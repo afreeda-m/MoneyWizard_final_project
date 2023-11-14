@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS categories CASCADE;
+
+CREATE TABLE categories (
+  id SERIAL PRIMARY KEY NOT NULL,
+  category_name VARCHAR(255) NOT NULL,
+  type VARCHAR(255) NOT NULL,
+  logo_url VARCHAR(255),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+)
