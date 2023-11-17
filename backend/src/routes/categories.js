@@ -61,7 +61,7 @@ router.post('/categories/:category_id/edit', (req, res) => {
 
   const categoryData = { category_name, type, logo_url };
   const userId = 1;
-  
+
   // Call the database function to edit the category
   dbQueries.updateCategory(categoryId, categoryData, userId)
   .then(editedCategory => {
@@ -75,6 +75,21 @@ router.post('/categories/:category_id/edit', (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   });
+});
+
+
+// POST delete a category by ID
+router.post('/categories/:category_id/delete', (req, res) => {
+  const categoryId = req.params.category_id;
+  const userId = 1;
+  
+  // Call the database function to delete the category
+  dbQueries.removeCategory(categoryId, userId)
+    .then(() => res.json({ message: 'Category deleted successfully' }))
+    .catch(error => {
+      console.error('Error deleting category:', error);
+      res.status(500).send('Internal Server Error');
+    });
 });
 
 module.exports = router;
