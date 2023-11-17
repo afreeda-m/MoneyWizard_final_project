@@ -47,29 +47,52 @@ const addCategory = (categoryData, userId) => {
 };
 
 // Update Existing category
-
 const updateCategory = (categoryId, categoryData, userId) => {
   // Check if the category exists before updating
   return getCategoryById(categoryId)
     .then(existingCategory => {
       if (!existingCategory) {
         throw new Error('Category not found');
-    }
-  })
+      }
 
-  const queryString = `UPDATE categories SET category_name = $1, type = $2, logo_url = $3 WHERE id = $4 AND user_id = $5;`;
+      // If the category exists, proceed with the update
+      const queryString = `
+        UPDATE categories
+        SET category_name = $1, type = $2, logo_url = $3
+        WHERE id = $4 AND user_id = $5
+        RETURNING *;`;
 
-  return db
-    .query(queryString, [categoryData.category_name, categoryData.type, categoryData.logo_url, categoryId, userId])
-    .then((data) => {
-      return data.rows[0]; // only one updated row
+      return db.query(queryString, [
+        categoryData.category_name,
+        categoryData.type,
+        categoryData.logo_url,
+        categoryId,
+        userId
+      ]);
     })
-    .catch((error) => {
+    .then(data => {
+      return data.rows[0]; //only one updated row
+    })
+    .catch(error => {
       console.error("Unable to update category data", error);
       throw error;
     });
 };
 
+
+
+const removeCategory =(category_id, userId) =>{
+
+  const queryString = `DELETE FROM categories WHERE id = $1 AND user_id = $2;`;
+  return db
+    .query(queryString, [category_id, userId])
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((error) => {
+      console.log('Unable to remove category', error);
+    });
+};
 
 module.exports = {
 
@@ -77,5 +100,6 @@ module.exports = {
   getCategoryById,
   addCategory,
   updateCategory,
+  removeCategory,
 
 };
