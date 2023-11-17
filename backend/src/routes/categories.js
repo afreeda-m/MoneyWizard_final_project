@@ -55,4 +55,26 @@ router.post('/categories/add', (req, res) => {
 
 // POST edit a category by ID
 
+router.post('/categories/:category_id/edit', (req, res) => {
+  const categoryId = req.params.category_id;
+  const { category_name, type, logo_url } = req.body;
+
+  const categoryData = { category_name, type, logo_url };
+  const userId = 1;
+  
+  // Call the database function to edit the category
+  dbQueries.updateCategory(categoryId, categoryData, userId)
+  .then(editedCategory => {
+    res.json(editedCategory);
+  })
+  .catch(error => {
+    if (error.message === 'Category not found') {
+      res.status(404).json({ error: 'Category not found' });
+    } else {
+      console.error('Error editing category:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+});
+
 module.exports = router;
