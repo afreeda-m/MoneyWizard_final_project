@@ -1,0 +1,46 @@
+#logo {
+  height: 150px;
+  width: 150px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  align-self: center;
+}
+
+.side-bar {
+  background-color: rgb(56, 184, 56);
+  width: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  position: fixed;
+}
+
+.side-bar-item {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  list-style: none;
+  height: 80px;
+  margin-left: -40px;
+}
+
+.side-bar-item a {
+  text-decoration: none;
+  color:white;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 4px;
+}
+
+.side-bar-item :hover {
+  background-color: rgb(182, 177, 32);
+}
+
+span {
+  margin-left: 16px;
+}

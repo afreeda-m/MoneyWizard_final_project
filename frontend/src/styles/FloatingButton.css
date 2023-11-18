@@ -1,0 +1,17 @@
+.floating-button {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: rgb(56, 184, 56);
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 3px #999;
+}
+
+.plus-icon {
+  margin-top: 15px;
+  font-size: 30px;
+  color: white;
+}
