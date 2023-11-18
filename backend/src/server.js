@@ -3,6 +3,9 @@ const app = express();
 const PORT = 8080;
 const transactionsRouter = require('./routes/transactions.js')
 const categoriesRouter = require('./routes/categories.js')
+const cors = require('cors');
+
+app.use(cors());
 
 app.use(express.static('public'));
 
