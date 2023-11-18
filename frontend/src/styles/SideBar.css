@@ -8,29 +8,28 @@
 
 .side-bar {
   background-color: rgb(56, 184, 56);
-  width: 250px;
+  width: 200px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: top;
   position: fix;
-  transition: 850ms;
 }
 
 .side-bar-item {
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 8pm 0px 98px 16px;
   list-style: none;
-  height: 60px;
+  height: 80px;
+  margin-left: -40px;
 }
 
 .side-bar-item a {
   text-decoration: none;
   color:white;
   font-size: 18px;
-  width: 95%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -38,7 +37,7 @@
   border-radius: 4px;
 }
 
-.side-bar-item a:hover {
+.side-bar-item :hover {
   background-color: rgb(182, 177, 32);
 }
 
