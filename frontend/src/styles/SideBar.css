@@ -9,11 +9,11 @@
 .side-bar {
   background-color: rgb(56, 184, 56);
   width: 200px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: top;
-  position: fix;
+  position: fixed;
 }
 
 .side-bar-item {
