@@ -1,11 +1,22 @@
 
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SideBar from './components/SideBar';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Money Wizard here we go!</h1>
-    </div>
+    <>
+      <Router>
+
+        <SideBar />
+
+        <Routes>
+          <Route path='/dashboard'>{Dashboard}</Route>
+        </Routes>
+        
+      </Router>
+    </>
   );
 }
 
