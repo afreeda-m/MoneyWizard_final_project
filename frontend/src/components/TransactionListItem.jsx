@@ -3,18 +3,18 @@ import "../styles/TransactionListItem.css";
 
 const TransactionListItem = (props) => {
 
-  const { id, category_icon, category_name, account_name, amount, notes } = props;
+  const { id, categoryIcon, categoryName, accountName, amount, notes } = props;
   return (
     <div key={id} className="transaction-list-item">
 
       <div className="category-icon">
-        {category_icon}
+        {categoryIcon}
       </div>
 
       <div className="transaction-list-item-detail">
 
-        {category_name}
-        {account_name}
+        {categoryName}
+        {accountName}
 
         <div className="transaction-notes">
           {notes}

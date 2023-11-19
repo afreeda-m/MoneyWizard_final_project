@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/TransactionList.css"
+import "../styles/TransactionList.css";
 
 import TransactionListItem from "./TransactionListItem";
 
@@ -12,12 +12,13 @@ const TransactionList = (props) => {
       <TransactionListItem
         key={transaction.id}
         id={transaction.id}
-        category_icon={getCategoryIconById(transaction.category_id, categories)}
-        category_name={getCategoryNameById(transaction.category_id, categories)}
-        account_name={getAccountNameById(transaction.account_id, accounts)}
+        categoryIcon={getCategoryIconById(transaction.category_id, categories)}
+        categoryName={getCategoryNameById(transaction.category_id, categories)}
+        accountName={getAccountNameById(transaction.account_id, accounts)}
         amount={transaction.amount}
         notes={transaction.notes}
-      />);
+      />
+    );
   });
 
   return (
