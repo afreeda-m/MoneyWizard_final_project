@@ -23,8 +23,8 @@ export const SideBarData = [
     cName: 'side-bar-item'
   },
   {
-    title: 'Report',
-    path: '/report',
+    title: 'Reports',
+    path: '/reports',
     icon: <IoIcons.IoDocumentsSharp />,
     cName: 'side-bar-item'
   },
