@@ -12,6 +12,19 @@ const getAccountsByUserId = (userId) => {
       console.log("Unable to get Accounts by user_id", error);
     })
 }
+// get total balance by user's ID
+const getTotalBalanceByUserId = (userId) => {
+  const queryString = `SELECT SUM(balance) AS total_balance FROM accounts WHERE user_id = $1;`;
+  return db
+    .query(queryString, [userId])
+    .then((data) => {
+      return data.rows.length > 0 ? data.rows[0].total_balance : 0;
+    })
+    .catch((error) => {
+      console.log("Unable to get Total Balance by user_id", error);
+      throw error;
+    });
+};
 
 // get accounts by their ID
 const getAccountsById = (accountId) => {
@@ -98,6 +111,7 @@ const removeAccount =(account_id, userId) =>{
 module.exports = {
 
   getAccountsByUserId,
+  getTotalBalanceByUserId,
   getAccountsById,
   addAccount,
   updateAccount,
