@@ -1,6 +1,6 @@
 import React from "react";
-import * as MdIcons from "react-icons/md";
 import * as IoIcons from "react-icons/io5";
+import * as MdIcons from "react-icons/md";
 
 
 export const SideBarData = [
@@ -23,8 +23,8 @@ export const SideBarData = [
     cName: 'side-bar-item'
   },
   {
-    title: 'Report',
-    path: '/report',
+    title: 'Reports',
+    path: '/reports',
     icon: <IoIcons.IoDocumentsSharp />,
     cName: 'side-bar-item'
   },

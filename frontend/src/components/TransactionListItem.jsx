@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/TransactionListItem.css";
+import "../styles/TransactionListItem.scss";
 
 const TransactionListItem = (props) => {
 

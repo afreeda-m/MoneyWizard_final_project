@@ -1,9 +1,13 @@
 import React from "react";
+import SideBar from "../components/SideBar";
 
 const Report = () => {
   return (
-    <div className="report">
-      <h1>Report Page</h1>
+    <div className="reports">
+
+      <SideBar />
+      <h1>Reports Page</h1>
+
     </div>
   );
 };
