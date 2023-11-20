@@ -53,14 +53,14 @@ INSERT INTO accounts(account_name, balance, user_id, note)
 VALUES('Cash', 2000, 1, 'cash account');
 
 
-INSERT INTO transactions(user_id,category_id, account_id, amount, notes)
-VALUES(1, 2, 1, 200, 'Bought some clothes');
-INSERT INTO transactions(user_id,category_id, account_id, amount, notes)
-VALUES(1, 2, 1, 150, 'Groceries');
-INSERT INTO transactions(user_id,category_id, account_id, amount, notes)
-VALUES(1, 1, 3, 40,'Dinning Out');
-INSERT INTO transactions(user_id,category_id, account_id, amount, notes)
-VALUES(1, 1, 2, 5000, 'Recieved from client');
-INSERT INTO transactions(user_id,category_id, account_id, amount, notes)
-VALUES(1, 14, 1, 1000, 'Monthly Income');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 2, 1, 200, '2023-01-20', 'Bought some clothes');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 2, 1, 150, '2023-11-15', 'Groceries');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 1, 3, 40,'2023-10-05', 'Dinning Out');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 1, 2, 5000, '2023-11-15', 'Recieved from client');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 14, 1, 1000, '2023-10-30', 'Monthly Income');
 
