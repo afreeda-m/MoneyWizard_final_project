@@ -1,7 +1,9 @@
 const db = require('../connection.js');
 
+//show all transactions in DB for a user
 const getTransactionsByUserId = (userId) => {
-  const queryString = `SELECT * FROM transactions WHERE user_id = $1 ORDER BY transaction_date DESC;`
+  const queryString = `SELECT * FROM transactions WHERE user_id = $1 ORDER BY transaction_date DESC;`;
+
   return db
   .query(queryString, [userId])
   .then((data) => {
@@ -9,42 +11,72 @@ const getTransactionsByUserId = (userId) => {
   })
   .catch((error) => {
     console.log("Unable to get transactions by user_id", error);
-  })
-}
+  });
+  //filter by date, initially show transactions for current month, all transactions
+};
 
 const addTransactions = (userId, transactionData) => {
-  const insertTransaction = `INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes) VALUES($1, $2, $3, $4, $5, $6);`
+  const insertTransaction = `
+    INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING category_id, amount, account_id;`;
 
-  const updateBalance = `UPDATE accounts SET balance = balance - $1 where id = $2;`
+  const updateBalance = `
+    UPDATE accounts
+    SET balance =
+      CASE
+        WHEN (SELECT type FROM categories WHERE id = $1) = 'Income' THEN balance + $2
+        WHEN (SELECT type FROM categories WHERE id = $1) = 'Expense' THEN balance - $2
+      END
+    WHERE id = $3;`;
 
   return db
-  .query("begin")
-  .then((res) => {
-    return db.query(insertTransaction, [userId, transactionData.categoryId, transactionData.accountId, transactionData.amount,transactionData.transaction_date, transactionData.notes])
-  })
-  .then((res) => {
-    return db.query(updateBalance, [transactionData.amount, userId])
-  })
-  .then((res) => {
-    return db.query("commit");
-  })
-  .then((data) => {
-    console.log('Transaction added to DB')
-    return data.rowCount
-  })
-  .catch((error) => {
-    console.log('Error in adding transactions to DB', error)
-    return db.query("rollback")
-  })
-  .catch((err) => {
-    console.error("error while rolling back transaction:", err)
-  })
-}
+    .query("begin")
+    .then((res) => {
+    return db.query (insertTransaction, [
+        userId,
+        transactionData.categoryId,
+        transactionData.accountId,
+        transactionData.amount,
+        transactionData.transaction_date,
+        transactionData.notes,
+      ]);
+    })
+    .then((result) => {
+      const categoryId = result.rows[0].category_id;
+      const amount = result.rows[0].amount;
+      const accountId = result.rows[0].account_id;
+
+      return db.query(updateBalance, [categoryId, amount, accountId]);
+    })
+    .then(() => {
+      return db.query("commit");
+    })
+    .then((data) => {
+      console.log('Transaction added to DB');
+      return data.rowCount;
+    })
+    .catch((error) => {
+      console.log('Error in adding transaction to DB', error);
+      return db.query("rollback");
+    })
+    .catch((err) => {
+      console.error("Error while rolling back transaction:", err);
+    });
+};
+
 
 const deleteTransaction = (transactionId) => {
-  const deleteTransaction = `DELETE FROM transactions WHERE id = $1 RETURNING amount, account_id;`
+  const deleteTransaction = `DELETE FROM transactions WHERE id = $1 RETURNING category_id, amount, account_id;`
 
-  const updateBalance = `UPDATE accounts SET balance = balance + $1 where id = $2;`
+  const updateBalance = `
+  UPDATE accounts
+  SET balance =
+    CASE
+      WHEN (SELECT type FROM categories WHERE id = $1) = 'Income' THEN balance - $2
+      WHEN (SELECT type FROM categories WHERE id = $1) = 'Expense' THEN balance + $2
+    END
+  WHERE id = $3;`
 
   return db
   .query("begin")
@@ -52,22 +84,21 @@ const deleteTransaction = (transactionId) => {
     return db.query(deleteTransaction, [transactionId])
   })
   .then((res) => {
+    categoryId = res.rows[0].category_id
     amount = res.rows[0].amount
-    account_id = res.rows[0].account_id
+    accountId = res.rows[0].account_id
 
-    console.log(amount)
-    console.log(account_id);
-    return db.query(updateBalance, [amount, account_id])
+    return db.query(updateBalance, [categoryId, amount, accountId])
   })
   .then((res) => {
     return db.query("commit");
   })
   .then((data) => {
-    console.log('Transaction added to DB')
+    console.log('Transaction successfully deleted from DB')
     return data.rowCount
   })
   .catch((error) => {
-    console.log('Error in adding transactions to DB', error)
+    console.log('Error in deleting transactions from DB', error)
     return db.query("rollback")
   })
   .catch((err) => {
@@ -75,15 +106,13 @@ const deleteTransaction = (transactionId) => {
   })
 }
 
-
 const editTransaction = (transactionData) => {
   const queryString = `UPDATE transactions SET category_id = $1, account_id = $2, amount = $3, transaction_date = $4, notes = $5 where id = $6;`
-  console.log(transactionData);
+
   return db
     .query(queryString, [transactionData.categoryId, transactionData.accountId, transactionData.amount, transactionData.transaction_date, transactionData.notes, transactionData.transaction_id])
     .then((transaction) => {
       console.log("Transaction successfully edited")
-      console.log(transaction);
       return transaction.rowCount
     })
     .catch((error) => {
@@ -96,9 +125,6 @@ const getTransactionsByCategoryId = (userId, year, month) => {
 
   let queryParams = [userId];
 
-  console.log(typeof year);
-  console.log(typeof month);
-
   let filterString = ""
   if (year) {
     filterString = "AND EXTRACT(year from transaction_date) = $2 AND EXTRACT(MONTH from transaction_date) = $3"
@@ -106,7 +132,6 @@ const getTransactionsByCategoryId = (userId, year, month) => {
   }
 
   queryString = queryString.replace("{date_filter}", filterString);
-  console.log(queryString);
 
   return db
     .query(queryString, queryParams)
@@ -120,6 +145,9 @@ const getTransactionsByCategoryId = (userId, year, month) => {
 
 
 //getTransactionsByDate
+
+//updateTransfer?
+
 
 
 module.exports = {

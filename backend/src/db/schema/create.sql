@@ -32,6 +32,6 @@ CREATE TABLE transactions (
   category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE,
   account_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE,
   amount INTEGER NOT NULL DEFAULT 0,
-  transaction_date TIMESTAMP NOT NULL,
+  transaction_date DATE NOT NULL,
   notes TEXT
 );

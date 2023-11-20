@@ -46,7 +46,6 @@ router.post('/delete', (req, res) => {
     })
 })
 
-
 router.post('/edit', (req, res) => {
   const transactionData = {
     categoryId: req.body.categoryId,
