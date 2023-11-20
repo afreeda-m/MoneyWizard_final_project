@@ -5,7 +5,7 @@ const Report = () => {
   return (
     <div className="reports">
 
-      <SideBar />
+      
       <h1>Reports Page</h1>
 
     </div>

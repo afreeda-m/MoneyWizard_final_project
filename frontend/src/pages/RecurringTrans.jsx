@@ -6,7 +6,7 @@ const RecurringTransactions = () => {
   return (
     <div className="recurringTrans">
 
-      <SideBar />
+     
       <h1>Recurring Transactions Page</h1>
 
     </div>

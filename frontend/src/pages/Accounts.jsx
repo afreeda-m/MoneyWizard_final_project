@@ -6,7 +6,6 @@ const Accounts = () => {
   return (
     <div className="accounts">
 
-      <SideBar />
       <h1>Accounts Page</h1>
 
     </div>

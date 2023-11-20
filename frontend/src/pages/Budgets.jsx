@@ -5,7 +5,7 @@ const Budgets = () => {
   return (
     <div className="budgets">
 
-      <SideBar />
+      
       <h1>Budgets Page</h1>
 
     </div>

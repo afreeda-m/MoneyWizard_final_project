@@ -13,8 +13,6 @@ const Transactions = () => {
   return (
     <div className="transactions">
 
-      <SideBar />
-
       <h1>List of transactions</h1>
 
       <h3>Placeholder for filter</h3>
