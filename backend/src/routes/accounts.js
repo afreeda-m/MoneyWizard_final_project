@@ -2,16 +2,27 @@ const express = require('express');
 const router = express.Router();
 const dbQueries = require('../db/queries/accounts_query.js')
 
-// GET accounts for a user
-router.get('/accounts', (req, res) => {
+// GET accounts and total balance for a user
+router.get('/accounts', async (req, res) => {
   const userId = 1;
 
-  dbQueries.getAccountsByUserId(userId)
-    .then(accounts => res.json(accounts))
-    .catch(error => {
-      console.error('Error fetching Accounts:', error);
-      res.status(500).send('Internal Server Error');
-    });
+  try {
+    //  execute queries concurrently
+    const [accounts, totalBalance] = await Promise.all([
+      // Fetch the accounts for the user using getAccountsByUserId
+      dbQueries.getAccountsByUserId(userId),
+
+      // Calculate the total balance for the user using getTotalBalanceByUserId
+      dbQueries.getTotalBalanceByUserId(userId),
+    ]);
+
+    // Send the response as JSON, containing the accounts and total balance
+    res.json({ accounts, totalBalance });
+  } catch (error) {
+
+    console.error('Error fetching Accounts and Total Balance:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 // GET route for getting accounts by ID
