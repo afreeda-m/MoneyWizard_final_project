@@ -3,42 +3,42 @@ const db = require('../connection.js');
 const getTransactionsByUserId = (userId) => {
   const queryString = `SELECT * FROM transactions WHERE user_id = $1 ORDER BY transaction_date DESC;`
   return db
-    .query(queryString, [userId])
-    .then((data) => {
-      return data.rows
-    })
-    .catch((error) => {
-      console.log("Unable to get transactions by user_id", error);
-    })
+  .query(queryString, [userId])
+  .then((data) => {
+    return data.rows
+  })
+  .catch((error) => {
+    console.log("Unable to get transactions by user_id", error);
+  })
 }
 
 const addTransactions = (userId, transactionData) => {
-    const insertTransaction = `INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes) VALUES($1, $2, $3, $4, $5, $6);`
+  const insertTransaction = `INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes) VALUES($1, $2, $3, $4, $5, $6);`
 
-    const updateBalance = `UPDATE accounts SET balance = balance - $1 where id = $2;`
+  const updateBalance = `UPDATE accounts SET balance = balance - $1 where id = $2;`
 
-    return db
-    .query("begin")
-    .then((res) => {
-      return db.query(insertTransaction, [userId, transactionData.categoryId, transactionData.accountId, transactionData.amount,transactionData.transaction_date, transactionData.notes])
-    })
-    .then((res) => {
-      return db.query(updateBalance, [transactionData.amount, userId])
-    })
-    .then((res) => {
-      return db.query("commit");
-    })
-    .then((data) => {
-      console.log('Transaction added to DB')
-      return data.rowCount
-    })
-    .catch((error) => {
-      console.log('Error in adding transactions to DB', error)
-      return db.query("rollback")
-    })
-    .catch((err) => {
-      console.error("error while rolling back transaction:", err)
-    })
+  return db
+  .query("begin")
+  .then((res) => {
+    return db.query(insertTransaction, [userId, transactionData.categoryId, transactionData.accountId, transactionData.amount,transactionData.transaction_date, transactionData.notes])
+  })
+  .then((res) => {
+    return db.query(updateBalance, [transactionData.amount, userId])
+  })
+  .then((res) => {
+    return db.query("commit");
+  })
+  .then((data) => {
+    console.log('Transaction added to DB')
+    return data.rowCount
+  })
+  .catch((error) => {
+    console.log('Error in adding transactions to DB', error)
+    return db.query("rollback")
+  })
+  .catch((err) => {
+    console.error("error while rolling back transaction:", err)
+  })
 }
 
 const deleteTransaction = (transactionId) => {
@@ -117,7 +117,6 @@ const getTransactionsByCategoryId = (userId, year, month) => {
       console.log('Error getting transactions by category', error)
     })
 }
-
 
 
 //getTransactionsByDate
