@@ -28,7 +28,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />}> </Route>
           <Route path='/transactions' element={<Transactions />}> </Route>
           <Route path='/accounts' element={<Accounts />}> </Route>
-          <Route path='/report' element={<Report />}> </Route>
+          <Route path='/reports' element={<Report />}> </Route>
           <Route path='/budgets' element={<Budgets />}> </Route>
           <Route path='/recurringtransactions' element={<RecurringTransactions />}> </Route>
           <Route path='/categoriesmanagement' element={<CategoriesManagement />}> </Route>
