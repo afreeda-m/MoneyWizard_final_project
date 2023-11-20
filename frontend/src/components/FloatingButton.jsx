@@ -1,11 +1,11 @@
 import React from "react";
-import '../styles/FloatingButton.css'
 import * as FiIcons from "react-icons/fi";
+import '../styles/FloatingButton.scss';
 
 const FloatingButton = () => {
   return (
     <div className="floating-button">
-    <div className="plus-icon"><FiIcons.FiPlus /></div>
+      <div className="plus-icon"><FiIcons.FiPlus /></div>
     </div>
   );
 };
