@@ -1,31 +1,29 @@
 import React from "react";
-import "../styles/TransactionListItem.css";
+import "../styles/TransactionListItem.scss";
+import { Box, List, ListItem, ListItemText, ListItemIcon, ListItemButton, Divider } from '@mui/material';
 
 const TransactionListItem = (props) => {
 
   const { id, categoryIcon, categoryName, accountName, amount, notes } = props;
   return (
-    <div key={id} className="transaction-list-item">
+    <div key={id} className="tranasction-list-item">
+      <Box sx={{ width: '500px', bgcolor: '#efefef' }}>
+        <List disablePadding>
+          <ListItem>
 
-      <div className="category-icon">
-        {categoryIcon}
-      </div>
+            <ListItemIcon>{categoryIcon}</ListItemIcon>
 
-      <div className="transaction-list-item-detail">
+            <ListItemText primary={categoryName} secondary={notes} sx={{ paddingLeft: "30px"}} />
 
-        {categoryName}
-        {accountName}
+            <ListItemText primary={amount} secondary="1111/11/11" sx={{ display:"flex", flexDirection:"column", alignItems:"flex-end" }} />
 
-        <div className="transaction-notes">
-          {notes}
-        </div>
+          </ListItem>
 
-      </div>
+          <Divider />
 
-      <div className="transaction-list-item-amount">
-        {amount}
-      </div>
+        </List>
 
+      </Box>
     </div>
   );
 };
