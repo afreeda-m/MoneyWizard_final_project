@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Budgets.css"
+import "../styles/Budgets.scss"
 
 const Budgets = () => {
   return (

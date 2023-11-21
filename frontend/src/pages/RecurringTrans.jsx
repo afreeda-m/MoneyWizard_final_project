@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/RecurringTrans.css"
+import "../styles/RecurringTrans.scss"
 
 const RecurringTransactions = () => {
   return (

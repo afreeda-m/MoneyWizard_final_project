@@ -1,5 +1,6 @@
 import React from "react";
-import "../styles/TransactionList.css";
+import "../styles/TransactionList.scss";
+
 
 import TransactionListItem from "./TransactionListItem";
 

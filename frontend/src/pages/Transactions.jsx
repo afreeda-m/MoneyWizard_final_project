@@ -4,7 +4,7 @@ import categories from "../mocks/categories";
 import accounts from "../mocks/accounts";
 import { getAccountNameById, getCategoryIconById, getCategoryNameById } from "../helpers/mockhelpers";
 import TransactionList from "../components/TransactionList";
-import "../styles/Transactions.css"
+import "../styles/Transactions.scss"
 import FloatingButton from "../components/FloatingButton";
 
 

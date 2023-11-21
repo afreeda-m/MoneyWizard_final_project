@@ -1,7 +1,7 @@
 import React from "react";
 import accounts from "../mocks/accounts";
 import AccountList from "../components/AccountList";
-import "../styles/Accounts.css";
+import "../styles/Accounts.scss";
 import FloatingButton from "../components/FloatingButton";
 
 const Accounts = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/FloatingButton.css'
+import '../styles/FloatingButton.scss'
 import * as FiIcons from "react-icons/fi";
 
 const FloatingButton = () => {
