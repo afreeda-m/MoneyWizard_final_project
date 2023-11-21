@@ -4,8 +4,10 @@ const transactionsQueries = require('../db/queries/transactions_query.js')
 
 router.get('/', (req, res) => {
   const userId = 1; //will need to extract this from cookies (set cookie session at initial login then extract the user_id every time)
+  const year = req.body.year;
+  const month = req.body.month;
 
-  transactionsQueries.getTransactionsByUserId(userId)
+  transactionsQueries.getTransactionsByUserId(userId, year, month)
     .then(transactions => res.json(transactions))
     .catch(error => {
       console.error('Error fetching transactions:', error);
@@ -23,7 +25,7 @@ router.post('/add', (req, res) => {
     notes: req.body.notes
   };
 
-  transactionsQueries.addTransactions(userId, transactionData)
+  transactionsQueries.addTransaction(userId, transactionData)
     .then(() => {
       res.redirect('/transactions');
     })
