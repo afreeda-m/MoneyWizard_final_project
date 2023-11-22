@@ -36,7 +36,7 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/delete', (req, res) => {
-  const transaction_id = req.body.transaction_id;
+  const transaction_id = req.body.transactionId;
 
   transactionsQueries.deleteTransaction(transaction_id)
     .then(() => {
@@ -69,7 +69,7 @@ router.post('/edit', (req, res) => {
     transaction_date:
     req.body.transaction_date,
     notes: req.body.notes,
-    transaction_id: req.body.transactionId
+    transaction_id: req.body.transaction_id
   }
 
   transactionsQueries.editTransaction(transactionData)
@@ -103,5 +103,26 @@ router.get('/transactionsByCategory', (req, res) => {
       res.status(500).send('Internal Server Error');
     })
 });
+
+router.post('/transfer', (req, res) => {
+  const transferData = {
+    userId: req.body.userId,
+    categoryId: req.body.categoryId,
+    accountFrom: req.body.accountFrom,
+    accountTo: req.body.accountTo,
+    amount: req.body.amount,
+    transaction_date: req.body.transaction_date,
+    notes: req.body.notes
+  }
+
+  transactionsQueries.addTransfer(transferData)
+  .then(() => {
+    res.redirect('/transactions')
+  })
+  .catch((error) => {
+    console.log('Error in adding transfer to DB', error);
+    res.status(500).send('Internal Server Error');
+  })
+})
 
 module.exports = router;
