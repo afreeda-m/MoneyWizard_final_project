@@ -31,6 +31,7 @@ CREATE TABLE transactions (
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE,
   account_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE,
+  account_id_to INTEGER REFERENCES accounts(id) ON DELETE CASCADE DEFAULT NULL,
   amount INTEGER NOT NULL DEFAULT 0,
   transaction_date DATE NOT NULL,
   notes TEXT

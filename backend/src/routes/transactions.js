@@ -4,8 +4,8 @@ const transactionsQueries = require('../db/queries/transactions_query.js')
 
 router.get('/', (req, res) => {
   const userId = 1; //will need to extract this from cookies (set cookie session at initial login then extract the user_id every time)
-  const year = req.body.year;
-  const month = req.body.month;
+  const year = req.query.year;
+  const month = req.query.month;
 
   transactionsQueries.getTransactionsByUserId(userId, year, month)
     .then(transactions => res.json(transactions))
@@ -46,6 +46,19 @@ router.post('/delete', (req, res) => {
       console.log('Error deleting transaction in DB', error);
       res.status(500).send('Internal Server Error');
     })
+})
+
+router.get('/edit', (req, res) => {
+  const transactionId = req.query.transaction_id;
+
+  transactionsQueries.getTransactionById(transactionId)
+  .then((transaction) => {
+    res.json(transaction);
+  })
+  .catch((error) => {
+    console.log('Error deleting transaction in DB', error);
+    res.status(500).send('Internal Server Error');
+  })
 })
 
 router.post('/edit', (req, res) => {

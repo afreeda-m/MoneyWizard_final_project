@@ -6,17 +6,17 @@ const getTransactionsByUserId = (userId, year = null, month = null) => {
 
   let queryParams = [userId];
 
+  if (year == null && month == null) {
+    const currentDate = new Date();
+    year = currentDate.getFullYear();
+    month = currentDate.getMonth() + 1;
+  }
+
   let filterString = "";
 
-  if (year && month) {
-    filterString = "AND EXTRACT(year FROM transaction_date) = $2 AND EXTRACT(month FROM transaction_date) = $3";
-    queryParams.push(year, month);
-  } else {
-    // Use the current month and year if not provided
-    const currentDate = new Date();
-    queryParams.push(currentDate.getFullYear(), currentDate.getMonth() + 1);
-    filterString = "AND EXTRACT(year FROM transaction_date) = $2 AND EXTRACT(month FROM transaction_date) = $3";
-  }
+  filterString = "AND EXTRACT(year FROM transaction_date) = $2 AND EXTRACT(month FROM transaction_date) = $3";
+  queryParams.push(year, month);
+
 
   queryString = queryString.replace("{date_filter}", filterString);
 
@@ -130,12 +130,11 @@ const getTransactionById = (transactionId) => {
   return db
     .query(queryString, [transactionId])
     .then((transaction) => {
-      return transaction.rows
+      return transaction.rows;
     })
     .catch((error) => {
       console.log('Error getting transactions by id', error);
     });
-
 };
 
 const editTransaction = (transactionData) => {
@@ -155,7 +154,7 @@ const editTransaction = (transactionData) => {
 //Show the sum of transactions by category for a given month/year timeframe
 const getTransactionsByCategoryId = (userId, year = null, month = null) => {
   // {date_filter} is a placeholder depending on date being passed in
-  let queryString = `SELECT type, category_name, sum(amount) FROM transactions JOIN categories ON categories.id = category_id WHERE transactions.user_Id = $1 {date_filter} GROUP BY type, category_name;`
+  let queryString = `SELECT type, category_name, sum(amount) FROM transactions JOIN categories ON categories.id = category_id WHERE transactions.user_Id = $1 {date_filter} GROUP BY type, category_name;`;
 
   let queryParams = [userId];
 
@@ -181,12 +180,53 @@ const getTransactionsByCategoryId = (userId, year = null, month = null) => {
     .catch((error) => {
       console.log('Error getting transactions by category', error);
     });
-}
+};
 
-
-//getTransactionsByDate
 
 //updateTransfer?
+
+const addTransfer = (transfer) => {
+  const fundsFrom = "UPDATE accounts SET balance = balance - $1 WHERE id= $2";
+  const fundsTo = "UPDATE accounts SET balance = balance + $1 WHERE id=$2";
+  const createTransaction = `
+    INSERT INTO transactions(user_id, category_id, account_id, account_id_to, amount, transaction_date, notes)
+    VALUES ($1, $2, $3, $4, $5, $6, $7);
+  `
+  return db
+  .query("begin")
+  .then((res) => {
+    return db.query(fundsFrom, transfer.amount, transfer.accountFrom);
+  })
+  .then((res) => {
+    return db.query(fundsTo, transfer.amount, transfer.accountTo);
+  })
+  .then((res) => {
+    return db.query(createTranscation, [
+      transfer.userId,
+      transfer.categoryId,
+      transfer.accountFrom,
+      transfer.accountTo,
+      transfer.amount,
+      transfer.transaction_date,
+      transfer.notes,
+    ]);
+  })
+  .then((res) => {
+    return db.query("commit");
+  })
+  .then((data) => {
+    console.log('Added a transfer');
+    return data.rowCount;
+  })
+  .catch((error) => {
+    console.log('Error in handling add transfer from DB', error);
+    return db.query("rollback");
+  })
+  .catch((err) => {
+    console.error("error while rolling back transaction in add transfer:", err);
+  });
+}
+
 
 
 
@@ -194,7 +234,8 @@ module.exports = {
   getTransactionsByUserId,
   addTransaction,
   deleteTransaction,
+  getTransactionById,
   editTransaction,
   getTransactionsByCategoryId,
-  getTransactionById
+  addTransfer
 };
