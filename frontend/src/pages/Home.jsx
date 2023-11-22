@@ -35,9 +35,6 @@ const Home = () => {
 
       </main>
 
-      <Footer />
-
-    </div>
       {/* Header */}
       <Header />
 
