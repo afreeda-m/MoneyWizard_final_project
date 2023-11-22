@@ -29,11 +29,11 @@ const Home = () => {
         * chosen to add an inline style here. To use inline styling with JSX,
         * use this format: `style={{camelCaseAttribute: 'string'}}`.
         */}
-      <main className='text-center' style={{minHeight: "85vh"}}>
+      {/* <main className='text-center' style={{minHeight: "85vh"}}>
 
         <h1>Welcome to Money Wizard!</h1>
 
-      </main>
+      </main> */}
 
       {/* Header */}
       <Header />
