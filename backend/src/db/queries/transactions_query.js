@@ -286,6 +286,89 @@ const addTransfer = (transfer) => {
 }
 
 
+const editTransfer = (transferData) => {
+  const getPreviousTransferAmountQuery = `SELECT amount, account_id, account_id_to FROM transactions WHERE id = $1;`;
+
+  const updateTransferQuery = `
+    UPDATE transactions
+    SET
+      category_id = $2,
+      account_id = $3,
+      account_id_to = $4,
+      amount = $5,
+      transaction_date = $6,
+      notes = $7
+    WHERE
+      id = $1;
+  `;
+
+  const updateBalanceFromQuery = `
+    UPDATE accounts
+    SET balance = balance + $1
+    WHERE id = $2;
+  `;
+
+  const updateBalanceToQuery = `
+    UPDATE accounts
+    SET balance = balance - $1
+    WHERE id = $2;
+  `;
+
+  let previousTransferAmount;
+  let previousAccountId;
+  let previousAccountIdTo;
+
+  return db
+    .query("begin")
+    .then(() => {
+      console.log(transferData)
+      // Get the previous transfer amount and account IDs
+      return db.query(getPreviousTransferAmountQuery, [transferData.transactionId]);
+    })
+    .then((previousTransferResult) => {
+      console.log(previousTransferAmount)
+      previousTransferAmount = previousTransferResult.rows[0].amount;
+      previousAccountId = previousTransferResult.rows[0].account_id;
+      previousAccountIdTo = previousTransferResult.rows[0].account_id_to;
+
+      // Execute the update query for the transfer
+      return db.query(updateTransferQuery, [
+        transferData.transactionId,
+        transferData.categoryId,
+        transferData.accountFrom,
+        transferData.accountTo,
+        transferData.amount,
+        transferData.transaction_date,
+        transferData.notes,
+      ]);
+    })
+    .then(() => {
+      // Execute the update query for the source account balance
+      return db.query(updateBalanceFromQuery, [previousTransferAmount, previousAccountId]);
+    })
+    .then(() => {
+      // Execute the update query for the destination account balance
+      return db.query(updateBalanceToQuery, [previousTransferAmount, previousAccountIdTo]);
+    })
+    .then(() => {
+      return db.query("commit");
+    })
+    .then((data) => {
+      console.log('Transfer successfully edited');
+      return data.rowCount;
+    })
+    .catch((error) => {
+      console.log('Error editing transfer in DB', error);
+      return db.query("rollback");
+    })
+    .catch((err) => {
+      console.error("Error while rolling back transfer:", err);
+    });
+};
+
+//can delete an expense or income transaction but not transfer transaction...
+
+
 module.exports = {
   getTransactionsByUserId,
   addTransaction,
@@ -293,5 +376,6 @@ module.exports = {
   getTransactionById,
   editTransaction,
   getTransactionsByCategoryId,
-  addTransfer
+  addTransfer,
+  editTransfer
 };
