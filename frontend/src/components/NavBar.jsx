@@ -3,17 +3,21 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Navbar from 'react-bootstrap/Navbar';
+import { FaBullseye } from 'react-icons/fa';
 
 
 
 function NavBar() {
   return (
 
-    <Navbar className="fluid-container bg-body-tertiary">
+    <Navbar className="fluid-container bg-success" fixed='top'>
       <Container>
 
         {/* BRAND NAME */}
-        <Navbar.Brand href="#home">Money Wizard</Navbar.Brand>
+        <Navbar.Brand href="#home" className='text-light'>
+
+        <FaBullseye size={50} className="mb-2 text-white" />
+          Money Wizard</Navbar.Brand>
         <Navbar.Toggle />
 
 
@@ -38,7 +42,7 @@ function NavBar() {
                 aria-describedby="Password Field"
               />
 
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Login</Button>
 
             </InputGroup>
           </Form>
