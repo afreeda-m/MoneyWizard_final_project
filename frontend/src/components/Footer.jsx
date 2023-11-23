@@ -1,7 +1,6 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 
-
 function Footer() {
 
   return (
@@ -31,7 +30,6 @@ function Footer() {
           <p>All Rights Reserved</p>
 
         </div>
-
       </Container>
 
     </footer>
@@ -39,6 +37,5 @@ function Footer() {
   );
 
 }
-
 
 export default Footer;
