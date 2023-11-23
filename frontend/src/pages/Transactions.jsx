@@ -1,5 +1,5 @@
 import React from "react";
-import FloatingButton from "../components/FloatingButton";
+import FloatingActionButton from "../components/FloatingActionButton";
 import SideBar from "../components/SideBar";
 import TransactionList from "../components/TransactionList";
 import { getAccountNameById, getCategoryIconById, getCategoryNameById } from "../helpers/mockhelpers";
@@ -28,7 +28,7 @@ const Transactions = () => {
         getCategoryNameById={getCategoryNameById}
       />
 
-      <FloatingButton />
+      <FloatingActionButton />
 
     </div>
   );
