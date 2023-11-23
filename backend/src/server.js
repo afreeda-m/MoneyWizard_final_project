@@ -6,7 +6,6 @@ const transactionsRouter = require('./routes/transactions.js')
 const categoriesRouter = require('./routes/categories.js')
 const accountsRouter = require('./routes/accounts.js')
 
-const cors = require('cors');
 
 app.use(cors());
 
