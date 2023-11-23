@@ -6,6 +6,7 @@ const transactionsRouter = require('./routes/transactions.js')
 const categoriesRouter = require('./routes/categories.js')
 const accountsRouter = require('./routes/accounts.js')
 
+
 app.use(cors());
 
 app.use(express.static('public'));
