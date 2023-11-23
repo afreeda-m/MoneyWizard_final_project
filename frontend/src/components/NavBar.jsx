@@ -16,7 +16,7 @@ function NavBar() {
         {/* BRAND NAME */}
         <Navbar.Brand href="#home" className='text-light'>
 
-        <FaBullseye size={50} className="mb-2 text-white" />
+        <FaBullseye size={45} className="mb-2 text-white" style={{marginRight: "1rem"}} />
           Money Wizard</Navbar.Brand>
         <Navbar.Toggle />
 
@@ -30,6 +30,7 @@ function NavBar() {
 
               {/* Username Field */}
               <Form.Control
+                name="username"
                 placeholder="Username"
                 aria-label="Username"
                 aria-describedby="Username Field"
@@ -37,6 +38,7 @@ function NavBar() {
 
               {/* Password Field */}
               <Form.Control
+                name="password"
                 placeholder="Password"
                 aria-label="Password"
                 aria-describedby="Password Field"
