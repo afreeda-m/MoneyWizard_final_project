@@ -1,6 +1,5 @@
 import React from "react";
 import FloatingActionButton from "../components/FloatingActionButton";
-import SideBar from "../components/SideBar";
 import TransactionList from "../components/TransactionList";
 import { getAccountNameById, getCategoryIconById, getCategoryNameById } from "../helpers/mockhelpers";
 import accounts from "../mocks/accounts";
@@ -13,9 +12,7 @@ const Transactions = () => {
   return (
     <div className="transactions">
 
-      <SideBar />
-
-      <h1>List of transactions</h1>
+      <h1>List of Transactions</h1>
 
       <h3>Placeholder for filter</h3>
 
