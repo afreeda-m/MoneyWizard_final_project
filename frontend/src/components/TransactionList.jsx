@@ -17,45 +17,50 @@ const TransactionList = (props) => {
 
   const listOfTransactions = transactions.map((transaction) => {
     return (
-      <ListGroupItem style={{innerWidth: "1000px"}}>
-        <Container>
-          <Row >
+      <div style={{ width: "1000px" }}>
 
-            <Col sm={2}>
-              <Image src="bank.png" roundedCircle />
-            </Col>
+        <ListGroupItem >
+          <Container>
+            <Row className="d-flex align-items-center">
 
-            <Col lg={3}>
-              <div className="category_name">
-                {getCategoryNameById(transaction.category_id, categories)}
-              </div>
-              <div className="account_name">
-                {getAccountNameById(transaction.account_id, accounts)}
-              </div>
-            </Col>
+              <Col sm={2}>
+                <Image src="bank.png" roundedCircle />
+              </Col>
 
-            <Col lg={3}>
-              <div className="transaction_notes">
-                {transaction.notes}
-              </div>
-            </Col>
+              <Col lg={3}>
+                <div className="category_name">
+                  <b>
+                    {getCategoryNameById(transaction.category_id, categories)}
+                  </b>
+                </div>
+                <div className="account_name">
+                  {getAccountNameById(transaction.account_id, accounts)}
+                </div>
+              </Col>
 
-            <Col sm={2}>
-              <div className="transaction_amount">
-                {transaction.amount}
-              </div>
-              <div className="transaction_date">
-                <i>1111/11/11</i>
-              </div>
-            </Col>
+              <Col lg={3}>
+                <div className="transaction_notes">
+                  {transaction.notes}
+                </div>
+              </Col>
 
-            <Col sm={1}>
-              <MoreVertIcon />
-            </Col>
+              <Col sm={2}>
+                <div className="transaction_amount">
+                  {transaction.amount}
+                </div>
+                <div className="transaction_date">
+                  <i>1111/11/11</i>
+                </div>
+              </Col>
 
-          </Row>
-        </Container>
-      </ListGroupItem>
+              <Col className="d-flex" style={{ border: "1px solid black" }}>
+                <MoreVertIcon className="alignItems: flex-end" />
+              </Col>
+
+            </Row>
+          </Container>
+        </ListGroupItem>
+      </div>
     );
   });
 
