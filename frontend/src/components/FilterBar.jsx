@@ -11,23 +11,19 @@ const FilterBar = (props) => {
 
   const incrementDate = () => {
     let currentDate = moment(date);
-    let newDate = moment(currentDate, "DD-MM-YYYY").add(1, 'months').format("MMMM YYYY");
-    console.log(newDate);
-
+    let newDate = moment(currentDate).add(1, 'months').format("MMMM YYYY");
     setDate(newDate);
   };
 
   const decrementDate = () => {
     let currentDate = moment(date);
-    let newDate = moment(currentDate, "DD-MM-YYYY").add(-1, 'months').format("MMMM YYYY");
-    console.log(newDate);
-
+    let newDate = moment(currentDate).add(-1, 'months').format("MMMM YYYY");
     setDate(newDate);
   };
 
   return (
 
-    <Container className="p-2 mb-4 mt-4 rounded"style={{ width: "40vw" }}>
+    <Container className="p-2 mb-4 mt-4 rounded bg-white"style={{ width: "40vw" }}>
       <Row >
         <Col className="d-flex justify-content-center" xs={2} onClick={decrementDate} >
           <ArrowBackIosIcon />
