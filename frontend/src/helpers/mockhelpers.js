@@ -10,6 +10,12 @@ export const getCategoryIconById = (id, categories) => {
   return result.logo_url;
 };
 
+export const getCategoryTypeById = (id, categories) => {
+  const result = categories.find(category => category.id === id);
+
+  return result.type;
+};
+
 export const getAccountNameById = (id, accounts) => {
   const result = accounts.find(account => account.id === id);
 
