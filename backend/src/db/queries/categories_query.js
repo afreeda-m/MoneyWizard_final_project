@@ -82,7 +82,6 @@ const updateCategory = (categoryId, categoryData, userId) => {
 
 
 const removeCategory =(category_id, userId) =>{
-
   const queryString = `DELETE FROM categories WHERE id = $1 AND user_id = $2;`;
   return db
     .query(queryString, [category_id, userId])
@@ -94,6 +93,20 @@ const removeCategory =(category_id, userId) =>{
     });
 };
 
+// Get categories by type
+const getCategoryByType = (type) => {
+  const queryString =  `SELECT * FROM categories WHERE type = $1;`;
+
+  return db
+    .query(queryString, [type])
+    .then((categories) => {
+      return categories.rows;
+    })
+    .catch((error) => {
+      console.log('Unable to get categories by type, ', error);
+    });
+}
+
 module.exports = {
 
   getCategoriesByUserId,
@@ -101,5 +114,6 @@ module.exports = {
   addCategory,
   updateCategory,
   removeCategory,
+  getCategoryByType
 
 };
