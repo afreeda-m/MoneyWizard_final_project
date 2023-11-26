@@ -11,41 +11,44 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const TransactionListItem = (props) => {
 
-  const { categoryIcon, categoryName, accountName, amount, notes, date } = props;
+  const { categoryIcon, categoryName, categoryType, accountName, amount, notes, date } = props;
+
   return (
-    <ListGroupItem className="shadow p-1 mb-1 rounded" style={{ width: "50vw" }} >
+    <ListGroupItem className="p-1" style={{ width: "50vw" }} >
       <Container>
 
         <Row className="d-flex align-items-center">
 
-          <Col className="d-flex justify-content-center" xs={2} >
+          <Col className="d-flex justify-content-center" xs={1} >
             <Image src={categoryIcon} />
           </Col>
 
           <Col xs={3} >
-            <div className="category_name">
+            <div>
               <b>
                 {categoryName}
               </b>
             </div>
-            <div className="account_name">
+            <div>
               <i>
                 {accountName}
               </i>
             </div>
           </Col>
 
-          <Col xs={4} >
-            <div className="transaction_notes">
-              {notes}
-            </div>
+          <Col xs={5} >
+
+            {notes}
+
           </Col>
 
           <Col xs={2} className="d-flex flex-column align-items-end" >
-            <div className="transaction_amount">
-              {amount}
+            <div className={categoryType === "Expense" ? "text-danger" : "text-success"}  >
+              <b>
+                {amount}
+              </b>
             </div>
-            <div className="transaction_date">
+            <div>
               <i>{date}</i>
             </div>
           </Col >
