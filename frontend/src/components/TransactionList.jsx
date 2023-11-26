@@ -1,14 +1,13 @@
 import React from "react";
 // import "../styles/TransactionList.scss";
 
-import ListGroup from 'react-bootstrap/ListGroup';
-import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
-import Image from 'react-bootstrap/Image';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Image from 'react-bootstrap/Image';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
+import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 
 
 const TransactionList = (props) => {
@@ -17,7 +16,9 @@ const TransactionList = (props) => {
 
   const listOfTransactions = transactions.map((transaction) => {
     return (
-      <div style={{ width: "1000px" }}>
+
+      // Set the `TransactionList` component to be 50% of the viewport width.
+      <div style={{ width: "50vw" }}>
 
         <ListGroupItem >
           <Container>
