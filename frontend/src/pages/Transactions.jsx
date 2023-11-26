@@ -5,12 +5,10 @@ import { getAccountNameById, getCategoryIconById, getCategoryNameById } from "..
 import accounts from "../mocks/accounts";
 import categories from "../mocks/categories";
 import transactions from "../mocks/transactions";
-import "../styles/Transactions.scss";
-
 
 const Transactions = () => {
   return (
-    <div className="transactions">
+    <div className="d-flex flex-column align-items-center" >
 
       <h1>List of Transactions</h1>
 
