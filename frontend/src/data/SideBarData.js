@@ -33,18 +33,18 @@ export const SideBarData = [
     icon: <RequestQuoteIcon />,
     cName: 'side-bar-item'
   },
-  {
-    title: 'Budgets',
-    path: '/budgets',
-    icon: <PieChartIcon />,
-    cName: 'side-bar-item'
-  },
-  {
-    title: 'Recurring Transactions',
-    path: '/recurringtransactions',
-    icon: <CurrencyExchangeIcon />,
-    cName: 'side-bar-item'
-  },
+  // {
+  //   title: 'Budgets',
+  //   path: '/budgets',
+  //   icon: <PieChartIcon />,
+  //   cName: 'side-bar-item'
+  // },
+  // {
+  //   title: 'Recurring Transactions',
+  //   path: '/recurringtransactions',
+  //   icon: <CurrencyExchangeIcon />,
+  //   cName: 'side-bar-item'
+  // },
   {
     title: 'Categories Management',
     path: '/categoriesmanagement',

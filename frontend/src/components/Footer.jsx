@@ -5,9 +5,8 @@ function Footer() {
 
   return (
 
-    // `min-vw-100`: Set to 100% of viewport.
     // `bg-body-tertiary`: Give its the same colour as the NavBar.
-    <footer className='navbar-expand navbar-light bg-body-tertiary min-vw-100'>
+    <footer className='navbar-expand navbar-light bg-body-tertiary'>
 
       <Container>
 
@@ -22,7 +21,7 @@ function Footer() {
           <p> Copyright &copy; 2023: &nbsp;
 
             <a className='text-dark' href='https://github.com/afreeda-m/MoneyWizard_final_project'>
-              Wizards of Money Wizard
+              The Wizards of Money Wizard
             </a>
 
           </p>
