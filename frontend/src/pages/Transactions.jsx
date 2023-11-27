@@ -7,10 +7,14 @@ import categories from "../mocks/categories";
 import transactions from "../mocks/transactions";
 import FilterBar from "../components/FilterBar";
 import moment from 'moment';
+import TransactionModal from "../components/TransactionModal";
 
 const Transactions = () => {
 
   const [date, setDate] = useState(moment().format("MMMM YYYY"));
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary" >
@@ -31,8 +35,16 @@ const Transactions = () => {
         getCategoryNameById={getCategoryNameById}
         getCategoryTypeById={getCategoryTypeById}
       />
+      <div onClick={toggleModal}>
+        <FloatingActionButton />
+      </div>
 
-      <FloatingActionButton />
+      <TransactionModal
+        isModalOpen={isModalOpen}
+        toggleModal={toggleModal}
+        categories={categories}
+        accounts={accounts}
+      />
 
     </div>
   );
