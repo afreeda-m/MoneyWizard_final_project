@@ -1,33 +1,49 @@
-import React from "react";
+// Report.jsx
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Container from 'react-bootstrap/Container';
-import ColumnChart from "../components/ColumnChart";
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import monthlyData from '../mocks/monthlyData'; // Importing mock data
+// Import other Bootstrap components as needed
+//import IncomeTransactions from "../components/IncomeTransactions";
 import IncomePieChart from "../components/IncomePieChart";
 import ExpensePieChart from "../components/ExpensePieChart";
-import { calculateIncomeDistribution, calculateExpenseDistribution } from "../helpers/mockhelpers";
 
 const Report = () => {
+  const [incomeData, setIncomeData] = useState([]);
+  const [expenseData, setExpenseData] = useState([]);
 
-// Calculate income distribution by category
-const incomeDistributionData = calculateIncomeDistribution();
-const expenseDistributionData = calculateExpenseDistribution();
+  useEffect(() => {
+    axios.get('/category/type')
+      .then(response => {
+        setIncomeData(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching income distribution data:', error);
+      });
+  }, []);
+
+
+  useEffect(() => {
+    axios.get('/category/type')
+    .then(response =>{
+      setExpenseData(response.data)
+    }).catch(error=>{
+      console.error('Error fetching Expense distribution data:', error)
+    })
+
+  }, []);
+
   return (
     <Container>
-      <Row >
-        <Col>
-          <ColumnChart monthlyData={monthlyData}/>
-        </Col>
+      <Row>
+        <IncomePieChart
+          incomeData={incomeData}
+        />
       </Row>
-      <Row className="justify-content-md-center">
-        <Col>
-          <IncomePieChart
-           incomeData={incomeDistributionData}/>
-        </Col>
-        <Col >
-        <ExpensePieChart expenseData={expenseDistributionData}/>
-        </Col>
+      <Row>
+        <ExpensePieChart
+          expenseData={expenseData}
+        />
       </Row>
     </Container>
   );
