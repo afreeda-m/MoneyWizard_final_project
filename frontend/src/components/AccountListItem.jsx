@@ -1,3 +1,4 @@
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { CardActionArea } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -27,6 +28,7 @@ const AccountListItem = (props) => {
                 thousandSeparator={true}
                 prefix={"$"}
               />
+              <MoreVertIcon className="alignItems: flex-end" />
             </Typography>
           </CardContent>
         </CardActionArea>
