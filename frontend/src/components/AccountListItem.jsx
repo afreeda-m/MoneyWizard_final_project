@@ -1,39 +1,57 @@
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { CardActionArea } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React from "react";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Dropdown from "react-bootstrap/Dropdown";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
+import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import { NumericFormat } from "react-number-format";
 
 const AccountListItem = (props) => {
   const { id, account_name, amount } = props;
 
   return (
-    <div key={id} className="account-list-item">
-      <Card sx={{ maxWidth: 600, margin: 5 }}>
-        <CardActionArea>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {account_name}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ textAlign: "right" }}
-            >
+    <ListGroupItem className="p-1" style={{ width: "50vw" }}>
+      <Container>
+        <Row className="d-flex align-items-center">
+          <Col className="d-flex justify-content-center" xs={1}>
+            {/* <Image src={categoryIcon} /> */}
+          </Col>
+
+          <Col xs={3}>
+            <div>
+              <i> {account_name} </i>
+            </div>
+          </Col>
+
+          <Col xs={2} className="d-flex flex-column align-items-end">
+            <b>
               <NumericFormat
                 value={amount.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"$"}
               />
-              <MoreVertIcon className="alignItems: flex-end" />
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </div>
+            </b>
+          </Col>
+
+          {/* 3 dots icon with dropdown list show the Edit and Delete feature for a transaction */}
+          <Col xs={1} className="d-flex justify-content-end">
+            <Dropdown>
+              <Dropdown.Toggle variant="none" id="dropdown-basic">
+                <MoreVertIcon />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item key={id} href="#">Edit account</Dropdown.Item>
+                <Dropdown.Item key={id} href="#">Delete account</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+        </Row>
+      </Container>
+    </ListGroupItem>
   );
 };
 

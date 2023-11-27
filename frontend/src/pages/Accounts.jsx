@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
+import Col from "react-bootstrap/Col";
 import { NumericFormat } from "react-number-format";
 import { Cell, Label, Legend, Pie, PieChart, Tooltip } from "recharts";
 import AccountList from "../components/AccountList";
@@ -15,7 +16,10 @@ const Accounts = () => {
   const [show, setShow] = useState(false);
 
   const modalClose = () => setShow(false);
-  const modalShow = () => setShow(true);
+  const modalShow = () => {
+    console.log("Show button clicked");
+    setShow(true);
+  }
 
   useEffect(() => {
     axios.get('/accounts')
@@ -83,6 +87,7 @@ const Accounts = () => {
         <Legend />
       </PieChart>
 
+      <Col xs={2} className="d-flex flex-column align-items-end text-end">
       <span class="text-end">
         Total:{" "}
         <NumericFormat
@@ -92,13 +97,13 @@ const Accounts = () => {
           prefix={"$"}
         />
       </span>
+      </Col>
 
       <AccountList accounts={accounts} />
 
       {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow}/>}
 
-      <FloatingActionButton onClick={modalShow}/>
-
+      <FloatingActionButton click={modalShow}/>
     </div>
   );
 };

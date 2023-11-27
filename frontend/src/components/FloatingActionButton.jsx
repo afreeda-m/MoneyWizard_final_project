@@ -5,7 +5,9 @@ import Fab from '@mui/material/Fab';
 import * as React from 'react';
 
 
-function FloatingActionButton() {
+function FloatingActionButton(props) {
+
+  console.log(props);
 
   return (
 
@@ -28,7 +30,7 @@ function FloatingActionButton() {
         <Fab color="primary"
           aria-label="add"
           style={{ position: "fixed", bottom: "3rem", right: "3rem" }}
-          // onClick={}
+          onClick={props.click}
         >
 
           {/* The plus sign in the button. */}
