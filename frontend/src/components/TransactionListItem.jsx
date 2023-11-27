@@ -25,14 +25,10 @@ const TransactionListItem = (props) => {
 
           <Col xs={3} >
             <div>
-              <b>
-                {categoryName}
-              </b>
+              <b> {categoryName} </b>
             </div>
             <div>
-              <i>
-                {accountName}
-              </i>
+              <i> {accountName} </i>
             </div>
           </Col>
 
@@ -43,10 +39,9 @@ const TransactionListItem = (props) => {
           </Col>
 
           <Col xs={2} className="d-flex flex-column align-items-end" >
+            {/* Amount shows in red for expense and green for income */}
             <div className={categoryType === "Expense" ? "text-danger" : "text-success"}  >
-              <b>
-                {amount}
-              </b>
+              <b> {amount} </b>
             </div>
             <div>
               <i>{date}</i>
@@ -57,19 +52,18 @@ const TransactionListItem = (props) => {
           <Col xs={1} className="d-flex justify-content-end"  >
 
             <Dropdown >
+
               <Dropdown.Toggle variant="none" id="dropdown-basic">
-
                 <MoreVertIcon />
-
               </Dropdown.Toggle>
+
               <Dropdown.Menu>
-
-                <Dropdown.Item href="#">Edit</Dropdown.Item>
-                <Dropdown.Item href="#">Delete</Dropdown.Item>
-
+                <Dropdown.Item href="#">Edit transaction</Dropdown.Item>
+                <Dropdown.Item href="#">Delete transaction</Dropdown.Item>
               </Dropdown.Menu>
 
             </Dropdown>
+
           </Col>
 
         </Row>
