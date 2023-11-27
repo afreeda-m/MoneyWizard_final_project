@@ -366,8 +366,6 @@ const editTransfer = (transferData) => {
     });
 };
 
-//can delete an expense or income transaction but not transfer transaction...
-
 
 module.exports = {
   getTransactionsByUserId,

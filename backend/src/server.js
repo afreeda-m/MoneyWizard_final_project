@@ -5,6 +5,7 @@ const PORT = 8080;
 const transactionsRouter = require('./routes/transactions.js')
 const categoriesRouter = require('./routes/categories.js')
 const accountsRouter = require('./routes/accounts.js')
+const userRouter = require('./routes/user_auth.js')
 
 
 app.use(cors());
@@ -14,6 +15,7 @@ app.use(express.static('public'));
 // middleware set up to parse the JSON body
 app.use(express.json());
 
+app.use('/login', userRouter)
 app.use('/transactions', transactionsRouter);
 app.use('/', categoriesRouter);
 app.use('/', accountsRouter);

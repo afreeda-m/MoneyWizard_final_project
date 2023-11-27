@@ -82,7 +82,7 @@ router.post('/categories/:category_id/edit', (req, res) => {
 router.post('/categories/:category_id/delete', (req, res) => {
   const categoryId = req.params.category_id;
   const userId = 1;
-  
+
   // Call the database function to delete the category
   dbQueries.removeCategory(categoryId, userId)
     .then(() => res.json({ message: 'Category deleted successfully' }))
@@ -91,5 +91,19 @@ router.post('/categories/:category_id/delete', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 });
+
+//GET categories based on the type provided
+router.get('/category/type', (req, res) => {
+  const type = req.params.type;
+
+  dbQueries.getCategoryByType(type)
+    .then((categories) => {
+      res.send(categories);
+    })
+    .catch((error) => {
+      console.log('Error in editing transfer in DB', error);
+      res.status(500).send('Internal Server Error');
+    });
+})
 
 module.exports = router;
