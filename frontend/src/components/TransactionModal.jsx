@@ -10,13 +10,13 @@ const TransactionModal = (props) => {
 
   const categoryDropdown = categories.map((category) => {
     return (
-      <option>{category.category_name}</option>
+      <option key={category.id}>{category.category_name}</option>
     );
   });
 
   const accountDropdown = accounts.map((account) => {
     return (
-      <option>{account.account_name}</option>
+      <option key={account.id}>{account.account_name}</option>
     )
   })
 
