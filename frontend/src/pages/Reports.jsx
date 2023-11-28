@@ -19,9 +19,9 @@ const Report = () => {
 
   // State for date and income/expense totals
   const [date, setDate] = useState(new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
-  // const [totalIncome, setTotalIncome] = useState(0);
-  // const [totalExpense, setTotalExpense] = useState(0);
- 
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
+
   useEffect(() => {
     // Fetch income and expense data from the backend
     axios.get('/transactions/transactionsByCategory')
@@ -53,12 +53,12 @@ const Report = () => {
       });
 
     // // Calculate and set total income and expense amounts
-    // const totalIncomeAmount = incomeData.reduce((total, item) => total + item.value, 0);
-    // const totalExpenseAmount = expenseData.reduce((total, item) => total + item.value, 0);
-    // console.log("totalincomeamount", totalIncomeAmount);
-    // console.log("totalExpenseAmount", totalExpenseAmount);
-    // setTotalIncome(totalIncomeAmount);
-    // setTotalExpense(totalExpenseAmount);
+    const totalIncomeAmount = incomeData.reduce((total, item) => total + parseFloat(item.value), 0);
+    const totalExpenseAmount = expenseData.reduce((total, item) => total + parseFloat(item.value), 0);
+    console.log("totalincomeamount", totalIncomeAmount);
+    console.log("totalExpenseAmount", totalExpenseAmount);
+    setTotalIncome(totalIncomeAmount);
+    setTotalExpense(totalExpenseAmount);
 
   }, [date, incomeData, expenseData]);
 
@@ -80,6 +80,8 @@ const Report = () => {
             incomeData={incomeData}
             expenseData={expenseData}
             date={date}
+            totalIncome={totalIncome}
+            totalExpense={totalExpense}
           />
         </Col>
 
