@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/TransactionListItem.scss";
-
+import moment from 'moment';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
@@ -14,7 +14,7 @@ const TransactionListItem = (props) => {
   const { categoryIcon, categoryName, categoryType, accountName, amount, notes, date } = props;
 
   return (
-    <ListGroupItem className="p-1" style={{ width: "50vw" }} >
+    <ListGroupItem className="p-2" style={{ width: "50vw" }} >
       <Container>
 
         <Row className="d-flex align-items-center">
@@ -44,7 +44,7 @@ const TransactionListItem = (props) => {
               <b> {amount} </b>
             </div>
             <div>
-              <i>{date}</i>
+              <i>{moment(date).format("YYYY-MM-DD")}</i>
             </div>
           </Col >
 
@@ -58,8 +58,8 @@ const TransactionListItem = (props) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#">Edit transaction</Dropdown.Item>
-                <Dropdown.Item href="#">Delete transaction</Dropdown.Item>
+                <Dropdown.Item >Edit transaction</Dropdown.Item>
+                <Dropdown.Item >Delete transaction</Dropdown.Item>
               </Dropdown.Menu>
 
             </Dropdown>
