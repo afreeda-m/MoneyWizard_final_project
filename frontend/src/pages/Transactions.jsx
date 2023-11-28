@@ -6,10 +6,6 @@ import FloatingActionButton from "../components/FloatingActionButton";
 import TransactionList from "../components/TransactionList";
 import TransactionModal from "../components/TransactionModal";
 import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/helperFunctions";
-// import accounts from "../mocks/accounts";
-// import categories from "../mocks/categories";
-// import transactions from "../mocks/transactions";
-
 
 
 const Transactions = () => {
