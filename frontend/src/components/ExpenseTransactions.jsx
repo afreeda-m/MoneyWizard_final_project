@@ -7,23 +7,9 @@ import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 
 const ExpenseTransactions = ({expenseData}) => {
 
-  console.log("inside ExpenseTransaction componenet:", expenseData);
-  /*
-{
-    "label": "Food/Drinks",
-    "value": "5000",
-    "type": "Expense"
-},
-{
-    "label": "Shopping",
-    "value": "150",
-    "type": "Expense"
-}
-  */
-
   return (
     <div className="justify-content-md-center shadow p-3 mb-5 bg-white rounded">
-      {/* Iterate through income transactions and display them */}
+      {/* Iterate through expense transactions and display them */}
       {expenseData.map((transaction, index) => (
         <ListGroupItem className="p-1" style={{ width: "50vw" }} key={index}>
           <Container>
