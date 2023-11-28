@@ -23,7 +23,7 @@ function NavBar() {
       <Navbar.Collapse className="justify-content-end">
 
         {/* LOGIN FORM */}
-        <Form inline>
+        <Form inline="true">
           <InputGroup>
 
             {/* Username Field */}

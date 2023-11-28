@@ -25,7 +25,7 @@ function FloatingActionButton() {
       >
 
         {/* THE FLOATING ACTION BUTTON COMPONENT */}
-        <Fab color="primary"
+        <Fab color="success"
           aria-label="add"
           style={{ position: "fixed", bottom: "3rem", right: "3rem" }}
           // onClick={}

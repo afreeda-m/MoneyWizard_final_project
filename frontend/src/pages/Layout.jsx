@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Footer from '../components/Footer';
-import Navbar from '../components/NavBar';
+import NavBar from "../components/NavBar";
 import Sidebar from '../components/SideBar';
 
 
@@ -12,8 +12,8 @@ const Layout = () => {
 
   return (
 
-    <div className="d-flex" style={{height: "100%"}}>
-
+    <div className="d-flex" style={{ height: "100%" }}>
+      <Sidebar />
       {/* COMPENSATORY STYLING
         *
         * For some reason, the width of this page overflows to the right,
@@ -23,8 +23,8 @@ const Layout = () => {
         * the width of this element has been made to account for the sidebar's
         * width.
         */}
-      <div className="d-flex flex-column" style={{width: "calc(100% - 250px)"}}>
-   
+      <div className="d-flex flex-column" style={{ width: "calc(100% - 250px)" }}>
+
         <NavBar />
         <Outlet />
         <Footer />
