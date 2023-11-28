@@ -21,7 +21,7 @@ import Transactions from './pages/Transactions';
 function App() {
 
   return (
-    <div className='App'>
+    <div className='App bg-body-tertiary'>
 
       {/* INTRODUCTION TO THE `REACT-ROUTER` LIBRARY
         *
