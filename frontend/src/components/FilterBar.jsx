@@ -7,23 +7,28 @@ import Col from 'react-bootstrap/esm/Col';
 
 
 const FilterBar = (props) => {
-  const { date, setDate } = props;
+  const {
+    date,
+    // setDate,
+    incrementDate,
+    decrementDate
+  } = props;
 
-  const incrementDate = () => {
-    // let currentDate = moment(date);
-    let newDate = moment(date).add(1, 'months');
-    setDate(newDate);
-  };
+  // const incrementDate = () => {
+  //   // let currentDate = moment(date);
+  //   let newDate = moment(date).add(1, 'months');
+  //   setDate(newDate);
+  // };
 
-  const decrementDate = () => {
-    // let currentDate = moment(date);
-    let newDate = moment(date).add(-1, 'months');
-    setDate(newDate);
-  };
+  // const decrementDate = () => {
+  //   // let currentDate = moment(date);
+  //   let newDate = moment(date).add(-1, 'months');
+  //   setDate(newDate);
+  // };
 
   return (
 
-    <Container className="p-2 mb-4 mt-4 rounded bg-white"style={{ width: "40vw" }}>
+    <Container className="p-2 mb-4 mt-4 rounded bg-white" style={{ width: "40vw" }}>
       <Row >
         <Col className="d-flex justify-content-center" xs={2} onClick={decrementDate} >
           <ArrowBackIosIcon />
