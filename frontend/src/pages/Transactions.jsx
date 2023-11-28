@@ -9,37 +9,57 @@ import TransactionModalEditTransaction from "../components/TransactionModalEditT
 import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/helperFunctions";
 
 
-const Transactions = () => {
+const Transactions = (props) => {
 
-  const [accountsData, setAccountsData] = useState([]);
-  const [transactionsData, setTransactionsData] = useState([]);
-  const [categoriesData, setCategoriesData] = useState([]);
+  const { transactionsData,
+    categoriesData,
+    accountsData,
+    date,
+    isAddTransactionModalOpen,
+    isEditTransactionModalOpen,
+    isEditTransferModelOpen,
+    chosenTransaction,
+    incrementDate,
+    decrementDate,
+    toggleAddNewModal,
+    toggleEditTransactionModal,
+    toggleEditTransferModal,
+    chooseTransaction,
+    getAccountNameById,
+    getCategoryIconById,
+    getCategoryNameById,
+    getCategoryTypeById
+  } = props;
 
-  const [date, setDate] = useState(moment().format("YYYY-MM"));
-  const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
-  const [isEditTransactionModalOpen, setIsEditTransactionModalOpen] = useState(false);
-  const [chosenTransaction, setChosenTransaction] = useState(null);
+  // const [accountsData, setAccountsData] = useState([]);
+  // const [transactionsData, setTransactionsData] = useState([]);
+  // const [categoriesData, setCategoriesData] = useState([]);
 
-  const toggleAddNewModal = () => setIsAddTransactionModalOpen(!isAddTransactionModalOpen);
-  const toggleEditTransactionModal = () => setIsEditTransactionModalOpen(!isEditTransactionModalOpen);
-  // const chooseTransaction = () => setChosenTransaction
+  // const [date, setDate] = useState(moment().format("YYYY-MM"));
+  // const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
+  // const [isEditTransactionModalOpen, setIsEditTransactionModalOpen] = useState(false);
+  // const [chosenTransaction, setChosenTransaction] = useState(null);
 
-  useEffect(() => {
+  // const toggleAddNewModal = () => setIsAddTransactionModalOpen(!isAddTransactionModalOpen);
+  // const toggleEditTransactionModal = () => setIsEditTransactionModalOpen(!isEditTransactionModalOpen);
 
-    const fetchTransactions = axios.get('/transactions');
-    const fetchAccounts = axios.get('/accounts');
-    const fetchCategories = axios.get('/categories');
 
-    Promise.all([fetchTransactions, fetchAccounts, fetchCategories]).then((response) => {
-      const [transactionsResponse, accountsResponse, categoriesReponse] = response;
-      setTransactionsData(transactionsResponse.data);
-      setAccountsData(accountsResponse.data.accounts);
-      setCategoriesData(categoriesReponse.data);
-    }).catch((error) => {
-      console.error('Error Fetching Data', error);
-    });
+  // useEffect(() => {
 
-  }, [date]);
+  //   const fetchTransactions = axios.get('/transactions');
+  //   const fetchAccounts = axios.get('/accounts');
+  //   const fetchCategories = axios.get('/categories');
+
+  //   Promise.all([fetchTransactions, fetchAccounts, fetchCategories]).then((response) => {
+  //     const [transactionsResponse, accountsResponse, categoriesReponse] = response;
+  //     setTransactionsData(transactionsResponse.data);
+  //     setAccountsData(accountsResponse.data.accounts);
+  //     setCategoriesData(categoriesReponse.data);
+  //   }).catch((error) => {
+  //     console.error('Error Fetching Data', error);
+  //   });
+
+  // }, [date]);
 
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
@@ -48,7 +68,9 @@ const Transactions = () => {
 
       <FilterBar
         date={date}
-        setDate={setDate}
+        // setDate={setDate}
+        incrementDate={incrementDate}
+        decrementDate={decrementDate}
       />
 
       <TransactionList
