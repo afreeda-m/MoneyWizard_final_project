@@ -4,12 +4,21 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import moment from 'moment';
 
 
 
-const TransactionModal = (props) => {
+const TransactionModalEditTransaction = (props) => {
 
-  const { isEditTransactionModalOpen, toggleEditTransactionModal, categories, accounts } = props;
+  const {
+    isEditTransactionModalOpen,
+    toggleEditTransactionModal,
+    categories,
+    accounts,
+    chosenTransaction,
+    getCategoryNameById,
+    getAccountNameById
+  } = props;
 
   // list of categories for the dropdown selection
   const categoryDropdown = categories.map((category) => {
@@ -36,7 +45,6 @@ const TransactionModal = (props) => {
 
       <Modal.Body>
 
-
         <Form>
 
           {/* 2 input fields in the same row for Category selection, Account selection */}
@@ -51,7 +59,9 @@ const TransactionModal = (props) => {
             <Form.Group xs={6} as={Col}>
               <Form.Label >Category</Form.Label>
               <Form.Select >
-                <option> </option>
+                <option>
+                  {chosenTransaction && getCategoryNameById(chosenTransaction.category_id, categories)}
+                </option>
                 {categoryDropdown}
 
               </Form.Select>
@@ -61,7 +71,9 @@ const TransactionModal = (props) => {
             <Form.Group xs={6} as={Col}>
               <Form.Label >Account</Form.Label>
               <Form.Select >
-                <option> </option>
+                <option>
+                  {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
+                </option>
                 {accountDropdown}
 
               </Form.Select>
@@ -76,7 +88,7 @@ const TransactionModal = (props) => {
               <Form.Label >Amount</Form.Label>
               <InputGroup>
                 <InputGroup.Text >$</InputGroup.Text>
-                <Form.Control />
+                <Form.Control defaultValue={chosenTransaction && chosenTransaction.amount} />
               </InputGroup>
             </Form.Group>
           </Row>
@@ -85,7 +97,7 @@ const TransactionModal = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label >Date</Form.Label>
-              <Form.Control />
+              <Form.Control defaultValue={chosenTransaction && moment(chosenTransaction.transaction_date).format("YYYY-MM-DD")} />
             </Form.Group>
           </Row>
 
@@ -93,7 +105,7 @@ const TransactionModal = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label >Notes</Form.Label>
-              <Form.Control as="textarea" />
+              <Form.Control as="textarea" defaultValue={chosenTransaction && chosenTransaction.notes}/>
             </Form.Group>
           </Row>
 
@@ -115,4 +127,4 @@ const TransactionModal = (props) => {
 
 };
 
-export default TransactionModal;
+export default TransactionModalEditTransaction;
