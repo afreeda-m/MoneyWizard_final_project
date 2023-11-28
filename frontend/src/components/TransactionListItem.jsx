@@ -20,16 +20,23 @@ const TransactionListItem = (props) => {
     amount,
     notes,
     date,
-    chosenTransaction,
+    toggleEditTransferModal,
+    isEditTransferModalOpen,
     toggleEditTransactionModal,
-    isEditTransactionModalOpen
+    isEditTransactionModalOpen,
+    chooseTransaction,
+    transaction
   } = props;
 
-  // const handleClick = () => {
-  //   !isEditTransactionModalOpen && toggleEditTransactionModal && toggleEditTransactionModal();
-  //   !isEditTransactionModalOpen && chosenTransaction && toggleEditTransactionModal();
+  const handleEditTransactionClick = () => {
+    !isEditTransactionModalOpen && chooseTransaction(transaction);
+    !isEditTransactionModalOpen && toggleEditTransactionModal && toggleEditTransactionModal();
+  };
 
-  // };
+  const handleEditTransferClick = () => {
+    !isEditTransferModalOpen && chooseTransaction(transaction);
+    !isEditTransferModalOpen && toggleEditTransferModal && toggleEditTransferModal();
+  };
 
 
   return (
@@ -79,8 +86,12 @@ const TransactionListItem = (props) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item >Edit transaction</Dropdown.Item>
+
+                {/* The onClick event on Edit button will open different modal based on the type of the category */}
+                <Dropdown.Item onClick={categoryType === "Transfer" ? handleEditTransferClick : handleEditTransactionClick}>Edit transaction</Dropdown.Item>
+
                 <Dropdown.Item >Delete transaction</Dropdown.Item>
+
               </Dropdown.Menu>
 
             </Dropdown>
