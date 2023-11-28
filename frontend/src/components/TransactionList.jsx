@@ -18,11 +18,11 @@ const TransactionList = (props) => {
 
       <TransactionListItem
         key={transaction.id}
-        categoryIcon={getCategoryIconById(categoryId, categoriesData)}
+        categoryIcon={`/images/${getCategoryIconById(categoryId, categoriesData)}`}
         categoryName={getCategoryNameById(categoryId, categoriesData)}
         categoryType={getCategoryTypeById(categoryId, categoriesData)}
         accountName={getAccountNameById(accountId, accountsData)}
-        accountToName={getAccountNameById(accountToId, accountsData)}
+        accountToName={accountToId ? getAccountNameById(accountToId, accountsData) : null}
         notes={transaction.notes}
         amount={transaction.amount}
         date={transaction.transaction_date}
