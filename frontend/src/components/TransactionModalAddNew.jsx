@@ -6,12 +6,22 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import DatePickerBox from './DatePickerBox';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 
 
 const TransactionModal = (props) => {
 
-  const { isAddTransactionModalOpen, toggleAddNewModal, categories, accounts } = props;
+  const {
+    isAddTransactionModalOpen,
+    toggleAddNewModal,
+    categories,
+    accounts,
+    transactionDate,
+    pickTransactionDate
+  } = props;
 
   // list of categories for the dropdown selection
   const categoryDropdown = categories.map((category) => {
@@ -43,15 +53,11 @@ const TransactionModal = (props) => {
 
           {/* TRANSACTION TAB using grid layout */}
           <Tab eventKey="transaction" title="TRANSACTION">
+
             <Form>
 
               {/* 2 input fields in the same row for Category selection, Account selection */}
               <Row className='mb-3' >
-
-                {/* Placeholder for category logo when a category is selected
-                <Col className='d-flex justify-content-center' xs={2}>
-                  <img src="bank.png" />
-                </Col> */}
 
                 {/* Dropdown selection for Category */}
                 <Form.Group xs={6} as={Col}>
@@ -76,7 +82,7 @@ const TransactionModal = (props) => {
               </Row>
 
               {/* Input field for Amount */}
-              <Row className="mb-3">
+              <Row className="mb-3" >
                 <Form.Group as={Col}>
 
                   <Form.Label >Amount</Form.Label>
@@ -91,7 +97,15 @@ const TransactionModal = (props) => {
               <Row className="mb-3">
                 <Form.Group as={Col}>
                   <Form.Label >Date</Form.Label>
-                  <Form.Control />
+                  {/* <Form.Control /> */}
+                  <div>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      <DatePickerBox
+                        transactionDate={transactionDate}
+                        pickTransactionDate={pickTransactionDate}
+                      />
+                    </LocalizationProvider>
+                  </div>
                 </Form.Group>
               </Row>
 
