@@ -39,11 +39,10 @@ function App() {
     date,
     isAddTransactionModalOpen,
     isEditTransactionModalOpen,
-    isEditTransferModelOpen,
+    isEditTransferModalOpen,
     chosenTransaction
   } = state;
 
-  console.log(date);
   return (
     <div className='App bg-body-tertiary'>
 
@@ -144,7 +143,7 @@ function App() {
               date={date}
               isAddTransactionModalOpen={isAddTransactionModalOpen}
               isEditTransactionModalOpen={isEditTransactionModalOpen}
-              isEditTransferModelOpen={isEditTransferModelOpen}
+              isEditTransferModalOpen={isEditTransferModalOpen}
               chosenTransaction={chosenTransaction}
               incrementDate={incrementDate}
               decrementDate={decrementDate}
