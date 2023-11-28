@@ -1,5 +1,4 @@
 import React from "react";
-// import "../styles/TransactionList.scss";
 import ListGroup from 'react-bootstrap/ListGroup';
 import TransactionListItem from "./TransactionListItem";
 
