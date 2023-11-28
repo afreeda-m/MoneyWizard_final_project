@@ -39,22 +39,22 @@ const TransactionModal = (props) => {
       <Modal.Body>
 
         {/* This modal has two tabs: Transaction and Transfer */}
-        <Tabs defaultActiveKey="transaction" transition={false} className="mb-3" fill >
+        <Tabs defaultActiveKey="transaction" transition={false} className="mb-3" justify >
 
           {/* TRANSACTION TAB using grid layout */}
           <Tab eventKey="transaction" title="TRANSACTION">
             <Form>
 
-              {/* 3 inputs in the same row for Category selection, Account selection and Amount input */}
+              {/* 2 input fields in the same row for Category selection, Account selection */}
               <Row className='d-flex align-items-center mb-3' >
 
-                {/* Placeholder for category logo when a category is selected */}
+                {/* Placeholder for category logo when a category is selected
                 <Col className='d-flex justify-content-center' xs={2}>
                   <img src="bank.png" />
-                </Col>
+                </Col> */}
 
                 {/* Dropdown selection for Category */}
-                <Form.Group xs={5} as={Col}>
+                <Form.Group xs={6} as={Col}>
                   <Form.Label >Category</Form.Label>
                   <Form.Select >
                     <option> </option>
@@ -64,7 +64,7 @@ const TransactionModal = (props) => {
                 </Form.Group>
 
                 {/* Dropdown selection for Account */}
-                <Form.Group xs={5} as={Col}>
+                <Form.Group xs={6} as={Col}>
                   <Form.Label >Account</Form.Label>
                   <Form.Select >
                     <option> </option>
@@ -169,7 +169,7 @@ const TransactionModal = (props) => {
         <Button variant="secondary" onClick={toggleModal}>
           Close
         </Button>
-        <Button variant="primary" onClick={toggleModal}>
+        <Button variant="success" onClick={toggleModal}>
           Save
         </Button>
       </Modal.Footer>
