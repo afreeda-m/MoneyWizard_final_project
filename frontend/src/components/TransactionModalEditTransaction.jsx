@@ -50,11 +50,6 @@ const TransactionModalEditTransaction = (props) => {
           {/* 2 input fields in the same row for Category selection, Account selection */}
           <Row className='d-flex align-items-center mb-3' >
 
-            {/* Placeholder for category logo when a category is selected
-                <Col className='d-flex justify-content-center' xs={2}>
-                  <img src="bank.png" />
-                </Col> */}
-
             {/* Dropdown selection for Category */}
             <Form.Group xs={6} as={Col}>
               <Form.Label >Category</Form.Label>
