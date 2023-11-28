@@ -3,6 +3,7 @@ import FloatingActionButton from "../components/FloatingActionButton";
 import TransactionList from "../components/TransactionList";
 import TransactionModalAddNew from "../components/TransactionModalAddNew";
 import TransactionModalEditTransaction from "../components/TransactionModalEditTransaction";
+import TransactionModalEditTransfer from "../components/TransactionModalEditTransfer";
 
 const Transactions = (props) => {
 
@@ -12,7 +13,7 @@ const Transactions = (props) => {
     date,
     isAddTransactionModalOpen,
     isEditTransactionModalOpen,
-    isEditTransferModelOpen,
+    isEditTransferModalOpen,
     chosenTransaction,
     incrementDate,
     decrementDate,
@@ -48,6 +49,9 @@ const Transactions = (props) => {
         chosenTransaction={chosenTransaction}
         isEditTransactionModalOpen={isEditTransactionModalOpen}
         toggleEditTransactionModal={toggleEditTransactionModal}
+        isEditTransferModalOpen={isEditTransferModalOpen}
+        toggleEditTransferModal={toggleEditTransferModal}
+        chooseTransaction={chooseTransaction}
       />
       <div onClick={toggleAddNewModal}>
         <FloatingActionButton />
@@ -66,6 +70,17 @@ const Transactions = (props) => {
         categories={categoriesData}
         accounts={accountsData}
         chosenTransaction={chosenTransaction}
+        getAccountNameById={getAccountNameById}
+        getCategoryNameById={getCategoryNameById}
+      />
+
+      <TransactionModalEditTransfer
+        isEditTransferModalOpen={isEditTransferModalOpen}
+        toggleEditTransferModal={toggleEditTransferModal}
+        categories={categoriesData}
+        accounts={accountsData}
+        chosenTransaction={chosenTransaction}
+        getAccountNameById={getAccountNameById}
       />
 
     </div>
