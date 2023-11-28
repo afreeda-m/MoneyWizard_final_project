@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import moment from 'moment';
+import React, { useEffect, useState } from "react";
+import FilterBar from "../components/FilterBar";
 import FloatingActionButton from "../components/FloatingActionButton";
 import TransactionList from "../components/TransactionList";
-import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/mockhelpers";
-import accounts from "../mocks/accounts";
-import categories from "../mocks/categories";
-import transactions from "../mocks/transactions";
-import FilterBar from "../components/FilterBar";
-import moment from 'moment';
 import TransactionModal from "../components/TransactionModal";
+import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/mockhelpers";
+// import accounts from "../mocks/accounts";
+// import categories from "../mocks/categories";
+// import transactions from "../mocks/transactions";
 
 
 
@@ -19,43 +19,32 @@ const Transactions = () => {
   const [categoriesData, setCategoriesData] = useState([]);
 
   const [date, setDate] = useState(moment().format("MMMM YYYY"));
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  useEffect(() => {
-    // Fetch transactions when the component mounts
-    axios.get('/transactions')
-      .then((response) => {
-        setTransactionsData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching transactions', error);
-      });
+ useEffect(() => {
+    console.log('testing')
 
-    // Fetch accounts data when the component mounts
-    axios.get('/accounts')
-      .then((response) => {
-        setAccountsData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching accounts', error);
-      });
+   const fetchTransactions =  axios.get('/transactions')
+   const fetchAccounts = axios.get('/accounts')
+   const fetchCategories =    axios.get('/categories')
 
-    // Fetch categories when the component mounts
-    axios.get('/categories')
-      .then(response => {
-        console.log(response.data);
-        setCategoriesData(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching categories:', error);
-      });
+   Promise.all([fetchTransactions, fetchAccounts, fetchCategories]).then((response) => {
+     const [transactionsResponse, accountsResponse, categoriesReponse] = response
+     setTransactionsData(transactionsResponse.data)
+     setAccountsData(accountsResponse.data.accounts)
+     setCategoriesData(categoriesReponse.data)
+   }).catch((error) => {
+     console.error('Error Fetching Data', error)
+   })
 
-    // Empty dependency array ensures the effect runs only once
   }, []);
 
-  console.log('Transactions data from backend', transactionsData);
-  console.log('Accounts data from backend', accountsData);
-  console.log('Categories data from backend', categoriesData);
+
+
+  console.log('Accounts data outside axios', accountsData);
+  console.log('Transactions data outside axios', transactionsData);
+
+  console.log('Categories data outside axios', categoriesData);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -70,9 +59,9 @@ const Transactions = () => {
       />
 
       <TransactionList
-        transactions={transactions}
-        categories={categories}
-        accounts={accounts}
+        transactionsData={transactionsData}
+        categoriesData={categoriesData}
+        accountsData={accountsData}
         getAccountNameById={getAccountNameById}
         getCategoryIconById={getCategoryIconById}
         getCategoryNameById={getCategoryNameById}
@@ -85,8 +74,8 @@ const Transactions = () => {
       <TransactionModal
         isModalOpen={isModalOpen}
         toggleModal={toggleModal}
-        categories={categories}
-        accounts={accounts}
+        categories={categoriesData}
+        accounts={accountsData}
       />
 
     </div>

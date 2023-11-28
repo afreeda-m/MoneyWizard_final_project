@@ -6,20 +6,26 @@ import TransactionListItem from "./TransactionListItem";
 
 const TransactionList = (props) => {
 
-  const { transactions, categories, accounts, getCategoryTypeById, getCategoryNameById, getAccountNameById } = props;
+  const { transactionsData, categoriesData, accountsData, getCategoryIconById, getCategoryTypeById, getCategoryNameById, getAccountNameById } = props;
 
-  const listOfTransactions = transactions.map((transaction) => {
+  const listOfTransactions = transactionsData.map((transaction) => {
+
+    const categoryId = transaction.category_id;
+    const accountId = transaction.account_id;
+    const accountToId = transaction.account_id_to;
+
     return (
 
       <TransactionListItem
         key={transaction.id}
-        categoryIcon={"bank.png"}
-        categoryName={getCategoryNameById(transaction.category_id, categories)}
-        categoryType={getCategoryTypeById(transaction.category_id, categories)}
-        accountName={getAccountNameById(transaction.account_id, accounts)}
+        categoryIcon={getCategoryIconById(categoryId, categoriesData)}
+        categoryName={getCategoryNameById(categoryId, categoriesData)}
+        categoryType={getCategoryTypeById(categoryId, categoriesData)}
+        accountName={getAccountNameById(accountId, accountsData)}
+        accountToName={getAccountNameById(accountToId, accountsData)}
         notes={transaction.notes}
         amount={transaction.amount}
-        date={transaction.date}
+        date={transaction.transaction_date}
       />
 
     );
