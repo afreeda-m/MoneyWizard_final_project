@@ -1,10 +1,13 @@
-import moment from "moment";
 import { useReducer, useEffect } from "react";
+import moment from "moment";
+import axios from 'axios';
 
 export const ACTIONS = {
   SET_TRANSACTIONS_DATA: 'SET_TRANSACTION_DATA',
   SET_CATEGORIES_DATA: 'SET_CATEGORY_DATA',
   SET_ACCOUNTS_DATA: 'SET_ACCOUNT_DATA',
+  SET_ACCOUNTS_AND_CATEGORIES_DATA: 'SET_ACCOUNTS_AND_CATEGORIES_DATA',
+  SET_DATE: 'SET_DATE',
   INCREMENT_DATE: 'INCREMENT_DATE',
   DECREMENT_DATE: 'DECREMENT_DATE',
   TOGGLE_ADD_NEW_TRANSACTION_MODAL: 'TOGGLE_ADD_NEW_TRANSACTION_MODAL',
@@ -20,13 +23,17 @@ function reducer(state, action) {
     case ACTIONS.SET_TRANSACTIONS_DATA:
       return { ...state, transactionsData: action.transactionsData };
 
-    //Update categoriesData state when open the app
-    case ACTIONS.SET_CATEGORIES_DATA:
-      return { ...state, categoriesData: action.categoriesData };
+    // // Update categoriesData state when open the app
+    // case ACTIONS.SET_CATEGORIES_DATA:
+    //   return { ...state, categoriesData: action.categoriesData };
 
-    //Update accountsData state when open the app
-    case ACTIONS.SET_ACCOUNTS_DATA:
-      return { ...state, accountsData: action.accountsData };
+    // // Update accountsData state when open the app
+    // case ACTIONS.SET_ACCOUNTS_DATA:
+    //   return { ...state, accountsData: action.accountsData };
+
+    // Update categoriesData and accountsData states when open the app
+    case ACTIONS.SET_ACCOUNTS_AND_CATEGORIES_DATA:
+      return { ...state, accountsData: action.accountsData, categoriesData: action.categoriesData };
 
     // Update date state when click on the right arrow on filter bar
     case ACTIONS.INCREMENT_DATE:
@@ -68,53 +75,55 @@ const useApplicationData = () => {
       accountsData: [],
       date: moment().format("YYYY-MM"),
       isAddTransactionModalOpen: false,
-      IsEditTransactionModalOpen: false,
-      IsEditTransferModalOpen: false,
+      isEditTransactionModalOpen: false,
+      isEditTransferModalOpen: false,
       chosenTransaction: null
     }
   );
 
-
-  // Fetching data from backend
+  // Fetch transactions data from backend server, dependent on the 'date' state
   useEffect(() => {
-
-    // Fetch transactions data from backend server
-    fetch('http://localhost:8080/transactions')
+    fetch('http://localhost:8080/transactions',)
       .then((res) => res.json())
       .then((data) => dispatch({
         type: ACTIONS.SET_TRANSACTIONS_DATA,
         transactionsData: data
-      }));
+      }))
+      .catch((error) => {
+        console.error('Error fetching transactions data:', error);
+      });
+  }, [state.date]);
 
-    // Fetch categories data from backend server
-    fetch('http://localhost:8080/categories')
-      .then((res) => res.json())
-      .then((data) => dispatch({
-        type: ACTIONS.SET_CATEGORIES_DATA,
-        categoriesData: data
-      }));
 
-    // Fetch accounts data from backend server
-    fetch('http://localhost:8080/accounts')
-      .then((res) => res.json())
-      .then((data) => dispatch({
-        type: ACTIONS.SET_ACCOUNTS_DATA,
-        accountsData: data
-      }));
+  // Fetch categories data from backend server
+  useEffect(() => {
+    const fetchCategories = axios.get('http://localhost:8080/categories');
+    const fetchAccounts = axios.get('http://localhost:8080/accounts');
+
+    Promise.all([fetchCategories, fetchAccounts])
+      .then((response) => {
+        const [categoriesResponse, accountsResponse] = response;
+        dispatch({
+          type: ACTIONS.SET_ACCOUNTS_AND_CATEGORIES_DATA,
+          accountsData: accountsResponse.data.accounts,
+          categoriesData: categoriesResponse.data
+        });
+      })
+      .catch((error) => { console.log("error occured retrieving the data", error); });
 
   }, []);
 
   const incrementDate = () => {
     dispatch({
       type: ACTIONS.INCREMENT_DATE,
-      newDate: moment(state.date).add(1, 'months')
+      newDate: moment(state.date).add(1, 'months').format("YYYY-MM")
     });
   };
 
   const decrementDate = () => {
     dispatch({
       type: ACTIONS.DECREMENT_DATE,
-      newDate: moment(state.date).add(-1, 'months')
+      newDate: moment(state.date).add(-1, 'months').format("YYYY-MM")
     });
   };
 
@@ -140,8 +149,8 @@ const useApplicationData = () => {
     dispatch({
       type: ACTIONS.SELECT_TRANSACTION,
       transaction
-    })
-  }
+    });
+  };
 
   return {
     state,
