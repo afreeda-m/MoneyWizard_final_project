@@ -46,7 +46,7 @@ const TransactionModal = (props) => {
             <Form>
 
               {/* 2 input fields in the same row for Category selection, Account selection */}
-              <Row className='d-flex align-items-center mb-3' >
+              <Row className='mb-3' >
 
                 {/* Placeholder for category logo when a category is selected
                 <Col className='d-flex justify-content-center' xs={2}>
