@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import FilterBar from "../components/FilterBar";
 import FloatingActionButton from "../components/FloatingActionButton";
 import TransactionList from "../components/TransactionList";
-import TransactionModal from "../components/TransactionModal";
+import TransactionModalAddNew from "../components/TransactionModalAddNew";
+import TransactionModalEditTransaction from "../components/TransactionModalEditTransaction";
 import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/helperFunctions";
 
 
@@ -14,8 +15,14 @@ const Transactions = () => {
   const [transactionsData, setTransactionsData] = useState([]);
   const [categoriesData, setCategoriesData] = useState([]);
 
-  const [date, setDate] = useState(moment().format("MMMM YYYY"));
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [date, setDate] = useState(moment().format("YYYY-MM"));
+  const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
+  const [isEditTransactionModalOpen, setIsEditTransactionModalOpen] = useState(false);
+  const [chosenTransaction, setChosenTransaction] = useState(null);
+
+  const toggleAddNewModal = () => setIsAddTransactionModalOpen(!isAddTransactionModalOpen);
+  const toggleEditTransactionModal = () => setIsEditTransactionModalOpen(!isEditTransactionModalOpen);
+  // const chooseTransaction = () => setChosenTransaction
 
   useEffect(() => {
 
@@ -32,9 +39,7 @@ const Transactions = () => {
       console.error('Error Fetching Data', error);
     });
 
-  }, []);
-
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  }, [date]);
 
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
@@ -54,17 +59,29 @@ const Transactions = () => {
         getCategoryIconById={getCategoryIconById}
         getCategoryNameById={getCategoryNameById}
         getCategoryTypeById={getCategoryTypeById}
+        chosenTransaction={chosenTransaction}
+        isEditTransactionModalOpen={isEditTransactionModalOpen}
+        toggleEditTransactionModal={toggleEditTransactionModal}
       />
-      <div onClick={toggleModal}>
+      <div onClick={toggleAddNewModal}>
         <FloatingActionButton />
       </div>
 
-      <TransactionModal
-        isModalOpen={isModalOpen}
-        toggleModal={toggleModal}
+      <TransactionModalAddNew
+        isAddTransactionModalOpen={isAddTransactionModalOpen}
+        toggleAddNewModal={toggleAddNewModal}
         categories={categoriesData}
         accounts={accountsData}
       />
+
+      <TransactionModalEditTransaction
+        isEditTransactionModalOpen={isEditTransactionModalOpen}
+        toggleEditTransactionModal={toggleEditTransactionModal}
+        categories={categoriesData}
+        accounts={accountsData}
+        chosenTransaction={chosenTransaction}
+      />
+
 
     </div>
   );

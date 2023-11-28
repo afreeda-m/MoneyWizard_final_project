@@ -11,7 +11,26 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const TransactionListItem = (props) => {
 
-  const { categoryIcon, categoryName, categoryType, accountName, accountToName, amount, notes, date } = props;
+  const {
+    categoryIcon,
+    categoryName,
+    categoryType,
+    accountName,
+    accountToName,
+    amount,
+    notes,
+    date,
+    chosenTransaction,
+    toggleEditTransactionModal,
+    isEditTransactionModalOpen
+  } = props;
+
+  // const handleClick = () => {
+  //   !isEditTransactionModalOpen && toggleEditTransactionModal && toggleEditTransactionModal();
+  //   !isEditTransactionModalOpen && chosenTransaction && toggleEditTransactionModal();
+
+  // };
+
 
   return (
     <ListGroupItem className="p-2" style={{ width: "50vw" }} >

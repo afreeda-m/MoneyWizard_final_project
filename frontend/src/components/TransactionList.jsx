@@ -6,7 +6,18 @@ import TransactionListItem from "./TransactionListItem";
 
 const TransactionList = (props) => {
 
-  const { transactionsData, categoriesData, accountsData, getCategoryIconById, getCategoryTypeById, getCategoryNameById, getAccountNameById } = props;
+  const {
+    transactionsData,
+    categoriesData,
+    accountsData,
+    getCategoryIconById,
+    getCategoryTypeById,
+    getCategoryNameById,
+    getAccountNameById,
+    chosenTransaction,
+    toggleEditTransactionModal,
+    isEditTransactionModalOpen
+  } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
 
@@ -26,6 +37,9 @@ const TransactionList = (props) => {
         notes={transaction.notes}
         amount={transaction.amount}
         date={transaction.transaction_date}
+        chosenTransaction={chosenTransaction}
+        isEditTransactionModalOpen={isEditTransactionModalOpen}
+        toggleEditTransactionModal={toggleEditTransactionModal}
       />
 
     );
