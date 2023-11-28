@@ -11,7 +11,7 @@ import Row from 'react-bootstrap/Row';
 
 const TransactionModal = (props) => {
 
-  const { isAddTransactionModalOpen, toggleModal, categories, accounts } = props;
+  const { isAddTransactionModalOpen, toggleAddNewModal, categories, accounts } = props;
 
   // list of categories for the dropdown selection
   const categoryDropdown = categories.map((category) => {
@@ -30,7 +30,7 @@ const TransactionModal = (props) => {
   return (
 
     // Adjust styling for the modal. Move 130px to the right and center vertically
-    <Modal style={{ marginLeft: "130px" }} show={isAddTransactionModalOpen} onHide={toggleModal} size="md" centered >
+    <Modal style={{ marginLeft: "130px" }} show={isAddTransactionModalOpen} onHide={toggleAddNewModal} size="md" centered >
 
       <Modal.Header className='d-flex justify-content-center'>
         <Modal.Title>ADD NEW</Modal.Title>
@@ -166,10 +166,10 @@ const TransactionModal = (props) => {
       </Modal.Body>
 
       <Modal.Footer className='d-flex justify-content-center'>
-        <Button variant="secondary" onClick={toggleModal}>
+        <Button variant="secondary" onClick={toggleAddNewModal}>
           Close
         </Button>
-        <Button variant="success" onClick={toggleModal}>
+        <Button variant="success" onClick={toggleAddNewModal}>
           Save
         </Button>
       </Modal.Footer>
