@@ -5,7 +5,7 @@ import FilterBar from "../components/FilterBar";
 import FloatingActionButton from "../components/FloatingActionButton";
 import TransactionList from "../components/TransactionList";
 import TransactionModal from "../components/TransactionModal";
-import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/mockhelpers";
+import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/helperFunctions";
 // import accounts from "../mocks/accounts";
 // import categories from "../mocks/categories";
 // import transactions from "../mocks/transactions";
@@ -19,39 +19,31 @@ const Transactions = () => {
   const [categoriesData, setCategoriesData] = useState([]);
 
   const [date, setDate] = useState(moment().format("MMMM YYYY"));
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
- useEffect(() => {
-    console.log('testing')
+  useEffect(() => {
 
-   const fetchTransactions =  axios.get('/transactions')
-   const fetchAccounts = axios.get('/accounts')
-   const fetchCategories =    axios.get('/categories')
+    const fetchTransactions = axios.get('/transactions');
+    const fetchAccounts = axios.get('/accounts');
+    const fetchCategories = axios.get('/categories');
 
-   Promise.all([fetchTransactions, fetchAccounts, fetchCategories]).then((response) => {
-     const [transactionsResponse, accountsResponse, categoriesReponse] = response
-     setTransactionsData(transactionsResponse.data)
-     setAccountsData(accountsResponse.data.accounts)
-     setCategoriesData(categoriesReponse.data)
-   }).catch((error) => {
-     console.error('Error Fetching Data', error)
-   })
+    Promise.all([fetchTransactions, fetchAccounts, fetchCategories]).then((response) => {
+      const [transactionsResponse, accountsResponse, categoriesReponse] = response;
+      setTransactionsData(transactionsResponse.data);
+      setAccountsData(accountsResponse.data.accounts);
+      setCategoriesData(categoriesReponse.data);
+    }).catch((error) => {
+      console.error('Error Fetching Data', error);
+    });
 
   }, []);
-
-
-
-  console.log('Accounts data outside axios', accountsData);
-  console.log('Transactions data outside axios', transactionsData);
-
-  console.log('Categories data outside axios', categoriesData);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   return (
-    <div className="d-flex flex-column align-items-center bg-body-tertiary" >
+    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
 
-      <h1>List of Transactions</h1>
+      <h1>Transactions</h1>
 
       <FilterBar
         date={date}
