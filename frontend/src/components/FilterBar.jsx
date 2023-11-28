@@ -11,13 +11,13 @@ const FilterBar = (props) => {
 
   const incrementDate = () => {
     let currentDate = moment(date);
-    let newDate = moment(currentDate).add(1, 'months').format("MMMM YYYY");
+    let newDate = moment(currentDate).add(1, 'months');
     setDate(newDate);
   };
 
   const decrementDate = () => {
     let currentDate = moment(date);
-    let newDate = moment(currentDate).add(-1, 'months').format("MMMM YYYY");
+    let newDate = moment(currentDate).add(-1, 'months');
     setDate(newDate);
   };
 
@@ -30,7 +30,7 @@ const FilterBar = (props) => {
         </Col>
 
         <Col className="d-flex justify-content-center" xs={8} >
-          <b> {date} </b>
+          <b> {moment(date).format("MMMM YYYY")} </b>
         </Col>
 
         <Col className="d-flex justify-content-center" xs={2} onClick={incrementDate} >
