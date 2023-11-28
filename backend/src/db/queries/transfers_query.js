@@ -85,6 +85,7 @@ const editTransfer = (transferData) => {
     })
     .then((previousTransferResult) => {
       console.log(previousTransferAmount)
+      console.log(previousTransferAmount)
       previousTransferAmount = previousTransferResult.rows[0].amount;
       previousAccountId = previousTransferResult.rows[0].account_id;
       previousAccountIdTo = previousTransferResult.rows[0].account_id_to;

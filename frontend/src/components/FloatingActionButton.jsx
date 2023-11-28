@@ -7,8 +7,6 @@ import * as React from 'react';
 
 function FloatingActionButton(props) {
 
-  console.log(props);
-
   return (
 
     <Box sx={{ '& > :not(style)': { m: 1 } }}>

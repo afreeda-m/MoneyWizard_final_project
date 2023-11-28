@@ -17,7 +17,6 @@ const Accounts = () => {
 
   const modalClose = () => setShow(false);
   const modalShow = () => {
-    console.log("Show button clicked");
     setShow(true);
   }
 
@@ -66,7 +65,7 @@ const Accounts = () => {
   return (
     <div className="accounts">
       <h1 className="title">Accounts</h1>
-      <PieChart width={400} height={400}>
+      <PieChart width={700} height={300}>
         <Pie
           data={accounts}
           dataKey="balance"
@@ -101,7 +100,7 @@ const Accounts = () => {
 
       <AccountList accounts={accounts} />
 
-      {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow}/>}
+      {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow} updateAccounts = {setAccounts}/>}
 
       <FloatingActionButton click={modalShow}/>
     </div>

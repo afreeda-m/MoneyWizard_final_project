@@ -13,7 +13,7 @@ const Layout = () => {
   return (
 
     <div className="d-flex" style={{height: "100%"}}>
-
+       <Sidebar />
       {/* COMPENSATORY STYLING
         *
         * For some reason, the width of this page overflows to the right,
@@ -24,8 +24,8 @@ const Layout = () => {
         * width.
         */}
       <div className="d-flex flex-column" style={{width: "calc(100% - 250px)"}}>
-   
-        <NavBar />
+
+        <Navbar />
         <Outlet />
         <Footer />
       </div>

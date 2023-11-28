@@ -13,7 +13,7 @@ router.post('/transfer/add', (req, res) => {
     notes: req.body.notes
   }
 
-  transactionsQueries.addTransfer(transferData)
+  transfersQueries.addTransfer(transferData)
   .then(() => {
     res.redirect('/transactions')
   })
