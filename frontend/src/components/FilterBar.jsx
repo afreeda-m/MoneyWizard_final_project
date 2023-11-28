@@ -10,14 +10,14 @@ const FilterBar = (props) => {
   const { date, setDate } = props;
 
   const incrementDate = () => {
-    let currentDate = moment(date);
-    let newDate = moment(currentDate).add(1, 'months');
+    // let currentDate = moment(date);
+    let newDate = moment(date).add(1, 'months');
     setDate(newDate);
   };
 
   const decrementDate = () => {
-    let currentDate = moment(date);
-    let newDate = moment(currentDate).add(-1, 'months');
+    // let currentDate = moment(date);
+    let newDate = moment(date).add(-1, 'months');
     setDate(newDate);
   };
 
