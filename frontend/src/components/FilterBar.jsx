@@ -9,22 +9,9 @@ import Col from 'react-bootstrap/esm/Col';
 const FilterBar = (props) => {
   const {
     date,
-    // setDate,
     incrementDate,
     decrementDate
   } = props;
-
-  // const incrementDate = () => {
-  //   // let currentDate = moment(date);
-  //   let newDate = moment(date).add(1, 'months');
-  //   setDate(newDate);
-  // };
-
-  // const decrementDate = () => {
-  //   // let currentDate = moment(date);
-  //   let newDate = moment(date).add(-1, 'months');
-  //   setDate(newDate);
-  // };
 
   return (
 
