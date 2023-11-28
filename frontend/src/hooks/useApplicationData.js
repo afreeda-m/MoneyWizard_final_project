@@ -4,9 +4,8 @@ import axios from 'axios';
 
 export const ACTIONS = {
   SET_TRANSACTIONS_DATA: 'SET_TRANSACTION_DATA',
-  SET_CATEGORIES_DATA: 'SET_CATEGORY_DATA',
-  SET_ACCOUNTS_DATA: 'SET_ACCOUNT_DATA',
   SET_ACCOUNTS_AND_CATEGORIES_DATA: 'SET_ACCOUNTS_AND_CATEGORIES_DATA',
+  SET_TRANSACTION_DATE: 'SET_TRANSACTION_DATE',
   SET_DATE: 'SET_DATE',
   INCREMENT_DATE: 'INCREMENT_DATE',
   DECREMENT_DATE: 'DECREMENT_DATE',
@@ -28,6 +27,9 @@ function reducer(state, action) {
     case ACTIONS.SET_ACCOUNTS_AND_CATEGORIES_DATA:
       return { ...state, accountsData: action.accountsData, categoriesData: action.categoriesData };
 
+    // Update transactionDate when picking date
+    case ACTIONS.SET_TRANSACTION_DATE:
+      return { ...state, transactionDate: action.transactionDate };
 
     // ACTION FOR FILTER BAR COMPONENT
     // Update date state when click on the right arrow on filter bar
@@ -67,6 +69,7 @@ const useApplicationData = () => {
       categoriesData: [],
       accountsData: [],
       date: moment().format("YYYY-MM"),
+      transactionDate: moment(),
       isAddTransactionModalOpen: false,
       isEditTransactionModalOpen: false,
       isEditTransferModalOpen: false,
@@ -106,6 +109,13 @@ const useApplicationData = () => {
     // No dependency for categories and accounts data, only retrieve when the page reload
   }, []);
 
+  // FUNCTION FOR PICKING DATE
+  const pickTransactionDate = (newDate) => {
+    dispatch({
+      type: ACTIONS.SET_TRANSACTION_DATE,
+      transactionDate: moment(newDate)
+    });
+  };
 
   // FUNCTION FOR FILTER BAR
   const incrementDate = () => {
@@ -147,6 +157,7 @@ const useApplicationData = () => {
 
   return {
     state,
+    pickTransactionDate,
     incrementDate,
     decrementDate,
     toggleAddNewModal,

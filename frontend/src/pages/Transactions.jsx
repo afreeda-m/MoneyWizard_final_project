@@ -11,6 +11,8 @@ const Transactions = (props) => {
     categoriesData,
     accountsData,
     date,
+    transactionDate,
+    pickTransactionDate,
     isAddTransactionModalOpen,
     isEditTransactionModalOpen,
     isEditTransferModalOpen,
@@ -62,6 +64,8 @@ const Transactions = (props) => {
         toggleAddNewModal={toggleAddNewModal}
         categories={categoriesData}
         accounts={accountsData}
+        transactionDate={transactionDate}
+        pickTransactionDate={pickTransactionDate}
       />
 
       <TransactionModalEditTransaction
