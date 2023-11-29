@@ -22,7 +22,7 @@ const FilterBar = (props) => {
         </Col>
 
         <Col className="d-flex justify-content-center" xs={8} >
-          <b> {moment(date).format("MMMM YYYY")} </b>
+          <h5> {moment(date).format("MMMM YYYY")}  </h5>
         </Col>
 
         <Col className="d-flex justify-content-center" xs={2} onClick={incrementDate} >
