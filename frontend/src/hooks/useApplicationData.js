@@ -79,7 +79,10 @@ const useApplicationData = () => {
 
   // Fetch transactions data from backend server, dependent on the 'date' state
   useEffect(() => {
-    fetch('http://localhost:8080/transactions',)
+    fetch('http://localhost:8080/transactions?' + new URLSearchParams({
+      month: moment(state.date).format("MM"),
+      year: moment(state.date).format("YYYY")
+    }))
       .then((res) => res.json())
       .then((data) => dispatch({
         type: ACTIONS.SET_TRANSACTIONS_DATA,
