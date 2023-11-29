@@ -26,8 +26,8 @@ const Report = () => {
     // Fetch income and expense data from the backend
     axios.get('/transactions/transactionsByCategory')
       .then(response => {
-        console.log("Transaction by category data:", response.data);
-         //transform each item in the response.data array into a new object
+
+        //transform each item in the response.data array into a new object
         // the response structure is an array of objects with 'category_name', 'sum', and 'type' properties
         const dataForRecharts = response.data.map(item => ({
           label: item.category_name,
@@ -38,11 +38,11 @@ const Report = () => {
         // Separate income and expense data based on the 'type' property
         const incomeCategoryList = dataForRecharts
           .filter(item => item.type === 'Income');
-         console.log("Income filtered data:", incomeCategoryList)
+
 
         const expenseCategoryList = dataForRecharts
           .filter(item => item.type === 'Expense');
-          console.log("Expense filtered data:", expenseCategoryList)
+
 
         // Set the filtered data in state
         setIncomeData(incomeCategoryList);
@@ -55,8 +55,7 @@ const Report = () => {
     // // Calculate and set total income and expense amounts
     const totalIncomeAmount = incomeData.reduce((total, item) => total + parseFloat(item.value), 0);
     const totalExpenseAmount = expenseData.reduce((total, item) => total + parseFloat(item.value), 0);
-    console.log("totalincomeamount", totalIncomeAmount);
-    console.log("totalExpenseAmount", totalExpenseAmount);
+
     setTotalIncome(totalIncomeAmount);
     setTotalExpense(totalExpenseAmount);
 
@@ -72,6 +71,7 @@ const Report = () => {
             date={date}
             setDate={setDate}
           />
+
         </Col>
       </Row>
       <Row className="justify-content-md-center">
