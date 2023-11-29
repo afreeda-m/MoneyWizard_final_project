@@ -15,7 +15,7 @@ const IncomeExpenseList = ({ transaction}) => {
           </Col>
           <Col xs={3}>
             <div>
-              <b><h7>{transaction.label}</h7></b>
+              <b><h6>{transaction.label}</h6></b>
             </div>
             <div>
               {/* Additional details if needed */}
