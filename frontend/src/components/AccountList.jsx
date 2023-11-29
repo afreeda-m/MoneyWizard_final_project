@@ -5,11 +5,6 @@ const AccountList = (props) => {
 
   const { accounts } = props;
 
-  //create function to pass down
-  const deleteAccount = (event) => {
-
-  }
-
   const listOfAccounts = accounts.map((account) => {
     return (
       <AccountListItem
@@ -17,7 +12,7 @@ const AccountList = (props) => {
         id={account.id}
         account_name={account.account_name}
         amount={account.balance}
-        onDelete={deleteAccount}
+        deleteAccount={props.deleteAccount}
       />);
   });
 

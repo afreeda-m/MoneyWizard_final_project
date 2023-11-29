@@ -11,12 +11,17 @@ import { NumericFormat } from "react-number-format";
 const AccountListItem = (props) => {
   const { id, account_name, amount } = props;
 
+  const deleteAccount = (event) => {
+    props.deleteAccount(event.target.id);
+  }
+
   return (
     <ListGroupItem className="p-1" style={{ width: "50vw" }}>
       <Container>
         <Row className="d-flex align-items-center">
           <Col className="d-flex justify-content-center" xs={1}>
             {/* <Image src={categoryIcon} /> */}
+
           </Col>
 
           <Col xs={3}>
@@ -44,8 +49,7 @@ const AccountListItem = (props) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item key={id} href="#">Edit account</Dropdown.Item>
-                <Dropdown.Item key={id} href="#">Delete account</Dropdown.Item>
+                <Dropdown.Item onClick={deleteAccount} id={id} href="#" className="text-danger">Delete account</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>

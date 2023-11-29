@@ -16,9 +16,21 @@ const Accounts = () => {
   const [show, setShow] = useState(false);
 
   const modalClose = () => setShow(false);
-  
+
   const modalShow = () => {
     setShow(true);
+  }
+
+  const deleteAccount = (account_id) => {
+    axios.post('/accounts/' + account_id + '/delete')
+    .then((response) => {
+      axios.get("/accounts").then((response) => {
+        setAccounts(response.data.accounts);
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   useEffect(() => {
@@ -99,7 +111,7 @@ const Accounts = () => {
       </span>
       </Col>
 
-      <AccountList accounts={accounts} />
+      <AccountList accounts={accounts} deleteAccount={deleteAccount}/>
 
       {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow} updateAccounts = {setAccounts}/>}
 
