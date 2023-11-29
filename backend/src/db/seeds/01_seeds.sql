@@ -37,7 +37,7 @@ VALUES ('Pension', 'Income', 'pension.png');
 INSERT INTO categories(category_name, type, logo_url)
 VALUES ('Investment', 'Income', 'investment.png');
 INSERT INTO categories(category_name, type, logo_url)
-VALUES ('Rental Income', 'Income', 'appartment.png');
+VALUES ('Rental Income', 'Income', 'apartment.png');
 INSERT INTO categories(category_name, type, logo_url)
 VALUES ('Gifts', 'Income', 'gift.png');
 INSERT INTO categories(category_name, type, logo_url)
