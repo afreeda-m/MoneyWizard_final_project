@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import IncomePieChart from "../components/IncomePieChart";
-import ExpensePieChart from "../components/ExpensePieChart";
+import PieChart from "../components/PieChart";
 import ColumnChart from "../components/ColumnChart";
 import Col from "react-bootstrap/esm/Col";
 import FilterBar from "../components/FilterBar";
@@ -88,13 +87,15 @@ const Report = () => {
       </Row>
       <Row  >
         <Col md={{ span: 4, offset: 2 }}>
-          <IncomePieChart
-            incomeData={incomeData}
+          <PieChart
+            data={incomeData}
+            isExpense={false}
           />
         </Col>
         <Col md={{ span: 4, offset: 2 }}>
-          <ExpensePieChart
-            expenseData={expenseData}
+          <PieChart
+            data={expenseData}
+            isExpense={true}
           />
         </Col>
       </Row>
