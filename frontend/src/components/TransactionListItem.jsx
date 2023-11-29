@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/TransactionListItem.scss";
-
+import moment from 'moment';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
@@ -11,10 +11,29 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const TransactionListItem = (props) => {
 
-  const { categoryIcon, categoryName, categoryType, accountName, amount, notes, date } = props;
+  const {
+    categoryIcon,
+    categoryName,
+    categoryType,
+    accountName,
+    accountToName,
+    amount,
+    notes,
+    date,
+    chosenTransaction,
+    toggleEditTransactionModal,
+    isEditTransactionModalOpen
+  } = props;
+
+  // const handleClick = () => {
+  //   !isEditTransactionModalOpen && toggleEditTransactionModal && toggleEditTransactionModal();
+  //   !isEditTransactionModalOpen && chosenTransaction && toggleEditTransactionModal();
+
+  // };
+
 
   return (
-    <ListGroupItem className="p-1" style={{ width: "50vw" }} >
+    <ListGroupItem className="p-2" style={{ width: "50vw" }} >
       <Container>
 
         <Row className="d-flex align-items-center">
@@ -27,8 +46,9 @@ const TransactionListItem = (props) => {
             <div>
               <b> {categoryName} </b>
             </div>
+            {/* Render from and to account if this is a transfer, if not then only render the account name */}
             <div>
-              <i> {accountName} </i>
+              <i> {accountToName ? `${accountName} - ${accountToName}` : accountName} </i>
             </div>
           </Col>
 
@@ -39,12 +59,13 @@ const TransactionListItem = (props) => {
           </Col>
 
           <Col xs={2} className="d-flex flex-column align-items-end" >
-            {/* Amount shows in red for expense and green for income */}
-            <div className={categoryType === "Expense" ? "text-danger" : "text-success"}  >
+            {/* Amount shows in red for expense, green for income and blue for transfer*/}
+            <div className={categoryType === "Expense" ? "text-danger" : categoryType === "Income" ? "text-success" : "text-primary"}  >
               <b> {amount} </b>
             </div>
+            {/* Change date to the desired format */}
             <div>
-              <i>{date}</i>
+              <i>{moment(date).format("YYYY-MM-DD")}</i>
             </div>
           </Col >
 
@@ -58,8 +79,8 @@ const TransactionListItem = (props) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#">Edit transaction</Dropdown.Item>
-                <Dropdown.Item href="#">Delete transaction</Dropdown.Item>
+                <Dropdown.Item >Edit transaction</Dropdown.Item>
+                <Dropdown.Item >Delete transaction</Dropdown.Item>
               </Dropdown.Menu>
 
             </Dropdown>

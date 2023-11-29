@@ -16,12 +16,36 @@ import Layout from './pages/Layout';
 import RecurringTransactions from './pages/RecurringTransactions';
 import Reports from './pages/Reports';
 import Transactions from './pages/Transactions';
+import useApplicationData from './hooks/useApplicationData';
+import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "./helpers/helperFunctions";
 
 
 function App() {
 
+  const {
+    state,
+    incrementDate,
+    decrementDate,
+    toggleAddNewModal,
+    toggleEditTransactionModal,
+    toggleEditTransferModal,
+    chooseTransaction
+  } = useApplicationData();
+
+  const {
+    transactionsData,
+    categoriesData,
+    accountsData,
+    date,
+    isAddTransactionModalOpen,
+    isEditTransactionModalOpen,
+    isEditTransferModelOpen,
+    chosenTransaction
+  } = state;
+
+  console.log(date);
   return (
-    <div className='App'>
+    <div className='App bg-body-tertiary'>
 
       {/* INTRODUCTION TO THE `REACT-ROUTER` LIBRARY
         *
@@ -112,7 +136,28 @@ function App() {
           <Route element={<Layout />}>
 
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/transactions' element={<Transactions />} />
+
+            <Route path='/transactions' element={<Transactions
+              transactionsData={transactionsData}
+              categoriesData={categoriesData}
+              accountsData={accountsData}
+              date={date}
+              isAddTransactionModalOpen={isAddTransactionModalOpen}
+              isEditTransactionModalOpen={isEditTransactionModalOpen}
+              isEditTransferModelOpen={isEditTransferModelOpen}
+              chosenTransaction={chosenTransaction}
+              incrementDate={incrementDate}
+              decrementDate={decrementDate}
+              toggleAddNewModal={toggleAddNewModal}
+              toggleEditTransactionModal={toggleEditTransactionModal}
+              toggleEditTransferModal={toggleEditTransferModal}
+              chooseTransaction={chooseTransaction}
+              getAccountNameById={getAccountNameById}
+              getCategoryIconById={getCategoryIconById}
+              getCategoryNameById={getCategoryNameById}
+              getCategoryTypeById={getCategoryTypeById}
+            />} />
+
             <Route path='/accounts' element={<Accounts />} />
             <Route path='/reports' element={<Reports />} />
             <Route path='/budgets' element={<Budgets />} />
