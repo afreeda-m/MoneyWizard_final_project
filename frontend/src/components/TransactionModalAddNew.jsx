@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 import DatePickerBox from './DatePickerBox';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-
+import moment from 'moment';
 
 
 const TransactionModal = (props) => {
@@ -37,10 +37,15 @@ const TransactionModal = (props) => {
     );
   });
 
+  const handleClose = () => {
+    toggleAddNewModal();
+    pickTransactionDate(moment());
+  };
+
   return (
 
     // Adjust styling for the modal. Move 130px to the right and center vertically
-    <Modal style={{ marginLeft: "130px" }} show={isAddTransactionModalOpen} onHide={toggleAddNewModal} size="md" centered >
+    <Modal style={{ marginLeft: "130px" }} show={isAddTransactionModalOpen} onHide={handleClose} size="md" centered >
 
       <Modal.Header className='d-flex justify-content-center'>
         <Modal.Title>ADD NEW</Modal.Title>
@@ -97,7 +102,7 @@ const TransactionModal = (props) => {
               <Row className="mb-3">
                 <Form.Group as={Col}>
                   <Form.Label >Date</Form.Label>
-                  {/* <Form.Control /> */}
+                  {/* Date picker box */}
                   <div>
                     <LocalizationProvider dateAdapter={AdapterMoment}>
                       <DatePickerBox
@@ -162,7 +167,15 @@ const TransactionModal = (props) => {
             <Row className="mb-3">
               <Form.Group as={Col}>
                 <Form.Label >Date</Form.Label>
-                <Form.Control />
+                {/* Date picker box */}
+                <div>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePickerBox
+                      transactionDate={transactionDate}
+                      pickTransactionDate={pickTransactionDate}
+                    />
+                  </LocalizationProvider>
+                </div>
               </Form.Group>
             </Row>
 
@@ -180,7 +193,7 @@ const TransactionModal = (props) => {
       </Modal.Body>
 
       <Modal.Footer className='d-flex justify-content-center'>
-        <Button variant="secondary" onClick={toggleAddNewModal}>
+        <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
         <Button variant="success" onClick={toggleAddNewModal}>
