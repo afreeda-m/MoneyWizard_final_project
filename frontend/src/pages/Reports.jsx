@@ -7,10 +7,9 @@ import PieChart from "../components/PieChart";
 import ColumnChart from "../components/ColumnChart";
 import Col from "react-bootstrap/esm/Col";
 import FilterBar from "../components/FilterBar";
-import IncomeTransactions from "../components/IncomeTransactions";
-import ExpenseTransactions from "../components/ExpenseTransactions";
+import IncomeExpenseList from "../components/IncomeExpenseList";
 
-const Report = () => {
+const Report = (props) => {
 
   // State for income and expense data
   const [incomeData, setIncomeData] = useState([]);
@@ -68,7 +67,7 @@ const Report = () => {
 
           <FilterBar
             date={date}
-            setDate={setDate}
+
           />
 
         </Col>
@@ -103,16 +102,23 @@ const Report = () => {
         <Col md={{ span: 4, offset: 2 }}>
           <Col><h4>Income</h4></Col>
           <Col >
-            <IncomeTransactions
-              incomeData={incomeData} />
+            {/* Iterate through income transactions and display them */}
+            {incomeData.map((transaction, index) => (
+              <IncomeExpenseList
+                key={index}
+                transaction={transaction}
+                 />
+            ))}
           </Col>
 
         </Col>
         <Col md={{ span: 4, offset: 2 }}>
           <h4>Expense</h4>
           <Col >
-            <ExpenseTransactions
-              expenseData={expenseData} />
+            {/* Iterate through expense transactions and display them */}
+            {expenseData.map((transaction, index) => (
+              <IncomeExpenseList key={index} transaction={transaction} />
+            ))}
           </Col>
         </Col>
       </Row>
