@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use('/login', userRouter)
 app.use('/transactions', transactionsRouter);
-app.use('/transactions', transfersRouter);
+app.use('/transfer', transfersRouter);
 app.use('/', categoriesRouter);
 app.use('/', accountsRouter);
 

@@ -16,6 +16,7 @@ const Accounts = () => {
   const [show, setShow] = useState(false);
 
   const modalClose = () => setShow(false);
+  
   const modalShow = () => {
     setShow(true);
   }

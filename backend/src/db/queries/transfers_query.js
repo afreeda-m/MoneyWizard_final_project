@@ -62,7 +62,7 @@ const editTransfer = (transferData) => {
 
   const updateBalanceFromQuery = `
     UPDATE accounts
-    SET balance = balance + $1
+    SET balance = balance + $1 
     WHERE id = $2;
   `;
 
@@ -84,8 +84,7 @@ const editTransfer = (transferData) => {
       return db.query(getPreviousTransferAmountQuery, [transferData.transactionId]);
     })
     .then((previousTransferResult) => {
-      console.log(previousTransferAmount)
-      console.log(previousTransferAmount)
+      console.log(previousTransferResult);
       previousTransferAmount = previousTransferResult.rows[0].amount;
       previousAccountId = previousTransferResult.rows[0].account_id;
       previousAccountIdTo = previousTransferResult.rows[0].account_id_to;

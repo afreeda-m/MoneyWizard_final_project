@@ -33,11 +33,12 @@ function AccountsModal(props) {
         console.log(error);
       });
 
+
     setFormData(value);
     modalClose();
   };
 
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   return (
     <div className="App p-4">
