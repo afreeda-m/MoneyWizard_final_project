@@ -76,6 +76,8 @@ const Transactions = (props) => {
         chosenTransaction={chosenTransaction}
         getAccountNameById={getAccountNameById}
         getCategoryNameById={getCategoryNameById}
+        transactionDate={transactionDate}
+        pickTransactionDate={pickTransactionDate}
       />
 
       <TransactionModalEditTransfer
