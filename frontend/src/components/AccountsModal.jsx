@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import '../styles/Accounts.scss';
 
 function AccountsModal(props) {
   const { show, modalClose, modalShow, updateAccounts } = props;
@@ -38,9 +39,9 @@ function AccountsModal(props) {
 
   return (
     <div className="App p-4">
-      <Modal centered show={show} onHide={modalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Account</Modal.Title>
+      <Modal style={{ marginLeft: "130px" }} show={show} onHide={modalClose} size="md" centered >
+        <Modal.Header className='d-flex justify-content-center'>
+          <Modal.Title>Add New Account</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -81,7 +82,7 @@ function AccountsModal(props) {
 
         <Modal.Footer>
           <div>
-            <Button variant="secondary" type="button" onClick={modalClose}>
+            <Button className="accounts-modal" variant="secondary" type="button" onClick={modalClose}>
               Close
             </Button>
             <Button type="submit" form="account-form" variant="primary">
