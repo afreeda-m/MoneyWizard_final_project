@@ -1,8 +1,11 @@
-.transaction-list-item {
-  width: 90%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px;
-  margin-bottom: 5px;
+// .transaction-list-item {
+//   width: 90%;
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   padding: 10px;
+//   margin-bottom: 5px;
+// }
+#dropdown-basic::after{
+  display: none;
 }

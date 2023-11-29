@@ -1,31 +1,109 @@
-import React from "react";
+import axios from 'axios';
+import moment from 'moment';
+import React, { useEffect, useState } from "react";
+import FilterBar from "../components/FilterBar";
 import FloatingActionButton from "../components/FloatingActionButton";
 import TransactionList from "../components/TransactionList";
-import { getAccountNameById, getCategoryIconById, getCategoryNameById } from "../helpers/mockhelpers";
-import accounts from "../mocks/accounts";
-import categories from "../mocks/categories";
-import transactions from "../mocks/transactions";
-import "../styles/Transactions.scss";
+import TransactionModalAddNew from "../components/TransactionModalAddNew";
+import TransactionModalEditTransaction from "../components/TransactionModalEditTransaction";
+import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/helperFunctions";
 
 
-const Transactions = () => {
+const Transactions = (props) => {
+
+  const { transactionsData,
+    categoriesData,
+    accountsData,
+    date,
+    isAddTransactionModalOpen,
+    isEditTransactionModalOpen,
+    isEditTransferModelOpen,
+    chosenTransaction,
+    incrementDate,
+    decrementDate,
+    toggleAddNewModal,
+    toggleEditTransactionModal,
+    toggleEditTransferModal,
+    chooseTransaction,
+    getAccountNameById,
+    getCategoryIconById,
+    getCategoryNameById,
+    getCategoryTypeById
+  } = props;
+
+  // const [accountsData, setAccountsData] = useState([]);
+  // const [transactionsData, setTransactionsData] = useState([]);
+  // const [categoriesData, setCategoriesData] = useState([]);
+
+  // const [date, setDate] = useState(moment().format("YYYY-MM"));
+  // const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
+  // const [isEditTransactionModalOpen, setIsEditTransactionModalOpen] = useState(false);
+  // const [chosenTransaction, setChosenTransaction] = useState(null);
+
+  // const toggleAddNewModal = () => setIsAddTransactionModalOpen(!isAddTransactionModalOpen);
+  // const toggleEditTransactionModal = () => setIsEditTransactionModalOpen(!isEditTransactionModalOpen);
+
+
+  // useEffect(() => {
+
+  //   const fetchTransactions = axios.get('/transactions');
+  //   const fetchAccounts = axios.get('/accounts');
+  //   const fetchCategories = axios.get('/categories');
+
+  //   Promise.all([fetchTransactions, fetchAccounts, fetchCategories]).then((response) => {
+  //     const [transactionsResponse, accountsResponse, categoriesReponse] = response;
+  //     setTransactionsData(transactionsResponse.data);
+  //     setAccountsData(accountsResponse.data.accounts);
+  //     setCategoriesData(categoriesReponse.data);
+  //   }).catch((error) => {
+  //     console.error('Error Fetching Data', error);
+  //   });
+
+  // }, [date]);
+
   return (
-    <div className="transactions">
+    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
 
-      <h1>List of Transactions</h1>
+      <h1>Transactions</h1>
 
-      <h3>Placeholder for filter</h3>
+      <FilterBar
+        date={date}
+        // setDate={setDate}
+        incrementDate={incrementDate}
+        decrementDate={decrementDate}
+      />
 
       <TransactionList
-        transactions={transactions}
-        categories={categories}
-        accounts={accounts}
+        transactionsData={transactionsData}
+        categoriesData={categoriesData}
+        accountsData={accountsData}
         getAccountNameById={getAccountNameById}
         getCategoryIconById={getCategoryIconById}
         getCategoryNameById={getCategoryNameById}
+        getCategoryTypeById={getCategoryTypeById}
+        chosenTransaction={chosenTransaction}
+        isEditTransactionModalOpen={isEditTransactionModalOpen}
+        toggleEditTransactionModal={toggleEditTransactionModal}
+      />
+      <div onClick={toggleAddNewModal}>
+        <FloatingActionButton />
+      </div>
+
+      <TransactionModalAddNew
+        isAddTransactionModalOpen={isAddTransactionModalOpen}
+        toggleAddNewModal={toggleAddNewModal}
+        categories={categoriesData}
+        accounts={accountsData}
       />
 
-      <FloatingActionButton />
+      <TransactionModalEditTransaction
+        isEditTransactionModalOpen={isEditTransactionModalOpen}
+        toggleEditTransactionModal={toggleEditTransactionModal}
+        categories={categoriesData}
+        accounts={accountsData}
+        chosenTransaction={chosenTransaction}
+      />
+
 
     </div>
   );

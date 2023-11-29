@@ -1,10 +1,10 @@
 const db = require('../connection.js');
 
 //get categories by user's ID
-const getCategoriesByUserId = (userId) => {
-  const queryString = `SELECT * FROM categories WHERE user_id = $1;`
+const getCategoriesByUserId = () => {
+  const queryString = `SELECT * FROM categories WHERE user_id IS NULL;`
   return db
-    .query(queryString, [userId])
+    .query(queryString)
     .then((data) => {
       return data.rows
     })
