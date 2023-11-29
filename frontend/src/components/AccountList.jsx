@@ -1,5 +1,6 @@
 import React from "react";
 import AccountListItem from "./AccountListItem";
+import '../styles/Accounts.scss';
 
 const AccountList = (props) => {
 
@@ -12,6 +13,8 @@ const AccountList = (props) => {
         id={account.id}
         account_name={account.account_name}
         amount={account.balance}
+        note={account.note}
+        deleteAccount={props.deleteAccount}
       />);
   });
 

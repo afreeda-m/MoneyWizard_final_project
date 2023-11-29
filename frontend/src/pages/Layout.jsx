@@ -23,6 +23,7 @@ const Layout = () => {
         * the width of this element has been made to account for the sidebar's
         * width.
         */}
+
       <div className="d-flex flex-column" style={{ width: "calc(100% - 250px)" }}>
 
         <NavBar />
