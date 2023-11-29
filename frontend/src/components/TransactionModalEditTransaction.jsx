@@ -4,7 +4,9 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import moment from 'moment';
+import DatePickerBox from './DatePickerBox';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 
 
@@ -17,7 +19,9 @@ const TransactionModalEditTransaction = (props) => {
     accounts,
     chosenTransaction,
     getCategoryNameById,
-    getAccountNameById
+    getAccountNameById,
+    transactionDate,
+    pickTransactionDate
   } = props;
 
   // list of categories for the dropdown selection
@@ -33,6 +37,8 @@ const TransactionModalEditTransaction = (props) => {
       <option key={account.id}>{account.account_name}</option>
     );
   });
+
+
 
   return (
 
@@ -92,7 +98,16 @@ const TransactionModalEditTransaction = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label >Date</Form.Label>
-              <Form.Control defaultValue={chosenTransaction && moment(chosenTransaction.transaction_date).format("YYYY-MM-DD")} />
+              {/* Date picker box */}
+              <div>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <DatePickerBox
+                    chosenTransaction={chosenTransaction}
+                    transactionDate={transactionDate}
+                    pickTransactionDate={pickTransactionDate}
+                  />
+                </LocalizationProvider>
+              </div>
             </Form.Group>
           </Row>
 
@@ -100,7 +115,7 @@ const TransactionModalEditTransaction = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label >Notes</Form.Label>
-              <Form.Control as="textarea" defaultValue={chosenTransaction && chosenTransaction.notes}/>
+              <Form.Control as="textarea" defaultValue={chosenTransaction && chosenTransaction.notes} />
             </Form.Group>
           </Row>
 
