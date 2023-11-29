@@ -15,14 +15,14 @@ const FilterBar = (props) => {
 
   return (
 
-    <Container className="p-2 mb-4 mt-4 rounded bg-white" style={{ width: "40vw" }}>
-      <Row >
+    <Container className="p-2 mb-4 mt-4 rounded bg-white" style={{ width: "40vw", border: "2px solid grey" }}>
+      <Row className='d-flex align-items-center'>
         <Col className="d-flex justify-content-center" xs={2} onClick={decrementDate} >
           <ArrowBackIosIcon />
         </Col>
 
         <Col className="d-flex justify-content-center" xs={8} >
-          <h5> {moment(date).format("MMMM YYYY")}  </h5>
+          <b> {moment(date).format("MMMM YYYY")}  </b>
         </Col>
 
         <Col className="d-flex justify-content-center" xs={2} onClick={incrementDate} >
