@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Dropdown from 'react-bootstrap/Dropdown';
+import axios from "axios";
 
 const TransactionListItem = (props) => {
 
@@ -25,17 +26,34 @@ const TransactionListItem = (props) => {
     toggleEditTransactionModal,
     isEditTransactionModalOpen,
     chooseTransaction,
-    transaction
+    transaction,
+    getTransactions
   } = props;
 
-  const handleEditTransactionClick = () => {
+  const handleTransactionEdit = () => {
     !isEditTransactionModalOpen && chooseTransaction(transaction);
     !isEditTransactionModalOpen && toggleEditTransactionModal && toggleEditTransactionModal();
   };
 
-  const handleEditTransferClick = () => {
+  const handleTransferEdit = () => {
     !isEditTransferModalOpen && chooseTransaction(transaction);
     !isEditTransferModalOpen && toggleEditTransferModal && toggleEditTransferModal();
+  };
+
+  const handleTransactionDelete = () => {
+
+    axios.post(`/transactions/${transaction.id}/delete`)
+      .then((response) => {
+        getTransactions();
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error);
+      });
+  };
+
+  const handleTransferDelete = () => {
+
+
   };
 
 
@@ -88,9 +106,9 @@ const TransactionListItem = (props) => {
               <Dropdown.Menu>
 
                 {/* The onClick event on Edit button will open different modal based on the type of the category */}
-                <Dropdown.Item onClick={categoryType === "Transfer" ? handleEditTransferClick : handleEditTransactionClick}>Edit transaction</Dropdown.Item>
+                <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit}>Edit transaction</Dropdown.Item>
 
-                <Dropdown.Item >Delete transaction</Dropdown.Item>
+                <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferDelete : handleTransactionDelete}>Delete transaction</Dropdown.Item>
 
               </Dropdown.Menu>
 
