@@ -4,32 +4,19 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import DatePickerBox from './DatePickerBox';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import moment from 'moment';
 
 
 
-const TransactionModalEditTransaction = (props) => {
+const TransactionModalEditTransfer = (props) => {
 
   const {
-    isEditTransactionModalOpen,
-    toggleEditTransactionModal,
-    categories,
+    isEditTransferModalOpen,
+    toggleEditTransferModal,
     accounts,
     chosenTransaction,
-    getCategoryNameById,
-    getAccountNameById,
-    transactionDate,
-    pickTransactionDate
+    getAccountNameById
   } = props;
-
-  // list of categories for the dropdown selection
-  const categoryDropdown = categories.map((category) => {
-    return (
-      <option key={category.id}>{category.category_name}</option>
-    );
-  });
 
   // list of accounts for the dropdown selection
   const accountDropdown = accounts.map((account) => {
@@ -38,15 +25,13 @@ const TransactionModalEditTransaction = (props) => {
     );
   });
 
-
-
   return (
 
     // Adjust styling for the modal. Move 130px to the right and center vertically
-    <Modal style={{ marginLeft: "130px" }} show={isEditTransactionModalOpen} onHide={toggleEditTransactionModal} size="md" centered >
+    <Modal style={{ marginLeft: "130px" }} show={isEditTransferModalOpen} onHide={toggleEditTransferModal} size="md" centered >
 
       <Modal.Header className='d-flex justify-content-center'>
-        <Modal.Title>EDIT TRANSACTION</Modal.Title>
+        <Modal.Title>EDIT TRANSFER</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -56,24 +41,28 @@ const TransactionModalEditTransaction = (props) => {
           {/* 2 input fields in the same row for Category selection, Account selection */}
           <Row className='d-flex align-items-center mb-3' >
 
+            {/* Placeholder for category logo when a category is selected
+                <Col className='d-flex justify-content-center' xs={2}>
+                  <img src="bank.png" />
+                </Col> */}
+
             {/* Dropdown selection for Category */}
             <Form.Group xs={6} as={Col}>
-              <Form.Label >Category</Form.Label>
+              <Form.Label >From Account</Form.Label>
               <Form.Select >
                 <option>
-                  {chosenTransaction && getCategoryNameById(chosenTransaction.category_id, categories)}
+                  {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
                 </option>
-                {categoryDropdown}
-
+                {accountDropdown}
               </Form.Select>
             </Form.Group>
 
             {/* Dropdown selection for Account */}
             <Form.Group xs={6} as={Col}>
-              <Form.Label >Account</Form.Label>
+              <Form.Label >To Account</Form.Label>
               <Form.Select >
                 <option>
-                  {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
+                  {chosenTransaction && chosenTransaction.type === "Transfer" && getAccountNameById(chosenTransaction.account_to_id, accounts)}
                 </option>
                 {accountDropdown}
 
@@ -98,16 +87,7 @@ const TransactionModalEditTransaction = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label >Date</Form.Label>
-              {/* Date picker box */}
-              <div>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePickerBox
-                    chosenTransaction={chosenTransaction}
-                    transactionDate={transactionDate}
-                    pickTransactionDate={pickTransactionDate}
-                  />
-                </LocalizationProvider>
-              </div>
+              <Form.Control defaultValue={chosenTransaction && moment(chosenTransaction.transaction_date).format("YYYY-MM-DD")} />
             </Form.Group>
           </Row>
 
@@ -124,10 +104,10 @@ const TransactionModalEditTransaction = (props) => {
       </Modal.Body>
 
       <Modal.Footer className='d-flex justify-content-center'>
-        <Button variant="secondary" onClick={toggleEditTransactionModal}>
+        <Button variant="secondary" onClick={toggleEditTransferModal}>
           Cancel
         </Button>
-        <Button variant="success" onClick={toggleEditTransactionModal}>
+        <Button variant="success" onClick={toggleEditTransferModal}>
           Update
         </Button>
       </Modal.Footer>
@@ -137,4 +117,4 @@ const TransactionModalEditTransaction = (props) => {
 
 };
 
-export default TransactionModalEditTransaction;
+export default TransactionModalEditTransfer;

@@ -1,5 +1,4 @@
 import React from "react";
-// import "../styles/TransactionList.scss";
 import ListGroup from 'react-bootstrap/ListGroup';
 import TransactionListItem from "./TransactionListItem";
 
@@ -14,9 +13,11 @@ const TransactionList = (props) => {
     getCategoryTypeById,
     getCategoryNameById,
     getAccountNameById,
-    chosenTransaction,
     toggleEditTransactionModal,
-    isEditTransactionModalOpen
+    toggleEditTransferModal,
+    isEditTransactionModalOpen,
+    isEditTransferModalOpen,
+    chooseTransaction
   } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
@@ -37,9 +38,12 @@ const TransactionList = (props) => {
         notes={transaction.notes}
         amount={transaction.amount}
         date={transaction.transaction_date}
-        chosenTransaction={chosenTransaction}
         isEditTransactionModalOpen={isEditTransactionModalOpen}
         toggleEditTransactionModal={toggleEditTransactionModal}
+        isEditTransferModalOpen={isEditTransferModalOpen}
+        toggleEditTransferModal={toggleEditTransferModal}
+        chooseTransaction={chooseTransaction}
+        transaction={transaction}
       />
 
     );

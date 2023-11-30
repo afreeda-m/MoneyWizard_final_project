@@ -24,6 +24,7 @@ function App() {
 
   const {
     state,
+    pickTransactionDate,
     incrementDate,
     decrementDate,
     toggleAddNewModal,
@@ -37,13 +38,13 @@ function App() {
     categoriesData,
     accountsData,
     date,
+    transactionDate,
     isAddTransactionModalOpen,
     isEditTransactionModalOpen,
-    isEditTransferModelOpen,
+    isEditTransferModalOpen,
     chosenTransaction
   } = state;
 
-  console.log(date);
   return (
     <div className='App bg-body-tertiary'>
 
@@ -142,15 +143,17 @@ function App() {
               categoriesData={categoriesData}
               accountsData={accountsData}
               date={date}
-              isAddTransactionModalOpen={isAddTransactionModalOpen}
-              isEditTransactionModalOpen={isEditTransactionModalOpen}
-              isEditTransferModelOpen={isEditTransferModelOpen}
-              chosenTransaction={chosenTransaction}
               incrementDate={incrementDate}
               decrementDate={decrementDate}
+              transactionDate={transactionDate}
+              pickTransactionDate={pickTransactionDate}
+              isAddTransactionModalOpen={isAddTransactionModalOpen}
               toggleAddNewModal={toggleAddNewModal}
+              isEditTransactionModalOpen={isEditTransactionModalOpen}
               toggleEditTransactionModal={toggleEditTransactionModal}
+              isEditTransferModalOpen={isEditTransferModalOpen}
               toggleEditTransferModal={toggleEditTransferModal}
+              chosenTransaction={chosenTransaction}
               chooseTransaction={chooseTransaction}
               getAccountNameById={getAccountNameById}
               getCategoryIconById={getCategoryIconById}

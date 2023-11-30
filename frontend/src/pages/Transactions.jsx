@@ -1,13 +1,9 @@
-import axios from 'axios';
-import moment from 'moment';
-import React, { useEffect, useState } from "react";
 import FilterBar from "../components/FilterBar";
 import FloatingActionButton from "../components/FloatingActionButton";
 import TransactionList from "../components/TransactionList";
 import TransactionModalAddNew from "../components/TransactionModalAddNew";
 import TransactionModalEditTransaction from "../components/TransactionModalEditTransaction";
-import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "../helpers/helperFunctions";
-
+import TransactionModalEditTransfer from "../components/TransactionModalEditTransfer";
 
 const Transactions = (props) => {
 
@@ -15,9 +11,11 @@ const Transactions = (props) => {
     categoriesData,
     accountsData,
     date,
+    transactionDate,
+    pickTransactionDate,
     isAddTransactionModalOpen,
     isEditTransactionModalOpen,
-    isEditTransferModelOpen,
+    isEditTransferModalOpen,
     chosenTransaction,
     incrementDate,
     decrementDate,
@@ -31,36 +29,6 @@ const Transactions = (props) => {
     getCategoryTypeById
   } = props;
 
-  // const [accountsData, setAccountsData] = useState([]);
-  // const [transactionsData, setTransactionsData] = useState([]);
-  // const [categoriesData, setCategoriesData] = useState([]);
-
-  // const [date, setDate] = useState(moment().format("YYYY-MM"));
-  // const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
-  // const [isEditTransactionModalOpen, setIsEditTransactionModalOpen] = useState(false);
-  // const [chosenTransaction, setChosenTransaction] = useState(null);
-
-  // const toggleAddNewModal = () => setIsAddTransactionModalOpen(!isAddTransactionModalOpen);
-  // const toggleEditTransactionModal = () => setIsEditTransactionModalOpen(!isEditTransactionModalOpen);
-
-
-  // useEffect(() => {
-
-  //   const fetchTransactions = axios.get('/transactions');
-  //   const fetchAccounts = axios.get('/accounts');
-  //   const fetchCategories = axios.get('/categories');
-
-  //   Promise.all([fetchTransactions, fetchAccounts, fetchCategories]).then((response) => {
-  //     const [transactionsResponse, accountsResponse, categoriesReponse] = response;
-  //     setTransactionsData(transactionsResponse.data);
-  //     setAccountsData(accountsResponse.data.accounts);
-  //     setCategoriesData(categoriesReponse.data);
-  //   }).catch((error) => {
-  //     console.error('Error Fetching Data', error);
-  //   });
-
-  // }, [date]);
-
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
 
@@ -68,7 +36,6 @@ const Transactions = (props) => {
 
       <FilterBar
         date={date}
-        // setDate={setDate}
         incrementDate={incrementDate}
         decrementDate={decrementDate}
       />
@@ -84,6 +51,9 @@ const Transactions = (props) => {
         chosenTransaction={chosenTransaction}
         isEditTransactionModalOpen={isEditTransactionModalOpen}
         toggleEditTransactionModal={toggleEditTransactionModal}
+        isEditTransferModalOpen={isEditTransferModalOpen}
+        toggleEditTransferModal={toggleEditTransferModal}
+        chooseTransaction={chooseTransaction}
       />
       <div onClick={toggleAddNewModal}>
         <FloatingActionButton />
@@ -94,6 +64,8 @@ const Transactions = (props) => {
         toggleAddNewModal={toggleAddNewModal}
         categories={categoriesData}
         accounts={accountsData}
+        transactionDate={transactionDate}
+        pickTransactionDate={pickTransactionDate}
       />
 
       <TransactionModalEditTransaction
@@ -102,8 +74,20 @@ const Transactions = (props) => {
         categories={categoriesData}
         accounts={accountsData}
         chosenTransaction={chosenTransaction}
+        getAccountNameById={getAccountNameById}
+        getCategoryNameById={getCategoryNameById}
+        transactionDate={transactionDate}
+        pickTransactionDate={pickTransactionDate}
       />
 
+      <TransactionModalEditTransfer
+        isEditTransferModalOpen={isEditTransferModalOpen}
+        toggleEditTransferModal={toggleEditTransferModal}
+        categories={categoriesData}
+        accounts={accountsData}
+        chosenTransaction={chosenTransaction}
+        getAccountNameById={getAccountNameById}
+      />
 
     </div>
   );
