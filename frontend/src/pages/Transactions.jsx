@@ -87,6 +87,7 @@ const Transactions = (props) => {
         pickTransactionDate={pickTransactionDate}
         setPostTransactionData={setPostTransactionData}
         postTransactionData={postTransactionData}
+        getTransactions={getTransactions}
       />
 
       <TransactionModalEditTransfer
