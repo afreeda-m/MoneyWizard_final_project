@@ -48,15 +48,17 @@ const TransactionModalAddNew = (props) => {
 
   // Function to handle the onChange event
   const handleInput = (event) => {
-    console.log(event.target);
+
+    // Convert data to number expect for notes
     const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
+
+    // Update postTransactionData state on each input change
     setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
+
   };
 
   // Function to close modal and reset transactionDate state to current date
   const handleClose = () => {
-
-    toggleAddNewModal();
 
     // Reset postTransactionData to default on Modal close
     setPostTransactionData({
@@ -68,7 +70,10 @@ const TransactionModalAddNew = (props) => {
       notes: ''
     });
 
-    // pickTransactionDate(moment());
+    // Reset transactionDate state to current date
+    pickTransactionDate(moment());
+
+    toggleAddNewModal();
 
   };
 
@@ -86,7 +91,6 @@ const TransactionModalAddNew = (props) => {
 
     axios.post('/transactions/add', postTransactionData)
       .then((response) => {
-        console.log('logging response param from handleTransactionSubmit', response);
         // Invoke getTransactions function to update transactionsData state
         getTransactions();
       })
@@ -111,13 +115,10 @@ const TransactionModalAddNew = (props) => {
   // Function to submit new transfer data to backend and then close the Add New Modal
   const handleTransferSubmit = (event) => {
 
-    console.log('log from handleTransferSubmit:', postTransactionData.categoryId);
-
     event.preventDefault();
 
     axios.post('/transfer/add', { ...postTransactionData, categoryId: 20 })
       .then((response) => {
-        console.log('logging response param from handleTransferSubmit', response);
         // Invoke getTransactions function to update transactionsData state
         getTransactions();
       })
