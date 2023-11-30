@@ -1,3 +1,5 @@
+import moment from 'moment';
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Tab from 'react-bootstrap/Tab';
@@ -8,9 +10,6 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import moment from 'moment';
-import { useState } from 'react';
-import axios from 'axios';
 import { DatePicker } from "@mui/x-date-pickers";
 
 
@@ -31,40 +30,49 @@ const TransactionModalAddNew = (props) => {
 
   // list of categories for the dropdown selection
   const categoryDropdown = categories.map((category) => {
-
     return (
       <option key={category.id} value={category.id}>
         {category.category_name}
       </option>
     );
-
   });
 
   // list of accounts for the dropdown selection
   const accountDropdown = accounts.map((account) => {
-
     return (
       <option key={account.id} value={account.id}>
         {account.account_name}
       </option>
     );
-
   });
 
   // Function to handle the onChange event
   const handleInput = (event) => {
     console.log(event.target);
     const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
-     setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
+    setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
   };
 
   // Function to close modal and reset transactionDate state to current date
   const handleClose = () => {
+
     toggleAddNewModal();
+
+    // Reset postTransactionData to default on Modal close
+    setPostTransactionData({
+      categoryId: null,
+      accountId: null,
+      accountToId: null,
+      amount: null,
+      transaction_date: moment(),
+      notes: ''
+    });
+
     // pickTransactionDate(moment());
 
   };
 
+  // Function to update transaction_date for DatePicker
   const handleDateChange = (newDate) => {
     setPostTransactionData({ ...postTransactionData, transaction_date: newDate });
     pickTransactionDate(newDate);
@@ -94,7 +102,7 @@ const TransactionModalAddNew = (props) => {
       amount: null,
       transaction_date: moment(),
       notes: ''
-     });
+    });
 
     toggleAddNewModal();
   };
@@ -107,7 +115,7 @@ const TransactionModalAddNew = (props) => {
 
     event.preventDefault();
 
-    axios.post('/transfer/add', {...postTransactionData, categoryId: 20})
+    axios.post('/transfer/add', { ...postTransactionData, categoryId: 20 })
       .then((response) => {
         console.log('logging response param from handleTransferSubmit', response);
         // Invoke getTransactions function to update transactionsData state
@@ -117,7 +125,7 @@ const TransactionModalAddNew = (props) => {
         console.error("Error posting new transaction to backend:", error);
       });
 
-// Reset 'postTransactionData' state to default - avoid resubmitting the same data
+    // Reset 'postTransactionData' state to default - avoid resubmitting the same data
     setPostTransactionData({
       categoryId: null,
       accountId: null,
@@ -125,7 +133,7 @@ const TransactionModalAddNew = (props) => {
       amount: null,
       transaction_date: moment(),
       notes: ''
-     });
+    });
 
     toggleAddNewModal();
   };
