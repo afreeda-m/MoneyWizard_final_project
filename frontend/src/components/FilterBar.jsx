@@ -8,27 +8,27 @@ import moment from 'moment';
 
 
 const FilterBar = (props) => {
-  
+
   // Props destructuring - Tuan
   const {
     date,
     incrementDate,
     decrementDate
   } = props;
-  
+
   // Props destructuring - Rora
-   //const {
-   // date,
+  //const {
+  // date,
   //  setDate,
- //   updateSelectedMonthAndYear
-//  } = props;
-  
+  //   updateSelectedMonthAndYear
+  //  } = props;
+
   // handle function - Rora
- //   const handleDateChange = (amount) => {
+  //   const handleDateChange = (amount) => {
   //    const newDate = moment(date).add(amount, 'months');
   //    setDate(newDate);
   //    updateSelectedMonthAndYear(newDate);
- //   };
+  //   };
 
   return (
 
@@ -45,8 +45,8 @@ const FilterBar = (props) => {
 
         </Col>
 
-<Col className="d-flex justify-content-center" xs={2} onClick={incrementDate} >
-{/* Rora column
+        <Col className="d-flex justify-content-center" xs={2} onClick={incrementDate} >
+          {/* Rora column
       *  <Col className="d-flex justify-content-center" xs={2} onClick={() => handleDateChange(1)}> */}
           <ArrowForwardIosIcon />
         </Col>
