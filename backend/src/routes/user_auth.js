@@ -31,7 +31,7 @@ router.post("/register", (req, res) => {
 });
 
 
-//register a new user
+//User login
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -54,34 +54,12 @@ router.post("/login", (req, res) => {
     });
 });
 
-// clear cookies and logout user
+//Logout user and clear cookies
 router.post("/logout", (req, res) => {
 
   req.session = null;
   res.redirect("/login");
 });
-
-
-// // New route for user login
-// router.post('/', (req, res) => {
-//   const { email, password } = req.body;
-
-//   // Use the checkUserCredentials function
-//   userQueries.checkUserCredentials(email)
-//     .then((user) => {
-//       if (user.password === password) {
-//         // User exists and password is valid, you can redirect to the dashboard or send a success response
-//         res.redirect('/dashboard');
-//       } else {
-//         // User doesn't exist or password is invalid, show an error message
-//         res.status(401).send('Invalid email or password. Please register.');
-//       }
-//     })
-//     .catch((error) => {
-//       console.error('Error checking user credentials:', error);
-//       res.status(500).send('Internal Server Error');
-//     });
-// });
 
 module.exports = router;
 
