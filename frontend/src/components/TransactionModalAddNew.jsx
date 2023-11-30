@@ -82,7 +82,7 @@ const TransactionModalAddNew = (props) => {
     pickTransactionDate(newDate);
   };
 
-
+  
 
   // Function to submit new transaction data to backend and then close the Add New Modal
   const handleTransactionSubmit = (event) => {
@@ -92,6 +92,7 @@ const TransactionModalAddNew = (props) => {
     axios.post('/transactions/add', { post })
       .then((response) => {
         console.log('logging response param from handleTransactionSubmit', response);
+        // Invoke getTransactions function to update transactionsData state
         getTransactions();
       })
       .catch((error) => {
@@ -117,6 +118,8 @@ const TransactionModalAddNew = (props) => {
     axios.post('/transfer/add', { post })
       .then((response) => {
         console.log('logging response param from handleTransferSubmit', response);
+        // Invoke getTransactions function to update transactionsData state
+        getTransactions();
       })
       .catch((error) => {
         console.error("Error posting new transaction to backend:", error);
