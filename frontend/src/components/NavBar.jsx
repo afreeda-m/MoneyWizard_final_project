@@ -1,12 +1,45 @@
+import axios from "axios";
+import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaBullseye } from 'react-icons/fa';
-
-
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const submitLogin = (event) => {
+    event.preventDefault();
+
+    const value = {
+      email: event.target.username.value,
+      password: event.target.password.value,
+    };
+
+    axios({
+      method: "post",
+      url: "/user/login",
+      header: {
+        "Content-Type": "application/json",
+      },
+      data: value,
+    })
+      .then((response) => {
+        console.log(response);
+        if(response.status == 200){
+          setLoggedIn(true);
+          navigate("/dashboard");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
 
     <Navbar className="bg-success d-flex justify-content-center align-items-between px-4">
@@ -23,7 +56,7 @@ function NavBar() {
       <Navbar.Collapse className="justify-content-end">
 
         {/* LOGIN FORM */}
-        <Form inline="true">
+        {!loggedIn && <Form inline="true" id="login-form" onSubmit={submitLogin}>
           <InputGroup>
 
             {/* Username Field */}
@@ -44,10 +77,10 @@ function NavBar() {
 
 
             {/* Submit Button */}
-            <Button type="submit">Login</Button>
+            <Button type="submit" form="login-form">Login</Button>
 
           </InputGroup>
-        </Form>
+        </Form>}
 
 
       {/* CODE TO DISPLAY SIGNED IN USER */}
