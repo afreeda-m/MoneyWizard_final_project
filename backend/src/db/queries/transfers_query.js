@@ -20,8 +20,8 @@ const addTransfer = (transfer) => {
     return db.query(createTransaction, [
       transfer.userId,
       transfer.categoryId,
-      transfer.accountFrom,
-      transfer.accountTo,
+      transfer.accountId,
+      transfer.accountToId,
       transfer.amount,
       transfer.transaction_date,
       transfer.notes,
@@ -62,7 +62,7 @@ const editTransfer = (transferData) => {
 
   const updateBalanceFromQuery = `
     UPDATE accounts
-    SET balance = balance + $1 
+    SET balance = balance + $1
     WHERE id = $2;
   `;
 
@@ -93,8 +93,8 @@ const editTransfer = (transferData) => {
       return db.query(updateTransferQuery, [
         transferData.transactionId,
         transferData.categoryId,
-        transferData.accountFrom,
-        transferData.accountTo,
+        transferData.accountId,
+        transferData.accountToId,
         transferData.amount,
         transferData.transaction_date,
         transferData.notes,
