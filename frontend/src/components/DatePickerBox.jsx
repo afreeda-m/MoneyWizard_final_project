@@ -3,16 +3,19 @@ import moment from "moment";
 
 const DatePickerBox = (props) => {
 
-  const { transactionDate, pickTransactionDate, chosenTransaction } = props;
+  const { transactionDate, pickTransactionDate, chosenTransaction, changePostTransactionDate } = props;
+
+  const handleChange = (newDate) => {
+    changePostTransactionDate(newDate);
+    pickTransactionDate(newDate);
+  };
 
   return (
 
     <DatePicker
       sx={{ width: "50%" }}
       value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
-      onChange={(newDate) => {
-        pickTransactionDate(newDate);
-      }}
+      onChange={handleChange}
     />
 
   );
