@@ -18,11 +18,11 @@ router.get('/', (req, res) => {
 router.post('/add', (req, res) => {
   const userId = 1;
   const transactionData = {
-    categoryId: req.body.post.categoryId,
-    accountId: req.body.post.accountId,
-    amount: req.body.post.amount,
-    transaction_date: req.body.post.transaction_date,
-    notes: req.body.post.notes
+    categoryId: req.body.categoryId,
+    accountId: req.body.accountId,
+    amount: req.body.amount,
+    transaction_date: req.body.transaction_date,
+    notes: req.body.notes
   };
 
   transactionsQueries.addTransaction(userId, transactionData)

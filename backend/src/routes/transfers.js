@@ -5,12 +5,12 @@ const transfersQueries = require('../db/queries/transfers_query.js')
 router.post('/add', (req, res) => {
   const transferData = {
     userId: 1,
-    categoryId: req.body.post.categoryId,
-    accountId: req.body.post.accountId,
-    accountToId: req.body.post.accountToId,
-    amount: req.body.post.amount,
-    transaction_date: req.body.post.transaction_date,
-    notes: req.body.post.notes
+    categoryId: req.body.categoryId,
+    accountId: req.body.accountId,
+    accountToId: req.body.accountToId,
+    amount: req.body.amount,
+    transaction_date: req.body.transaction_date,
+    notes: req.body.notes
   }
 
   transfersQueries.addTransfer(transferData)
@@ -25,14 +25,14 @@ router.post('/add', (req, res) => {
 
 router.post('/edit', (req, res) => {
   const transferData = {
-    transactionId: req.body.post.transaction_id,
-    userId: req.body.post.userId,
-    categoryId: req.body.post.categoryId,
-    accountId: req.body.post.accountId,
-    accountToId: req.body.post.accountToId,
-    amount: req.body.post.amount,
-    transaction_date: req.body.post.transaction_date,
-    notes: req.body.post.notes
+    transactionId: req.body.transaction_id,
+    userId: req.body.userId,
+    categoryId: req.body.categoryId,
+    accountId: req.body.accountId,
+    accountToId: req.body.accountToId,
+    amount: req.body.amount,
+    transaction_date: req.body.transaction_date,
+    notes: req.body.notes
   }
 
   transfersQueries.editTransfer(transferData)
