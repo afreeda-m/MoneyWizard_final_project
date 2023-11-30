@@ -23,11 +23,11 @@ function reducer(state, action) {
     // Update transactionsData state when open the app
     case ACTIONS.SET_TRANSACTIONS_DATA:
       return { ...state, transactionsData: action.transactionsData };
-    // Update categoriesData and accountsData states when open the app
+    // Update categoriesData and accountsData states when open the app --> To be revised if we should separate these into two actions. For now I combined them as a temporary workaround
     case ACTIONS.SET_ACCOUNTS_AND_CATEGORIES_DATA:
       return { ...state, accountsData: action.accountsData, categoriesData: action.categoriesData };
 
-    // Update transactionDate when picking date
+    // Update transactionDate when picking transaction date
     case ACTIONS.SET_TRANSACTION_DATE:
       return { ...state, transactionDate: action.transactionDate };
 
@@ -77,42 +77,7 @@ const useApplicationData = () => {
     }
   );
 
-  // Fetch transactions data from backend server, dependent on the 'date' state
-  useEffect(() => {
-    fetch('http://localhost:8080/transactions?' + new URLSearchParams({
-      month: moment(state.date).format("MM"),
-      year: moment(state.date).format("YYYY")
-    }))
-      .then((res) => res.json())
-      .then((data) => dispatch({
-        type: ACTIONS.SET_TRANSACTIONS_DATA,
-        transactionsData: data
-      }))
-      .catch((error) => {
-        console.error('Error fetching transactions data:', error);
-      });
-    // Transactions data will be dependent on the 'date' state
-  }, [state.date]);
-
-  // Fetch categories and accounts data from backend server
-  useEffect(() => {
-    const fetchCategories = axios.get('http://localhost:8080/categories');
-    const fetchAccounts = axios.get('http://localhost:8080/accounts');
-
-    Promise.all([fetchCategories, fetchAccounts])
-      .then((response) => {
-        const [categoriesResponse, accountsResponse] = response;
-        dispatch({
-          type: ACTIONS.SET_ACCOUNTS_AND_CATEGORIES_DATA,
-          accountsData: accountsResponse.data.accounts,
-          categoriesData: categoriesResponse.data
-        });
-      })
-      .catch((error) => { console.log("Error fetching categories and accounts data:", error); });
-    // No dependency for categories and accounts data, only retrieve when the page reload
-  }, []);
-
-  // FUNCTION FOR PICKING DATE
+  // FUNCTION FOR PICKING TRANSACTION DATE
   const pickTransactionDate = (newDate) => {
     dispatch({
       type: ACTIONS.SET_TRANSACTION_DATE,
@@ -158,6 +123,49 @@ const useApplicationData = () => {
     });
   };
 
+  const getTransactions = () => {
+    fetch('http://localhost:8080/transactions?' + new URLSearchParams({
+      month: moment(state.date).format("MM"),
+      year: moment(state.date).format("YYYY")
+    }))
+      .then((res) => res.json())
+      .then((data) => dispatch({
+        type: ACTIONS.SET_TRANSACTIONS_DATA,
+        transactionsData: data
+      }))
+      .catch((error) => {
+        console.error('Error fetching transactions data:', error);
+      });
+  };
+
+  // Fetch transactions data from backend server, dependent on the 'date' state
+  useEffect(() => {
+
+    getTransactions();
+
+    // Transactions data will be dependent on the 'date' state
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.date]);
+
+  // Fetch categories and accounts data from backend server
+  useEffect(() => {
+    const fetchCategories = axios.get('http://localhost:8080/categories');
+    const fetchAccounts = axios.get('http://localhost:8080/accounts');
+
+    Promise.all([fetchCategories, fetchAccounts])
+      .then((response) => {
+        const [categoriesResponse, accountsResponse] = response;
+        dispatch({
+          type: ACTIONS.SET_ACCOUNTS_AND_CATEGORIES_DATA,
+          accountsData: accountsResponse.data.accounts,
+          categoriesData: categoriesResponse.data
+        });
+      })
+      .catch((error) => { console.log("Error fetching categories and accounts data:", error); });
+    // No dependency for categories and accounts data, only retrieve when the page reload
+  }, []);
+
+
   return {
     state,
     pickTransactionDate,
@@ -166,7 +174,8 @@ const useApplicationData = () => {
     toggleAddNewModal,
     toggleEditTransactionModal,
     toggleEditTransferModal,
-    chooseTransaction
+    chooseTransaction,
+    getTransactions
   };
 
 };
