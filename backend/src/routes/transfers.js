@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const transfersQueries = require('../db/queries/transfers_query.js')
 
-router.post('/transfer/add', (req, res) => {
+router.post('/add', (req, res) => {
   const transferData = {
     userId: req.body.userId,
     categoryId: req.body.categoryId,
@@ -13,7 +13,7 @@ router.post('/transfer/add', (req, res) => {
     notes: req.body.notes
   }
 
-  transactionsQueries.addTransfer(transferData)
+  transfersQueries.addTransfer(transferData)
   .then(() => {
     res.redirect('/transactions')
   })
@@ -23,7 +23,7 @@ router.post('/transfer/add', (req, res) => {
   })
 })
 
-router.post('/transfer/edit', (req, res) => {
+router.post('/edit', (req, res) => {
   const transferData = {
     transactionId: req.body.transaction_id,
     userId: req.body.userId,

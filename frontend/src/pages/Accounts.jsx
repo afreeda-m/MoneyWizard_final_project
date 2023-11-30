@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
+import Col from "react-bootstrap/Col";
 import { NumericFormat } from "react-number-format";
 import { Cell, Label, Legend, Pie, PieChart, Tooltip } from "recharts";
 import AccountList from "../components/AccountList";
@@ -15,7 +16,22 @@ const Accounts = () => {
   const [show, setShow] = useState(false);
 
   const modalClose = () => setShow(false);
-  const modalShow = () => setShow(true);
+
+  const modalShow = () => {
+    setShow(true);
+  }
+
+  const deleteAccount = (account_id) => {
+    axios.post('/accounts/' + account_id + '/delete')
+    .then((response) => {
+      axios.get("/accounts").then((response) => {
+        setAccounts(response.data.accounts);
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
   useEffect(() => {
     axios.get('/accounts')
@@ -29,7 +45,7 @@ const Accounts = () => {
   .map((account) => account.balance)
   .reduce((a, b) => a + b, 0);
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#FFD300", "#8f2d56", "#BE0AFF", "#f15bb5"];
 
   const RADIAN = Math.PI / 180;
 
@@ -60,45 +76,48 @@ const Accounts = () => {
   };
 
   return (
-    <div className="accounts">
-      <h1 className="title">Accounts</h1>
-      <PieChart width={400} height={400}>
-        <Pie
-          data={accounts}
-          dataKey="balance"
-          nameKey="account_name"
-          cx="50%"
-          cy="50%"
-          labelLine={false}
-          label={renderCustomizedLabel}
-          outerRadius={80}
-          fill="#8884d8"
-        >
-          {accounts.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-          <Label layout="vertical" align="right" verticalAlign="middle" />
-        </Pie>
-        <Tooltip />
-        <Legend />
-      </PieChart>
+    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
+      <div className="accounts">
+        <h1 className="accounts-title">Accounts</h1>
+        <PieChart width={1200} height={600}>
+          <Pie
+            data={accounts}
+            dataKey="balance"
+            nameKey="account_name"
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={200}
+            fill="#8884d8"
+          >
+            {accounts.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+            <Label layout="vertical" align="right" verticalAlign="middle" />
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
 
-      <span class="text-end">
-        Total:{" "}
-        <NumericFormat
-          value={totalAccountsBalance.toFixed(2)}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"$"}
-        />
-      </span>
+        <Col className="h1 d-flex flex-column align-items-end text-end">
+        <span class="accounts-total">
+          Total:{" "}
+          <NumericFormat
+            value={totalAccountsBalance.toFixed(2)}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"$"}
+          />
+        </span>
+        </Col>
 
-      <AccountList accounts={accounts} />
+        <AccountList accounts={accounts} deleteAccount={deleteAccount}/>
 
-      {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow}/>}
+        {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow} updateAccounts = {setAccounts}/>}
 
-      <FloatingActionButton onClick={modalShow}/>
-
+        <FloatingActionButton click={modalShow}/>
+      </div>
     </div>
   );
 };
