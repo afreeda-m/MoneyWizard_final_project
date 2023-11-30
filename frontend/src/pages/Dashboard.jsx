@@ -2,9 +2,18 @@ import React from "react";
 import Container from 'react-bootstrap/Container';
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
+import { NumericFormat } from "react-number-format";
 
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  const { transactionsData,
+    categoriesData,
+    accountsData,
+    date, } = props;
+  const totalAccountsBalance = accountsData
+    .map((account) => account.balance)
+    .reduce((a, b) => a + b, 0);
+
   return (
     <Container className="mt-5 d-flex flex-column align-items-center">
       <h1>Dashboard</h1>
@@ -16,8 +25,14 @@ const Dashboard = () => {
             <p> All Accounts</p>
             <Col className="h1 d-flex flex-column align-items-center">
 
-              Total balance :{`$0 `}
-
+              Total balance :
+              <h1>{" "}</h1>
+              <NumericFormat
+                value={totalAccountsBalance.toFixed(2)}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+              />
             </Col>
           </div>
         </Col>
