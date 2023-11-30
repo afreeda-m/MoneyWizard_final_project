@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from 'moment';
+import React, { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import PieChart from "../components/PieChart";
-import ColumnChart from "../components/ColumnChart";
 import Col from "react-bootstrap/esm/Col";
+import ColumnChart from "../components/ColumnChart";
 import FilterBar from "../components/FilterBar";
 import IncomeExpenseList from "../components/IncomeExpenseList";
+import PieChartMoneyWizard from "../components/PieChartMoneyWizard";
 
 const Report = (props) => {
 
@@ -96,10 +96,10 @@ const Report = (props) => {
       {/* PieCharts for displaying income and expense distribution */}
       <Row>
         <Col md={{ span: 4, offset: 2 }}>
-          <PieChart data={incomeData} isExpense={false} />
+          <PieChartMoneyWizard data={incomeData} isExpense={false} />
         </Col>
         <Col md={{ span: 4, offset: 2 }}>
-          <PieChart data={expenseData} isExpense={true} />
+          <PieChartMoneyWizard data={expenseData} isExpense={true} />
         </Col>
       </Row>
       {/* Lists to display individual income and expense transactions */}
