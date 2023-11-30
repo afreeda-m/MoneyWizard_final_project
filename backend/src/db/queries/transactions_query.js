@@ -82,32 +82,56 @@ const addTransaction = (userId, transactionData) => {
     });
 };
 
-//remove a transaction from DB and update balance in respectice accounts
+//Remove a transaction or transfer from DB and update account balance
 const deleteTransaction = (transactionId) => {
-  const deleteTransaction = `DELETE FROM transactions WHERE id = $1 RETURNING category_id, amount, account_id;`;
+  const deleteTransactionQuery = `
+    DELETE FROM transactions
+    WHERE id = $1
+    RETURNING category_id, amount, account_id, account_id_to;
+  `;
 
-  const updateBalance = `
-  UPDATE accounts
-  SET balance =
-    CASE
-      WHEN (SELECT type FROM categories WHERE id = $1) = 'Income' THEN balance - $2
-      WHEN (SELECT type FROM categories WHERE id = $1) = 'Expense' THEN balance + $2
-    END
-  WHERE id = $3;`;
+  const updateBalanceQuery = `
+    UPDATE accounts
+    SET balance =
+      CASE
+        WHEN (SELECT type FROM categories WHERE id = $1) = 'Income' THEN balance - $2
+        WHEN (SELECT type FROM categories WHERE id = $1) = 'Expense' THEN balance + $2
+      END
+    WHERE id = $3;
+  `;
+
+  const updateTransferBalanceQuery = `
+    UPDATE accounts
+    SET balance = balance + $1
+    WHERE id = $2;
+  `;
 
   return db
     .query("begin")
-    .then((res) => {
-      return db.query(deleteTransaction, [transactionId]);
+    .then(() => {
+      return db.query(deleteTransactionQuery, [transactionId]);
     })
-    .then((res) => {
-      const categoryId = res.rows[0].category_id;
-      const amount = res.rows[0].amount;
-      const accountId = res.rows[0].account_id;
+    .then((result) => {
+      const { category_id, amount, account_id, account_id_to } = result.rows[0];
 
-      return db.query(updateBalance, [categoryId, amount, accountId]);
+      // Retrieve the category type dynamically
+      return db.query('SELECT type FROM categories WHERE id = $1', [category_id])
+        .then((categoryResult) => {
+          const categoryType = categoryResult.rows[0].type;
+
+          if (categoryType === 'Transfer') {
+            // Handle Transfer type transaction
+            return Promise.all([
+              db.query(updateTransferBalanceQuery, [amount, account_id]),
+              db.query(updateTransferBalanceQuery, [-amount, account_id_to]),
+            ]);
+          } else {
+            // Handle other types (Income/Expense) transactions
+            return db.query(updateBalanceQuery, [category_id, amount, account_id]);
+          }
+        });
     })
-    .then((res) => {
+    .then(() => {
       return db.query("commit");
     })
     .then((data) => {
@@ -115,13 +139,14 @@ const deleteTransaction = (transactionId) => {
       return data.rowCount;
     })
     .catch((error) => {
-      console.log('Error in deleting transactions from DB', error);
+      console.log('Error deleting transactions from DB', error);
       return db.query("rollback");
     })
     .catch((err) => {
-      console.error("error while rolling back transaction:", err);
+      console.error("Error while rolling back transaction:", err);
     });
 };
+
 
 
 //To show the transaction information for pre-filled modal for editing
@@ -138,9 +163,9 @@ const getTransactionById = (transactionId) => {
     });
 };
 
-
+//Update an existing transaction in DB
 const editTransaction = (transactionData) => {
-  const getPreviousAmountQuery = `SELECT amount FROM transactions WHERE id = $1;`;
+  const getPreviousAmountQuery = `SELECT amount, account_id FROM transactions WHERE id = $1;`;
 
   const updateTransactionQuery = `
     UPDATE transactions
@@ -154,17 +179,29 @@ const editTransaction = (transactionData) => {
       id = $1;
   `;
 
-  const updateBalanceQuery = `
+  const updatePreviousAccountBalance = `
+  UPDATE accounts
+    SET balance =
+      CASE
+        WHEN (SELECT type FROM categories WHERE id = $1) = 'Income' THEN balance - $3
+        WHEN (SELECT type FROM categories WHERE id = $1) = 'Expense' THEN balance + $3
+      END
+    WHERE id = $2
+    RETURNING balance;
+  `
+
+  const updateNewAccountBalanceQuery = `
     UPDATE accounts
     SET balance =
       CASE
-        WHEN (SELECT type FROM categories WHERE id = $1) = 'Income' THEN balance - $4 + $3
-        WHEN (SELECT type FROM categories WHERE id = $1) = 'Expense' THEN balance + $4 - $3
+        WHEN (SELECT type FROM categories WHERE id = $1) = 'Income' THEN balance + $3
+        WHEN (SELECT type FROM categories WHERE id = $1) = 'Expense' THEN balance - $3
       END
     WHERE id = $2;
   `;
 
   let previousAmount;
+  let previousAccount;
 
   return db
     .query("begin")
@@ -174,24 +211,31 @@ const editTransaction = (transactionData) => {
     })
     .then((previousAmountResult) => {
       previousAmount = previousAmountResult.rows[0].amount;
+      previousAccount = previousAmountResult.rows[0].account_id;
 
-      // Execute the update query for the transaction
-      return db.query(updateTransactionQuery, [
+      return db.query(updatePreviousAccountBalance, [
+        transactionData.categoryId,
+        previousAccount,
+        previousAmount
+     ]);
+    })
+    .then(() => {
+      // Execute the update query for the account balance
+      return db.query(updateNewAccountBalanceQuery, [
+        transactionData.categoryId,
+        transactionData.accountId,
+        transactionData.amount
+      ]);
+    })
+    .then(() => {
+       // Execute the update query for the transaction
+       return db.query(updateTransactionQuery, [
         transactionData.transaction_id,
         transactionData.categoryId,
         transactionData.accountId,
         transactionData.amount,
         transactionData.transaction_date,
         transactionData.notes
-      ]);
-    })
-    .then(() => {
-      // Execute the update query for the account balance
-      return db.query(updateBalanceQuery, [
-        transactionData.categoryId,
-        transactionData.accountId,
-        transactionData.amount,
-        previousAmount
       ]);
     })
     .then(() => {

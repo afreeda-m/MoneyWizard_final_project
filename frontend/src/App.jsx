@@ -24,12 +24,15 @@ function App() {
 
   const {
     state,
+    pickTransactionDate,
     incrementDate,
     decrementDate,
     toggleAddNewModal,
     toggleEditTransactionModal,
     toggleEditTransferModal,
-    chooseTransaction
+    chooseTransaction,
+    getTransactions,
+    setPostTransactionData
   } = useApplicationData();
 
   const {
@@ -37,13 +40,14 @@ function App() {
     categoriesData,
     accountsData,
     date,
+    transactionDate,
     isAddTransactionModalOpen,
     isEditTransactionModalOpen,
-    isEditTransferModelOpen,
-    chosenTransaction
+    isEditTransferModalOpen,
+    chosenTransaction,
+    postTransactionData
   } = state;
 
-  console.log(date);
   return (
     <div className='App bg-body-tertiary'>
 
@@ -151,20 +155,25 @@ function App() {
               categoriesData={categoriesData}
               accountsData={accountsData}
               date={date}
-              isAddTransactionModalOpen={isAddTransactionModalOpen}
-              isEditTransactionModalOpen={isEditTransactionModalOpen}
-              isEditTransferModelOpen={isEditTransferModelOpen}
-              chosenTransaction={chosenTransaction}
               incrementDate={incrementDate}
               decrementDate={decrementDate}
+              transactionDate={transactionDate}
+              pickTransactionDate={pickTransactionDate}
+              isAddTransactionModalOpen={isAddTransactionModalOpen}
               toggleAddNewModal={toggleAddNewModal}
+              isEditTransactionModalOpen={isEditTransactionModalOpen}
               toggleEditTransactionModal={toggleEditTransactionModal}
+              isEditTransferModalOpen={isEditTransferModalOpen}
               toggleEditTransferModal={toggleEditTransferModal}
+              chosenTransaction={chosenTransaction}
               chooseTransaction={chooseTransaction}
               getAccountNameById={getAccountNameById}
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
+              getTransactions={getTransactions}
+              setPostTransactionData={setPostTransactionData}
+              postTransactionData={postTransactionData}
             />} />
 
             <Route path='/accounts' element={<Accounts />} />

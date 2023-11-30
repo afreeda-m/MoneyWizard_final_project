@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Dropdown from 'react-bootstrap/Dropdown';
+import axios from "axios";
 
 const TransactionListItem = (props) => {
 
@@ -20,16 +21,39 @@ const TransactionListItem = (props) => {
     amount,
     notes,
     date,
-    chosenTransaction,
+    toggleEditTransferModal,
+    isEditTransferModalOpen,
     toggleEditTransactionModal,
-    isEditTransactionModalOpen
+    isEditTransactionModalOpen,
+    chooseTransaction,
+    transaction,
+    getTransactions
   } = props;
 
-  // const handleClick = () => {
-  //   !isEditTransactionModalOpen && toggleEditTransactionModal && toggleEditTransactionModal();
-  //   !isEditTransactionModalOpen && chosenTransaction && toggleEditTransactionModal();
 
-  // };
+  // Function to toggle Edit Transaction Modal
+  const handleTransactionEdit = () => {
+    !isEditTransactionModalOpen && chooseTransaction(transaction);
+    !isEditTransactionModalOpen && toggleEditTransactionModal && toggleEditTransactionModal();
+  };
+
+  // Function to toggle Edit Transfer Modal
+  const handleTransferEdit = () => {
+    !isEditTransferModalOpen && chooseTransaction(transaction);
+    !isEditTransferModalOpen && toggleEditTransferModal && toggleEditTransferModal();
+  };
+
+  // Function to delete transaction/transfer from database
+  const handleDelete = () => {
+    axios.post(`/transactions/${transaction.id}/delete`)
+      .then((response) => {
+        getTransactions();
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error);
+      });
+  };
+
 
 
   return (
@@ -48,7 +72,7 @@ const TransactionListItem = (props) => {
             </div>
             {/* Render from and to account if this is a transfer, if not then only render the account name */}
             <div>
-              <i> {accountToName ? `${accountName} - ${accountToName}` : accountName} </i>
+              <i> {categoryType === "Transfer" ? `${accountName} - ${accountToName}` : accountName} </i>
             </div>
           </Col>
 
@@ -79,8 +103,12 @@ const TransactionListItem = (props) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item >Edit transaction</Dropdown.Item>
-                <Dropdown.Item >Delete transaction</Dropdown.Item>
+
+                {/* The onClick event on Edit button will open different modal based on the type of the category */}
+                <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit}>Edit transaction</Dropdown.Item>
+
+                <Dropdown.Item onClick={handleDelete}>Delete transaction</Dropdown.Item>
+
               </Dropdown.Menu>
 
             </Dropdown>
