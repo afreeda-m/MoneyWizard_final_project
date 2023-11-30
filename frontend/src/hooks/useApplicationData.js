@@ -56,7 +56,7 @@ function reducer(state, action) {
       return { ...state, chosenTransaction: action.transaction };
 
     case ACTIONS.SET_POST_TRANSACTION_DATA:
-      return { ...state, postTransactionData: action.postTransactionData};
+      return { ...state, postTransactionData: action.postTransactionData };
 
     default:
       throw new Error(
@@ -72,13 +72,13 @@ const useApplicationData = () => {
       transactionsData: [],
       categoriesData: [],
       accountsData: [],
-      date: moment().format("YYYY-MM"),
-      transactionDate: moment(),
+      date: moment().format("YYYY-MM"), // state for filterBar
+      transactionDate: moment(), // state for DatePicker
       isAddTransactionModalOpen: false,
       isEditTransactionModalOpen: false,
       isEditTransferModalOpen: false,
-      chosenTransaction: null,
-      postTransactionData: {
+      chosenTransaction: null, // state to pull data and autofill edit form for Transaction/Transfer
+      postTransactionData: { // state for Transaction/Transfer related form submission
         categoryId: null,
         accountId: null,
         accountToId: null,
@@ -89,7 +89,7 @@ const useApplicationData = () => {
     }
   );
 
-
+  // FUNCTION FOR FORM SUBMISSION
   const setPostTransactionData = (data) => {
     dispatch({
       type: ACTIONS.SET_POST_TRANSACTION_DATA,
@@ -121,7 +121,7 @@ const useApplicationData = () => {
   };
 
 
-  // FUNCTION FOR TRANSACTION PAGE
+  // FUNCTION FOR TRANSACTION/TRANSFER RELATED PAGE
   const toggleAddNewModal = () => {
     dispatch({
       type: ACTIONS.TOGGLE_ADD_NEW_TRANSACTION_MODAL
@@ -143,7 +143,6 @@ const useApplicationData = () => {
       transaction
     });
   };
-
   const getTransactions = () => {
     fetch('http://localhost:8080/transactions?' + new URLSearchParams({
       month: moment(state.date).format("MM"),
@@ -159,12 +158,13 @@ const useApplicationData = () => {
       });
   };
 
+
   // Fetch transactions data from backend server, dependent on the 'date' state
   useEffect(() => {
 
     getTransactions();
 
-    // Transactions data will be dependent on the 'date' state
+    // Dependent on the 'date' state
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.date]);
 
