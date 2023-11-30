@@ -1,3 +1,5 @@
+import moment from 'moment';
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -7,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 import DatePickerBox from './DatePickerBox';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-
+import { DatePicker } from "@mui/x-date-pickers";
 
 
 const TransactionModalEditTransaction = (props) => {
@@ -21,7 +23,9 @@ const TransactionModalEditTransaction = (props) => {
     getCategoryNameById,
     getAccountNameById,
     transactionDate,
-    pickTransactionDate
+    pickTransactionDate,
+    setPostTransactionData,
+    postTransactionData
   } = props;
 
   // list of categories for the dropdown selection
@@ -38,6 +42,18 @@ const TransactionModalEditTransaction = (props) => {
     );
   });
 
+  // Function to update transaction_date for DatePicker
+  const handleDateChange = (newDate) => {
+    setPostTransactionData({ ...postTransactionData, transaction_date: newDate });
+    pickTransactionDate(newDate);
+  };
+
+  const handleEditSubmit = () => {
+
+    axios.post();
+
+    toggleEditTransactionModal();
+  };
 
 
   return (
@@ -101,10 +117,10 @@ const TransactionModalEditTransaction = (props) => {
               {/* Date picker box */}
               <div>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePickerBox
-                    chosenTransaction={chosenTransaction}
-                    transactionDate={transactionDate}
-                    pickTransactionDate={pickTransactionDate}
+                  <DatePicker
+                    sx={{ width: "50%" }}
+                    value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
+                    onChange={handleDateChange}
                   />
                 </LocalizationProvider>
               </div>
@@ -127,7 +143,7 @@ const TransactionModalEditTransaction = (props) => {
         <Button variant="secondary" onClick={toggleEditTransactionModal}>
           Cancel
         </Button>
-        <Button variant="success" onClick={toggleEditTransactionModal}>
+        <Button variant="success" onClick={handleEditSubmit}>
           Update
         </Button>
       </Modal.Footer>

@@ -20,11 +20,11 @@ router.get('/', (req, res) => {
 router.post('/add', (req, res) => {
   const userId = 1;
   const transactionData = {
-    categoryId: req.body.post.categoryId,
-    accountId: req.body.post.accountId,
-    amount: req.body.post.amount,
-    transaction_date: req.body.post.transaction_date,
-    notes: req.body.post.notes
+    categoryId: req.body.categoryId,
+    accountId: req.body.accountId,
+    amount: req.body.amount,
+    transaction_date: req.body.transaction_date,
+    notes: req.body.notes
   };
 
   transactionsQueries.addTransaction(userId, transactionData)
@@ -39,9 +39,9 @@ router.post('/add', (req, res) => {
 
 //Delete a transaction OR a transfer from DB
 router.post('/:transaction_id/delete', (req, res) => {
-  const transaction_id = req.params.transaction_id;
+  const transactionId = req.params.transaction_id;
 
-  transactionsQueries.deleteTransaction(transaction_id)
+  transactionsQueries.deleteTransaction(transactionId)
     .then(() => {
       res.redirect('/transactions');
     })
@@ -71,8 +71,7 @@ router.post('/edit', (req, res) => {
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
     amount: req.body.amount,
-    transaction_date:
-      req.body.transaction_date,
+    transaction_date: req.body.transaction_date,
     notes: req.body.notes,
     transaction_id: req.body.transaction_id
   };
