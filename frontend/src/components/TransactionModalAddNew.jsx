@@ -24,7 +24,9 @@ const TransactionModalAddNew = (props) => {
     transactionDate,
     pickTransactionDate,
     chosenTransaction,
-    getTransactions
+    getTransactions,
+    setPostTransactionData,
+    postTransactionData
   } = props;
 
   // list of categories for the dropdown selection
@@ -49,38 +51,24 @@ const TransactionModalAddNew = (props) => {
 
   });
 
-
-  // state of post data, to be moved to useReducer
-  const [post, setPost] = useState({
-    categoryId: 20,
-    accountId: null,
-    accountToId: null,
-    amount: null,
-    transaction_date: moment(),
-    notes: ''
-  });
-
   // Function to handle the onChange event
   const handleInput = (event) => {
     console.log(event.target);
     const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
-    setPost({ ...post, [event.target.name]: targetValue });
-
+     setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
   };
 
   // Function to close modal and reset transactionDate state to current date
   const handleClose = () => {
-
     toggleAddNewModal();
     // pickTransactionDate(moment());
 
   };
 
   const handleDateChange = (newDate) => {
-    setPost({ ...post, transaction_date: newDate });
+    setPostTransactionData({ ...postTransactionData, transaction_date: newDate });
     pickTransactionDate(newDate);
   };
-
 
 
   // Function to submit new transaction data to backend and then close the Add New Modal
@@ -88,7 +76,7 @@ const TransactionModalAddNew = (props) => {
 
     event.preventDefault();
 
-    axios.post('/transactions/add', { post })
+    axios.post('/transactions/add', postTransactionData)
       .then((response) => {
         console.log('logging response param from handleTransactionSubmit', response);
         // Invoke getTransactions function to update transactionsData state
@@ -98,8 +86,15 @@ const TransactionModalAddNew = (props) => {
         console.error("Error posting new transaction to backend:", error);
       });
 
-    // Reset 1 key element in 'post' state to avoid resubmitting the same data
-    setPost({ ...post, categoryId: null });
+    // Reset 'postTransactionData' state to default - avoid resubmitting the same data
+    setPostTransactionData({
+      categoryId: null,
+      accountId: null,
+      accountToId: null,
+      amount: null,
+      transaction_date: moment(),
+      notes: ''
+     });
 
     toggleAddNewModal();
   };
@@ -108,13 +103,11 @@ const TransactionModalAddNew = (props) => {
   // Function to submit new transfer data to backend and then close the Add New Modal
   const handleTransferSubmit = (event) => {
 
-    // setPost({ ...post, categoryId: 20 });
-    console.log('log from handleTransferSubmit:', post.categoryId);
+    console.log('log from handleTransferSubmit:', postTransactionData.categoryId);
 
     event.preventDefault();
 
-
-    axios.post('/transfer/add', { post })
+    axios.post('/transfer/add', {...postTransactionData, categoryId: 20})
       .then((response) => {
         console.log('logging response param from handleTransferSubmit', response);
         // Invoke getTransactions function to update transactionsData state
@@ -124,8 +117,15 @@ const TransactionModalAddNew = (props) => {
         console.error("Error posting new transaction to backend:", error);
       });
 
-    // Reset 1 key element in 'post' state to avoid resubmitting the same data
-    setPost({ ...post, categoryId: null });
+// Reset 'postTransactionData' state to default - avoid resubmitting the same data
+    setPostTransactionData({
+      categoryId: null,
+      accountId: null,
+      accountToId: null,
+      amount: null,
+      transaction_date: moment(),
+      notes: ''
+     });
 
     toggleAddNewModal();
   };
