@@ -135,7 +135,11 @@ function App() {
             */}
           <Route element={<Layout />}>
 
-            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/dashboard' element={<Dashboard
+            transactionsData={transactionsData}
+            categoriesData={categoriesData}
+            accountsData={accountsData}
+            date={date}/>} />
 
             <Route path='/transactions' element={<Transactions
               transactionsData={transactionsData}
