@@ -139,7 +139,12 @@ function App() {
             transactionsData={transactionsData}
             categoriesData={categoriesData}
             accountsData={accountsData}
-            date={date}/>} />
+            chooseTransaction={chooseTransaction}
+            getAccountNameById={getAccountNameById}
+            getCategoryIconById={getCategoryIconById}
+            getCategoryNameById={getCategoryNameById}
+            getCategoryTypeById={getCategoryTypeById}/>}
+             />
 
             <Route path='/transactions' element={<Transactions
               transactionsData={transactionsData}
