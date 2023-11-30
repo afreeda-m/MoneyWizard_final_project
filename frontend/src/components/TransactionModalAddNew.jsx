@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import DatePickerBox from './DatePickerBox';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from 'moment';
@@ -82,7 +81,7 @@ const TransactionModalAddNew = (props) => {
     pickTransactionDate(newDate);
   };
 
-  
+
 
   // Function to submit new transaction data to backend and then close the Add New Modal
   const handleTransactionSubmit = (event) => {
