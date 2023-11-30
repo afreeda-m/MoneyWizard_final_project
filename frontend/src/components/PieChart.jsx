@@ -1,20 +1,19 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import { PieChart, Pie, Cell, Tooltip, Label, Legend} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Label, Legend } from "recharts";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const IncomePieChart = ({ incomeData }) => {
+const PieChartComponent = ({ data, isExpense }) => {
+  // Calculate total for percentage calculation
+  const total = data.reduce((total, item) => total + parseFloat(item.value), 0);
 
-  // Calculate total income for percentage calculation
-  const totalIncome = incomeData.reduce((total, item) => total + parseFloat(item.value), 0);
-
-  // Calculate percentage for each income category
-  const incomeDataWithPercentage = incomeData.map(item => ({
+  // Calculate percentage for each category
+  const dataWithPercentage = data.map(item => ({
     label: item.label,
-    value: parseFloat(item.value), // Convert the value to a number
+    value: parseFloat(item.value),
     type: item.type,
-    percentage:  (parseFloat(item.value) / totalIncome) * 100,
+    percentage: (parseFloat(item.value) / total) * 100,
   }));
 
   // Define fixed colors for the chart segments
@@ -45,26 +44,28 @@ const IncomePieChart = ({ incomeData }) => {
       </text>
     );
   };
+
   return (
     <Container className='mt-5'>
-      <Row className="shadow p-3 mb-5 bg-white rounded" style={{border:'1px solid #ccc'}}>
+      <Row className="shadow p-3 mb-5 bg-white rounded" style={{ border: '1px solid #ccc' }}>
         <Col className='justify-content-md-center'>
           <PieChart width={400} height={400}>
             <Pie
               dataKey="percentage"
               nameKey="label"
-              data={incomeDataWithPercentage}
+              data={dataWithPercentage}
               cx="50%"
               cy="50%"
-              outerRadius={80}
+              outerRadius={130}
               fill="#8884d8"
               label={renderCustomizedLabel}
               labelLine={false}
+              innerRadius={isExpense ? 0 : 40} // Customize innerRadius based on isExpense
             >
-              {incomeDataWithPercentage.map((entry, index) => (
+              {dataWithPercentage.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
               ))}
-               <Label layout="vertical" align="right" verticalAlign="middle" />
+              <Label layout="vertical" align="right" verticalAlign="middle" />
             </Pie>
             <Tooltip formatter={(value) => `${value.toFixed()}%`} />
             <Legend />
@@ -75,4 +76,4 @@ const IncomePieChart = ({ incomeData }) => {
   );
 };
 
-export default IncomePieChart;
+export default PieChartComponent;
