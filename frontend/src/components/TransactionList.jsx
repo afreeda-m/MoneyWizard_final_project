@@ -17,7 +17,8 @@ const TransactionList = (props) => {
     toggleEditTransferModal,
     isEditTransactionModalOpen,
     isEditTransferModalOpen,
-    chooseTransaction
+    chooseTransaction,
+    getTransactions
   } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
@@ -44,6 +45,7 @@ const TransactionList = (props) => {
         toggleEditTransferModal={toggleEditTransferModal}
         chooseTransaction={chooseTransaction}
         transaction={transaction}
+        getTransactions={getTransactions}
       />
 
     );

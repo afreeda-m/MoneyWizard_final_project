@@ -55,6 +55,7 @@ const Transactions = (props) => {
         isEditTransferModalOpen={isEditTransferModalOpen}
         toggleEditTransferModal={toggleEditTransferModal}
         chooseTransaction={chooseTransaction}
+        getTransactions={getTransactions}
       />
       <div onClick={toggleAddNewModal}>
         <FloatingActionButton />
