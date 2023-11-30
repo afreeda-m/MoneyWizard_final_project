@@ -31,7 +31,8 @@ function App() {
     toggleEditTransactionModal,
     toggleEditTransferModal,
     chooseTransaction,
-    getTransactions
+    getTransactions,
+    setPostTransactionData
   } = useApplicationData();
 
   const {
@@ -43,7 +44,8 @@ function App() {
     isAddTransactionModalOpen,
     isEditTransactionModalOpen,
     isEditTransferModalOpen,
-    chosenTransaction
+    chosenTransaction,
+    postTransactionData
   } = state;
 
   return (
@@ -161,6 +163,8 @@ function App() {
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
               getTransactions={getTransactions}
+              setPostTransactionData={setPostTransactionData}
+              postTransactionData={postTransactionData}
             />} />
 
             <Route path='/accounts' element={<Accounts />} />

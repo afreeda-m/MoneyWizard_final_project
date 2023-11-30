@@ -12,7 +12,8 @@ export const ACTIONS = {
   TOGGLE_ADD_NEW_TRANSACTION_MODAL: 'TOGGLE_ADD_NEW_TRANSACTION_MODAL',
   TOGGLE_EDIT_TRANSACTION_MODAL: 'TOGGLE_EDIT_TRANSACTION_MODAL',
   TOGGLE_EDIT_TRANSFER_MODAL: 'TOGGLE_EDIT_TRANSFER_MODAL',
-  SELECT_TRANSACTION: 'SELECT_TRANSACTION'
+  SELECT_TRANSACTION: 'SELECT_TRANSACTION',
+  SET_POST_TRANSACTION_DATA: 'SET_POST_TRANSACTION_DATA'
 };
 
 function reducer(state, action) {
@@ -54,6 +55,9 @@ function reducer(state, action) {
     case ACTIONS.SELECT_TRANSACTION:
       return { ...state, chosenTransaction: action.transaction };
 
+    case ACTIONS.SET_POST_TRANSACTION_DATA:
+      return { ...state, postTransactionData: action.postTransactionData};
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -73,9 +77,26 @@ const useApplicationData = () => {
       isAddTransactionModalOpen: false,
       isEditTransactionModalOpen: false,
       isEditTransferModalOpen: false,
-      chosenTransaction: null
+      chosenTransaction: null,
+      postTransactionData: {
+        categoryId: null,
+        accountId: null,
+        accountToId: null,
+        amount: null,
+        transaction_date: moment(),
+        notes: ''
+      }
     }
   );
+
+
+  const setPostTransactionData = (data) => {
+    dispatch({
+      type: ACTIONS.SET_POST_TRANSACTION_DATA,
+      postTransactionData: data
+    });
+  };
+
 
   // FUNCTION FOR PICKING TRANSACTION DATE
   const pickTransactionDate = (newDate) => {
@@ -175,7 +196,8 @@ const useApplicationData = () => {
     toggleEditTransactionModal,
     toggleEditTransferModal,
     chooseTransaction,
-    getTransactions
+    getTransactions,
+    setPostTransactionData
   };
 
 };

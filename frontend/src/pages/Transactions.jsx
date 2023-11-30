@@ -27,7 +27,9 @@ const Transactions = (props) => {
     getCategoryIconById,
     getCategoryNameById,
     getCategoryTypeById,
-    getTransactions
+    getTransactions,
+    setPostTransactionData,
+    postTransactionData
   } = props;
 
   return (
@@ -69,6 +71,8 @@ const Transactions = (props) => {
         transactionDate={transactionDate}
         pickTransactionDate={pickTransactionDate}
         getTransactions={getTransactions}
+        setPostTransactionData={setPostTransactionData}
+        postTransactionData={postTransactionData}
       />
 
       <TransactionModalEditTransaction
@@ -81,6 +85,8 @@ const Transactions = (props) => {
         getCategoryNameById={getCategoryNameById}
         transactionDate={transactionDate}
         pickTransactionDate={pickTransactionDate}
+        setPostTransactionData={setPostTransactionData}
+        postTransactionData={postTransactionData}
       />
 
       <TransactionModalEditTransfer
@@ -90,6 +96,8 @@ const Transactions = (props) => {
         accounts={accountsData}
         chosenTransaction={chosenTransaction}
         getAccountNameById={getAccountNameById}
+        setPostTransactionData={setPostTransactionData}
+        postTransactionData={postTransactionData}
       />
 
     </div>
