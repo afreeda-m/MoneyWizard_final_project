@@ -30,7 +30,8 @@ function App() {
     toggleAddNewModal,
     toggleEditTransactionModal,
     toggleEditTransferModal,
-    chooseTransaction
+    chooseTransaction,
+    getTransactions
   } = useApplicationData();
 
   const {
@@ -159,6 +160,7 @@ function App() {
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
+              getTransactions={getTransactions}
             />} />
 
             <Route path='/accounts' element={<Accounts />} />

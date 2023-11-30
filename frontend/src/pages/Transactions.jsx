@@ -26,7 +26,8 @@ const Transactions = (props) => {
     getAccountNameById,
     getCategoryIconById,
     getCategoryNameById,
-    getCategoryTypeById
+    getCategoryTypeById,
+    getTransactions
   } = props;
 
   return (
@@ -66,6 +67,7 @@ const Transactions = (props) => {
         accounts={accountsData}
         transactionDate={transactionDate}
         pickTransactionDate={pickTransactionDate}
+        getTransactions={getTransactions}
       />
 
       <TransactionModalEditTransaction

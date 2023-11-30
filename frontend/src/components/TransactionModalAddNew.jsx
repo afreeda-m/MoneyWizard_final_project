@@ -24,7 +24,8 @@ const TransactionModalAddNew = (props) => {
     accounts,
     transactionDate,
     pickTransactionDate,
-    chosenTransaction
+    chosenTransaction,
+    getTransactions
   } = props;
 
   // list of categories for the dropdown selection
@@ -52,7 +53,7 @@ const TransactionModalAddNew = (props) => {
 
   // state of post data, to be moved to useReducer
   const [post, setPost] = useState({
-    categoryId: null,
+    categoryId: 20,
     accountId: null,
     accountToId: null,
     amount: null,
@@ -62,7 +63,7 @@ const TransactionModalAddNew = (props) => {
 
   // Function to handle the onChange event
   const handleInput = (event) => {
-
+    console.log(event.target);
     const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
     setPost({ ...post, [event.target.name]: targetValue });
 
@@ -88,9 +89,10 @@ const TransactionModalAddNew = (props) => {
 
     event.preventDefault();
 
-    axios.post('http://localhost:8080/transactions/add', { post })
+    axios.post('/transactions/add', { post })
       .then((response) => {
         console.log('logging response param from handleTransactionSubmit', response);
+        getTransactions();
       })
       .catch((error) => {
         console.error("Error posting new transaction to backend:", error);
@@ -106,11 +108,13 @@ const TransactionModalAddNew = (props) => {
   // Function to submit new transfer data to backend and then close the Add New Modal
   const handleTransferSubmit = (event) => {
 
+    // setPost({ ...post, categoryId: 20 });
+    console.log('log from handleTransferSubmit:', post.categoryId);
+
     event.preventDefault();
 
-    setPost({ ...post, categoryId: 20})
 
-    axios.post('http://localhost:8080/transactions/transfer', { post })
+    axios.post('/transfer/add', { post })
       .then((response) => {
         console.log('logging response param from handleTransferSubmit', response);
       })
@@ -237,8 +241,8 @@ const TransactionModalAddNew = (props) => {
               </Form.Group>
 
               <Form.Group xs={6} as={Col} >
-                <Form.Label type="text" name="accountToId" onChange={handleInput}>To Account</Form.Label>
-                <Form.Select >
+                <Form.Label >To Account</Form.Label>
+                <Form.Select type="text" name="accountToId" onChange={handleInput} >
                   <option> </option>
                   {accountDropdown}
 
