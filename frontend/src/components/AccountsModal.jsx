@@ -1,12 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import '../styles/Accounts.scss';
 
 function AccountsModal(props) {
-  const { show, modalClose, modalShow, updateAccounts } = props;
-
-  const [formData, setFormData] = useState({});
+  const { show, modalClose, updateAccounts } = props;
 
   const submitForm = (event) => {
     event.preventDefault();
@@ -33,7 +31,7 @@ function AccountsModal(props) {
       .catch(function (error) {
         console.log(error);
       });
-    setFormData(value);
+
     modalClose();
   };
 

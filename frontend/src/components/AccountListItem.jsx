@@ -1,5 +1,6 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React from "react";
+import { Image } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -7,7 +8,6 @@ import Row from "react-bootstrap/Row";
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import { NumericFormat } from "react-number-format";
 import icon from "../mocks/income.png";
-import { Image } from "react-bootstrap";
 import '../styles/Accounts.scss';
 
 const AccountListItem = (props) => {
