@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const transactionsQueries = require('../db/queries/transactions_query.js');
 
+//get all transactions for a user by month and year (default current month/year)
 router.get('/', (req, res) => {
   const userId = 1; //will need to extract this from cookies (set cookie session at initial login then extract the user_id every time)
   const year = req.query.year;
@@ -15,6 +16,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// Add a new transaction to the DB
 router.post('/add', (req, res) => {
   const userId = 1;
   const transactionData = {
@@ -35,8 +37,8 @@ router.post('/add', (req, res) => {
     });
 });
 
+//Delete a transaction OR a transfer from DB
 router.post('/:transaction_id/delete', (req, res) => {
-
   const transactionId = req.params.transaction_id;
 
   transactionsQueries.deleteTransaction(transactionId)
@@ -49,6 +51,7 @@ router.post('/:transaction_id/delete', (req, res) => {
     });
 });
 
+//Get transaction information from DB to auto-fill edit modal
 router.get('/edit', (req, res) => {
   const transactionId = req.query.transaction_id;
 
@@ -62,6 +65,7 @@ router.get('/edit', (req, res) => {
     });
 });
 
+//Update the DB with new transaction information
 router.post('/edit', (req, res) => {
   const transactionData = {
     categoryId: req.body.categoryId,
@@ -82,6 +86,7 @@ router.post('/edit', (req, res) => {
     });
 });
 
+//Get sum of all transactions based on category (for reports page)
 router.get('/transactionsByCategory', (req, res) => {
   const userId = 1;
   const date = req.query.date;

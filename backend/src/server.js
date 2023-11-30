@@ -7,6 +7,7 @@ const categoriesRouter = require('./routes/categories.js')
 const accountsRouter = require('./routes/accounts.js')
 const userRouter = require('./routes/user_auth.js')
 const transfersRouter = require('./routes/transfers.js')
+const cookieSession = require('cookie-session');
 
 
 app.use(cors());
@@ -16,7 +17,13 @@ app.use(express.static('public'));
 // middleware set up to parse the JSON body
 app.use(express.json());
 
-app.use('/login', userRouter)
+app.use(cookieSession({
+  name: "session",
+  keys: ['lighthouselabsPasswordKey'],
+  maxAge: 24 * 60 * 60 * 1000
+}));
+
+app.use('/user', userRouter);
 app.use('/transactions', transactionsRouter);
 app.use('/transfer', transfersRouter);
 app.use('/', categoriesRouter);

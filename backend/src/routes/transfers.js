@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const transfersQueries = require('../db/queries/transfers_query.js')
 
+//Add new transfer to the DB
 router.post('/add', (req, res) => {
   const transferData = {
     userId: 1,
@@ -23,6 +24,7 @@ router.post('/add', (req, res) => {
   })
 })
 
+//Update an existing transfer in DB
 router.post('/edit', (req, res) => {
   const transferData = {
     transactionId: req.body.transaction_id,

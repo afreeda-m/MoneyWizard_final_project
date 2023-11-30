@@ -8,9 +8,26 @@ const checkUserCredentials = (email) => {
     .query(query, [email])
     .then((result) => {
       return result.rows[0];
+    })
+    .catch((err) => {
+      console.error("Error checking users:", err);
     });
 };
 
+const addNewUser = (email, name, password) => {
+  const query =  `INSERT INTO users (email, name, password) VALUES ($1, $2, $3) RETURNING id;`
+
+  return db
+    .query(query, [email, name, password])
+    .then((result) => {
+      return result.rows[0].id
+    })
+    .catch((err) => {
+      console.error("Error adding user:", err);
+    });
+}
+
 module.exports = {
-  checkUserCredentials
+  checkUserCredentials,
+  addNewUser
 };
