@@ -10,9 +10,11 @@ import DatePickerBox from './DatePickerBox';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from 'moment';
+import { useState } from 'react';
+import axios from 'axios';
 
 
-const TransactionModal = (props) => {
+const TransactionModalAddNew = (props) => {
 
   const {
     isAddTransactionModalOpen,
@@ -25,22 +27,92 @@ const TransactionModal = (props) => {
 
   // list of categories for the dropdown selection
   const categoryDropdown = categories.map((category) => {
+
     return (
-      <option key={category.id}>{category.category_name}</option>
+      <option key={category.id} value={category.id}>
+        {category.category_name}
+      </option>
     );
+
   });
 
   // list of accounts for the dropdown selection
   const accountDropdown = accounts.map((account) => {
+
     return (
-      <option key={account.id}>{account.account_name}</option>
+      <option key={account.id} value={account.id}>
+        {account.account_name}
+      </option>
     );
+
   });
 
-  const handleClose = () => {
-    toggleAddNewModal();
-    pickTransactionDate(moment());
+
+  // state of post data, to be moved to useReducer
+  const [post, setPost] = useState({
+    categoryId: null,
+    accountId: null,
+    accountToId: null,
+    amount: null,
+    transaction_date: transactionDate,
+    notes: ''
+  });
+
+  // Function to handle the onChange event
+  const handleInput = (event) => {
+
+    const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
+    setPost({ ...post, [event.target.name]: targetValue });
+
   };
+
+  // Function to close modal and reset transactionDate state to current date
+  const handleClose = () => {
+
+    toggleAddNewModal();
+    // pickTransactionDate(moment());
+
+  };
+
+
+
+  // Function to submit new transaction data to backend and then close the Add New Modal
+  const handleTransactionSubmit = (event) => {
+
+    // console.log(event);
+    // console.log('log inside handleTransSubmit:', moment(transactionDate).format("YYYY-MM-DD"));
+
+    event.preventDefault();
+
+    axios.post('http://localhost:8080/transactions/add', { post })
+      .then((response) => {
+        console.log('logging response param from handleTransactionSubmit', response);
+      })
+      .catch((error) => {
+        console.error("Error posting new transaction to backend:", error);
+      });
+
+    toggleAddNewModal();
+  };
+
+
+  // Function to submit new transfer data to backend and then close the Add New Modal
+  const handleTransferSubmit = (event) => {
+
+    event.preventDefault();
+
+    axios.post('http://localhost:8080/transactions/transfer', { post })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error posting new transaction to backend:", error);
+      });
+
+    toggleAddNewModal();
+  };
+
+
 
   return (
 
@@ -59,7 +131,7 @@ const TransactionModal = (props) => {
           {/* TRANSACTION TAB using grid layout */}
           <Tab eventKey="transaction" title="TRANSACTION">
 
-            <Form>
+            <Form >
 
               {/* 2 input fields in the same row for Category selection, Account selection */}
               <Row className='mb-3' >
@@ -67,7 +139,7 @@ const TransactionModal = (props) => {
                 {/* Dropdown selection for Category */}
                 <Form.Group xs={6} as={Col}>
                   <Form.Label >Category</Form.Label>
-                  <Form.Select >
+                  <Form.Select type="text" name="categoryId" onChange={handleInput}>
                     <option> </option>
                     {categoryDropdown}
 
@@ -77,7 +149,7 @@ const TransactionModal = (props) => {
                 {/* Dropdown selection for Account */}
                 <Form.Group xs={6} as={Col}>
                   <Form.Label >Account</Form.Label>
-                  <Form.Select >
+                  <Form.Select type="text" name="accountId" onChange={handleInput} >
                     <option> </option>
                     {accountDropdown}
 
@@ -93,7 +165,7 @@ const TransactionModal = (props) => {
                   <Form.Label >Amount</Form.Label>
                   <InputGroup>
                     <InputGroup.Text >$</InputGroup.Text>
-                    <Form.Control />
+                    <Form.Control type="number" name="amount" onChange={handleInput} />
                   </InputGroup>
                 </Form.Group>
               </Row>
@@ -101,9 +173,9 @@ const TransactionModal = (props) => {
               {/* Input field for Date */}
               <Row className="mb-3">
                 <Form.Group as={Col}>
-                  <Form.Label >Date</Form.Label>
+                  <Form.Label  >Date</Form.Label>
                   {/* Date picker box */}
-                  <div>
+                  <div >
                     <LocalizationProvider dateAdapter={AdapterMoment}>
                       <DatePickerBox
                         transactionDate={transactionDate}
@@ -115,15 +187,22 @@ const TransactionModal = (props) => {
               </Row>
 
               {/* Input field for Notes */}
-              <Row className="mb-3">
+              <Row className="mb-4">
                 <Form.Group as={Col}>
                   <Form.Label >Notes</Form.Label>
-                  <Form.Control as="textarea" />
+                  <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
                 </Form.Group>
               </Row>
 
             </Form>
-
+            <div className='d-flex justify-content-around mb-2'>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="success" onClick={handleTransactionSubmit}>
+                Save
+              </Button>
+            </div>
           </Tab>
 
           {/* TRANSFER TAB using grid layout */}
@@ -180,30 +259,30 @@ const TransactionModal = (props) => {
             </Row>
 
             {/* Input field for Notes */}
-            <Row className="mb-3">
+            <Row className="mb-4">
               <Form.Group as={Col}>
                 <Form.Label >Notes</Form.Label>
                 <Form.Control as="textarea" />
               </Form.Group>
             </Row>
 
+            <div className='d-flex justify-content-around mb-2'>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="success" onClick={handleTransferSubmit}>
+                Save
+              </Button>
+            </div>
+
           </Tab>
 
         </Tabs>
       </Modal.Body>
-
-      <Modal.Footer className='d-flex justify-content-center'>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant="success" onClick={toggleAddNewModal}>
-          Save
-        </Button>
-      </Modal.Footer>
 
     </Modal>
   );
 
 };
 
-export default TransactionModal;
+export default TransactionModalAddNew;
