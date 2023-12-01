@@ -7,10 +7,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import { FaBullseye } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 
-function NavBar() {
+function NavBar(props) {
   const navigate = useNavigate();
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const {isLoggedIn, setIsLoggedIn, setUsername, username} = props;
 
   const submitLogin = (event) => {
     event.preventDefault();
@@ -29,9 +29,9 @@ function NavBar() {
       data: value,
     })
       .then((response) => {
-        console.log(response);
         if(response.status == 200){
-          setLoggedIn(true);
+          setIsLoggedIn(true);
+          setUsername(response.data.name);
           navigate("/dashboard");
         }
       })
@@ -39,6 +39,29 @@ function NavBar() {
         console.log(error);
       });
   };
+
+  const performLogout = (event) => {
+    event.preventDefault();
+    axios({
+      method: "post",
+      url: "/user/logout",
+      header: {
+        "Content-Type": "application/json",
+      }
+    })
+    .then((response) => {
+      if(response.status == 200) {
+        setIsLoggedIn(false);
+        setUsername('');
+        navigate("/");
+      }else{
+        console.log("Couldn't log user out", response);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
   return (
 
@@ -56,7 +79,7 @@ function NavBar() {
       <Navbar.Collapse className="justify-content-end">
 
         {/* LOGIN FORM */}
-        {!loggedIn && <Form inline="true" id="login-form" onSubmit={submitLogin}>
+        {!isLoggedIn && <Form inline="true" id="login-form" onSubmit={submitLogin}>
           <InputGroup>
 
             {/* Username Field */}
@@ -82,6 +105,7 @@ function NavBar() {
           </InputGroup>
         </Form>}
 
+        {isLoggedIn && <div><span>Hello {username}</span><Button onClick={performLogout}>Logout</Button></div>}
 
       {/* CODE TO DISPLAY SIGNED IN USER */}
       {/* <Navbar.Text>

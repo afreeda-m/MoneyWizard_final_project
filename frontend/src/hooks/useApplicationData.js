@@ -1,6 +1,6 @@
-import { useReducer, useEffect } from "react";
-import moment from "moment";
 import axios from 'axios';
+import moment from "moment";
+import { useEffect, useReducer } from "react";
 
 export const ACTIONS = {
   SET_TRANSACTIONS_DATA: 'SET_TRANSACTION_DATA',
@@ -13,7 +13,9 @@ export const ACTIONS = {
   TOGGLE_EDIT_TRANSACTION_MODAL: 'TOGGLE_EDIT_TRANSACTION_MODAL',
   TOGGLE_EDIT_TRANSFER_MODAL: 'TOGGLE_EDIT_TRANSFER_MODAL',
   SELECT_TRANSACTION: 'SELECT_TRANSACTION',
-  SET_POST_TRANSACTION_DATA: 'SET_POST_TRANSACTION_DATA'
+  SET_POST_TRANSACTION_DATA: 'SET_POST_TRANSACTION_DATA',
+  SET_LOGGED_IN: 'SET_LOGGED_IN',
+  SET_USERNAME: 'SET_USERNAME',
 };
 
 function reducer(state, action) {
@@ -40,6 +42,11 @@ function reducer(state, action) {
     case ACTIONS.DECREMENT_DATE:
       return { ...state, date: action.newDate };
 
+    case ACTIONS.SET_LOGGED_IN:
+      return {...state, isLoggedIn: action.isLoggedIn}
+
+    case ACTIONS.SET_USERNAME:
+      return {...state, username: action.username}
 
     // ACTION FOR TRANSACTION RELATED COMPONENTS
     // Update state to Open/Close the Add New Transaction modal
@@ -85,7 +92,9 @@ const useApplicationData = () => {
         amount: null,
         transaction_date: moment(),
         notes: ''
-      }
+      },
+      isLoggedIn: false,
+      username: '',
     }
   );
 
@@ -120,6 +129,20 @@ const useApplicationData = () => {
     });
   };
 
+  const setIsLoggedIn = (loggedIn) => {
+    dispatch({
+      type: ACTIONS.SET_LOGGED_IN,
+      isLoggedIn: loggedIn
+    });
+  }
+
+
+  const setUsername = (username) => {
+    dispatch({
+      type: ACTIONS.SET_USERNAME,
+      username: username
+    })
+  }
 
   // FUNCTION FOR TRANSACTION/TRANSFER RELATED PAGE
   const toggleAddNewModal = () => {
@@ -186,6 +209,25 @@ const useApplicationData = () => {
     // No dependency for categories and accounts data, only retrieve when the page reload
   }, []);
 
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "/user/status",
+      header: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    })
+      .then((response) => {
+        if(response.status == 200 && response.data.name){
+          setIsLoggedIn(true);
+          setUsername(response.data.name);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [])
 
   return {
     state,
@@ -197,7 +239,9 @@ const useApplicationData = () => {
     toggleEditTransferModal,
     chooseTransaction,
     getTransactions,
-    setPostTransactionData
+    setPostTransactionData,
+    setIsLoggedIn,
+    setUsername
   };
 
 };

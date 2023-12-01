@@ -4,7 +4,9 @@ const dbQueries = require('../db/queries/accounts_query.js')
 
 // GET accounts and total balance for a user
 router.get('/accounts', async (req, res) => {
-  const userId = 1;
+  // const userId = req.session.user_id;
+  const userId = 1
+
 
   try {
     //  execute queries concurrently

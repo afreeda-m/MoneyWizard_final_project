@@ -1,22 +1,22 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Image from 'react-bootstrap/Image';
 import Carousel from 'react-bootstrap/Carousel';
-import NavBar from '../components/NavBar';
-import Header from '../components/Header';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Image from 'react-bootstrap/Image';
+import Row from 'react-bootstrap/Row';
+import { FaCashRegister, FaChartPie, FaExchangeAlt, FaMoneyBillAlt, FaRocket, FaTags, FaWallet } from 'react-icons/fa'; // Import the FontAwesome icons
 import Footer from '../components/Footer';
-import { FaMoneyBillAlt, FaChartPie, FaWallet, FaCashRegister, FaTags, FaExchangeAlt, FaRocket } from 'react-icons/fa'; // Import the FontAwesome icons
+import Header from '../components/Header';
+import NavBar from '../components/NavBar';
 
 
-const Home = () => {
+const Home = (props) => {
   return (
     <Container fluid className="p-0">
 
       {/* Navbar */}
-      <NavBar />
+      <NavBar isLoggedIn={props.isLoggedIn} setIsLoggedIn={props.setIsLoggedIn} setUsername={props.setUsername} username={props.username}/>
 
       {/* For this page, I want the `Footer` component to hug the bottom of the
         * page, so I need to make the `main` element take 85% of the viewport
