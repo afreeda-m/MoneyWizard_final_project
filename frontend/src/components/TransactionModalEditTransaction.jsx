@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import DatePickerBox from './DatePickerBox';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DatePicker } from "@mui/x-date-pickers";
@@ -25,20 +24,25 @@ const TransactionModalEditTransaction = (props) => {
     transactionDate,
     pickTransactionDate,
     setPostTransactionData,
-    postTransactionData
+    postTransactionData,
+    getTransactions
   } = props;
 
   // list of categories for the dropdown selection
   const categoryDropdown = categories.map((category) => {
     return (
-      <option key={category.id}>{category.category_name}</option>
+      <option key={category.id} value={category.id}>
+        {category.category_name}
+      </option>
     );
   });
 
   // list of accounts for the dropdown selection
   const accountDropdown = accounts.map((account) => {
     return (
-      <option key={account.id}>{account.account_name}</option>
+      <option key={account.id} value={account.id}>
+        {account.account_name}
+      </option>
     );
   });
 
@@ -48,9 +52,49 @@ const TransactionModalEditTransaction = (props) => {
     pickTransactionDate(newDate);
   };
 
-  const handleEditSubmit = () => {
+  // Update postTransactionData state to the target Transaction for editing when opening the Modal
+  const handleOpen = () => {
+    setPostTransactionData({
+      categoryId: chosenTransaction.category_id,
+      accountId: chosenTransaction.account_id,
+      accountToId: chosenTransaction.account_to_id,
+      amount: chosenTransaction.amount,
+      transaction_date: moment(chosenTransaction.transaction_date),
+      notes: chosenTransaction.notes
+    });
+  };
 
-    axios.post();
+  // Update postTransactionDate whenever there is a change in the form
+  const handleInput = (event) => {
+
+    // Convert data to number expect for notes
+    const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
+
+    // Update postTransactionData state on each input change
+    setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
+  };
+
+  const handleSubmit = (event) => {
+
+    event.preventDefault();
+
+    axios.post(`/transactions/${chosenTransaction.id}/edit`, postTransactionData)
+      .then((response) => {
+        getTransactions();
+      })
+      .catch((error) => {
+        console.error("Error editing transaction:", error);
+      });
+
+    // Reset 'postTransactionData' state to default after submitting data to backend
+    setPostTransactionData({
+      categoryId: null,
+      accountId: null,
+      accountToId: null,
+      amount: null,
+      transaction_date: moment(),
+      notes: ''
+    });
 
     toggleEditTransactionModal();
   };
@@ -59,7 +103,14 @@ const TransactionModalEditTransaction = (props) => {
   return (
 
     // Adjust styling for the modal. Move 130px to the right and center vertically
-    <Modal style={{ marginLeft: "130px" }} show={isEditTransactionModalOpen} onHide={toggleEditTransactionModal} size="md" centered >
+    <Modal
+      style={{ marginLeft: "130px" }}
+      show={isEditTransactionModalOpen}
+      onHide={toggleEditTransactionModal}
+      onShow={handleOpen}
+      size="md"
+      centered
+    >
 
       <Modal.Header className='d-flex justify-content-center'>
         <Modal.Title>EDIT TRANSACTION</Modal.Title>
@@ -75,9 +126,10 @@ const TransactionModalEditTransaction = (props) => {
             {/* Dropdown selection for Category */}
             <Form.Group xs={6} as={Col}>
               <Form.Label >Category</Form.Label>
-              <Form.Select >
+              <Form.Select type="text" name="categoryId" onChange={handleInput} >
                 <option>
                   {chosenTransaction && getCategoryNameById(chosenTransaction.category_id, categories)}
+                  {/* {getCategoryNameById(postTransactionData.category_id, categories)} */}
                 </option>
                 {categoryDropdown}
 
@@ -87,7 +139,7 @@ const TransactionModalEditTransaction = (props) => {
             {/* Dropdown selection for Account */}
             <Form.Group xs={6} as={Col}>
               <Form.Label >Account</Form.Label>
-              <Form.Select >
+              <Form.Select type="text" name="accountId" onChange={handleInput} >
                 <option>
                   {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
                 </option>
@@ -105,7 +157,11 @@ const TransactionModalEditTransaction = (props) => {
               <Form.Label >Amount</Form.Label>
               <InputGroup>
                 <InputGroup.Text >$</InputGroup.Text>
-                <Form.Control defaultValue={chosenTransaction && chosenTransaction.amount} />
+                <Form.Control
+                  name="amount"
+                  onChange={handleInput}
+                  defaultValue={chosenTransaction && chosenTransaction.amount}
+                />
               </InputGroup>
             </Form.Group>
           </Row>
@@ -131,7 +187,12 @@ const TransactionModalEditTransaction = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label >Notes</Form.Label>
-              <Form.Control as="textarea" defaultValue={chosenTransaction && chosenTransaction.notes} />
+              <Form.Control
+                as="textarea"
+                name="notes"
+                onChange={handleInput}
+                defaultValue={chosenTransaction && chosenTransaction.notes}
+              />
             </Form.Group>
           </Row>
 
@@ -143,7 +204,7 @@ const TransactionModalEditTransaction = (props) => {
         <Button variant="secondary" onClick={toggleEditTransactionModal}>
           Cancel
         </Button>
-        <Button variant="success" onClick={handleEditSubmit}>
+        <Button variant="success" onClick={handleSubmit}>
           Update
         </Button>
       </Modal.Footer>

@@ -66,14 +66,14 @@ router.get('/edit', (req, res) => {
 });
 
 //Update the DB with new transaction information
-router.post('/edit', (req, res) => {
+router.post('/:transaction_id/edit', (req, res) => {
   const transactionData = {
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
     amount: req.body.amount,
     transaction_date: req.body.transaction_date,
     notes: req.body.notes,
-    transaction_id: req.body.transaction_id
+    transaction_id: req.params.transaction_id
   };
 
   transactionsQueries.editTransaction(transactionData)
