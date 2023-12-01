@@ -52,9 +52,8 @@ const TransactionModalEditTransaction = (props) => {
     pickTransactionDate(newDate);
   };
 
+  // Update postTransactionData state to the target Transaction for editing when opening the Modal
   const handleOpen = () => {
-
-    // Update postTransactionData state to the target Transaction for editing when opening the Modal
     setPostTransactionData({
       categoryId: chosenTransaction.category_id,
       accountId: chosenTransaction.account_id,
@@ -63,10 +62,9 @@ const TransactionModalEditTransaction = (props) => {
       transaction_date: moment(chosenTransaction.transaction_date),
       notes: chosenTransaction.notes
     });
-
-    // console.log('logging from handleOpen:', postTransactionData);
   };
 
+  // Update postTransactionDate whenever there is a change in the form
   const handleInput = (event) => {
 
     // Convert data to number expect for notes
@@ -76,20 +74,19 @@ const TransactionModalEditTransaction = (props) => {
     setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
   };
 
-  const handleEditSubmit = (event) => {
+  const handleSubmit = (event) => {
 
     event.preventDefault();
 
     axios.post(`/transactions/${chosenTransaction.id}/edit`, postTransactionData)
       .then((response) => {
-        console.log('logging from handleEditSubmit:', response);
         getTransactions();
       })
       .catch((error) => {
         console.error("Error editing transaction:", error);
       });
 
-    // Reset 'postTransactionData' state to default
+    // Reset 'postTransactionData' state to default after submitting data to backend
     setPostTransactionData({
       categoryId: null,
       accountId: null,
@@ -142,7 +139,7 @@ const TransactionModalEditTransaction = (props) => {
             {/* Dropdown selection for Account */}
             <Form.Group xs={6} as={Col}>
               <Form.Label >Account</Form.Label>
-              <Form.Select onChange={handleInput} >
+              <Form.Select type="text" name="accountId" onChange={handleInput} >
                 <option>
                   {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
                 </option>
@@ -207,7 +204,7 @@ const TransactionModalEditTransaction = (props) => {
         <Button variant="secondary" onClick={toggleEditTransactionModal}>
           Cancel
         </Button>
-        <Button variant="success" onClick={handleEditSubmit}>
+        <Button variant="success" onClick={handleSubmit}>
           Update
         </Button>
       </Modal.Footer>
