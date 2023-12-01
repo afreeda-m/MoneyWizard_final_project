@@ -7,6 +7,8 @@ import './App.scss';
 
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "./helpers/helperFunctions";
+import useApplicationData from './hooks/useApplicationData';
 import Accounts from './pages/Accounts';
 import Budgets from './pages/Budgets';
 import CategoriesManagement from './pages/CategoriesManagement';
@@ -16,8 +18,6 @@ import Layout from './pages/Layout';
 import RecurringTransactions from './pages/RecurringTransactions';
 import Reports from './pages/Reports';
 import Transactions from './pages/Transactions';
-import useApplicationData from './hooks/useApplicationData';
-import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "./helpers/helperFunctions";
 
 
 function App() {
@@ -32,7 +32,9 @@ function App() {
     toggleEditTransferModal,
     chooseTransaction,
     getTransactions,
-    setPostTransactionData
+    setPostTransactionData,
+    setIsLoggedIn,
+    setUsername,
   } = useApplicationData();
 
   const {
@@ -45,7 +47,9 @@ function App() {
     isEditTransactionModalOpen,
     isEditTransferModalOpen,
     chosenTransaction,
-    postTransactionData
+    postTransactionData,
+    isLoggedIn,
+    username,
   } = state;
 
   return (
@@ -87,7 +91,7 @@ function App() {
         <Routes>
 
           {/* The Root Route for Money Wizard */}
-          <Route path="/" element={<Home />}> </Route>
+          <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn = {setIsLoggedIn} setUsername={setUsername} username={username}/>}> </Route>
 
 
           {/* REACT-ROUTER: THE OUTLET COMPONENT
@@ -137,9 +141,9 @@ function App() {
             * components below. With this approach, we only need one additional
             * `Layout.jsx` component.
             */}
-          <Route element={<Layout />}>
+          <Route element={<Layout isLoggedIn={isLoggedIn} setIsLoggedIn = {setIsLoggedIn} setUsername={setUsername} username={username}/>}>
 
-            <Route path='/dashboard' element={<Dashboard />} />
+            {isLoggedIn && <Route path='/dashboard' element={<Dashboard />} />}
 
             <Route path='/transactions' element={<Transactions
               transactionsData={transactionsData}
@@ -165,7 +169,7 @@ function App() {
               getTransactions={getTransactions}
               setPostTransactionData={setPostTransactionData}
               postTransactionData={postTransactionData}
-            />} />
+            />} />}
 
             <Route path='/accounts' element={<Accounts />} />
             <Route path='/reports' element={<Reports />} />

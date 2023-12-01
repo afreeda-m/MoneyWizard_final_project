@@ -14,6 +14,20 @@ const checkUserCredentials = (email) => {
     });
 };
 
+// Add this function to check user credentials
+const getUserById = (user_id) => {
+  const query = 'SELECT * FROM users WHERE id = $1';
+
+  return db
+    .query(query, [user_id])
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.error("Error checking users by id:", err);
+    });
+};
+
 const addNewUser = (email, name, password) => {
   const query =  `INSERT INTO users (email, name, password) VALUES ($1, $2, $3) RETURNING id;`
 
@@ -29,5 +43,6 @@ const addNewUser = (email, name, password) => {
 
 module.exports = {
   checkUserCredentials,
-  addNewUser
+  addNewUser,
+  getUserById
 };

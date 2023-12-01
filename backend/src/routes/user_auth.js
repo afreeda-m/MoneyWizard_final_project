@@ -24,6 +24,9 @@ router.post("/register", (req, res) => {
         .then((userID) => {
           // set the userID cookie
           req.session.user_id = userID;
+          req.session.save(function(err) {
+            console.log("Error saving session", err);
+          })
 
           res.redirect("/dashboard");
         });
@@ -50,15 +53,39 @@ router.post("/login", (req, res) => {
       }
       req.session.user_id = foundUser.id;
       console.log("Redirecting to dashboard");
-      res.status(200).send()
+      res.status(200).json({"name": foundUser.name})
     });
+});
+
+router.post("/status", (req, res) => {
+
+  if (!req.session || !req.session.user_id) {
+    console.log("No session or userID found");
+    res.status(200).json({"name": ''})
+    return;
+  }
+
+  const userID = req.session.user_id
+
+  userQueries.getUserById(userID)
+    .then((foundUser) => {
+      if (!foundUser) {
+        console.log("No user found in DB");
+        res.status(200).json({"name": ''})
+        return;
+      }
+      console.log("User found", foundUser.name);
+      res.status(200).json({"name": foundUser.name})
+      return;
+    });
+
 });
 
 //Logout user and clear cookies
 router.post("/logout", (req, res) => {
 
   req.session = null;
-  res.redirect("/login");
+  res.status(200).send();
 });
 
 module.exports = router;

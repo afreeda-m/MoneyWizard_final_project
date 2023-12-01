@@ -8,7 +8,7 @@ import SideBar from '../components/SideBar';
 // This is the `Layout` page, which handles the layout for all the user pages.
 // This page consists of the sidebar and a second `div` consisting of the
 // Navbar, main component (`Outlet` component) and Footer.
-const Layout = () => {
+const Layout = (props) => {
 
   return (
 
@@ -26,7 +26,7 @@ const Layout = () => {
 
       <div className="d-flex flex-column" style={{ width: "calc(100% - 250px)" }}>
 
-        <NavBar />
+        <NavBar isLoggedIn={props.isLoggedIn} setIsLoggedIn={props.setIsLoggedIn} setUsername={props.setUsername} username={props.username}/>
         <Outlet />
         <Footer />
       </div>
