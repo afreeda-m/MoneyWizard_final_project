@@ -97,8 +97,11 @@ const Transactions = (props) => {
         accounts={accountsData}
         chosenTransaction={chosenTransaction}
         getAccountNameById={getAccountNameById}
+        transactionDate={transactionDate}
+        pickTransactionDate={pickTransactionDate}
         setPostTransactionData={setPostTransactionData}
         postTransactionData={postTransactionData}
+        getTransactions={getTransactions}
       />
 
     </div>
