@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 import Dropdown from 'react-bootstrap/Dropdown';
 import axios from "axios";
+import { NumericFormat } from "react-number-format";
 
 const TransactionListItem = (props) => {
 
@@ -83,11 +84,16 @@ const TransactionListItem = (props) => {
           </Col>
 
           <Col xs={2} className="d-flex flex-column align-items-end" >
-            {/* Amount shows in red for expense, green for income and blue for transfer*/}
-            <div className={categoryType === "Expense" ? "text-danger" : categoryType === "Income" ? "text-success" : "text-primary"}  >
-              <b> {amount} </b>
-            </div>
-            {/* Change date to the desired format */}
+            <b>
+              {/* Amount shows in red for expense, green for income and blue for transfer*/}
+              <NumericFormat
+                className={categoryType === "Expense" ? "text-danger font-weight-bold" : categoryType === "Income" ? "text-success" : "text-primary"}
+                value={amount.toFixed(2)}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"} />
+            </b>
+
             <div>
               <i>{moment(date).format("YYYY-MM-DD")}</i>
             </div>
@@ -107,7 +113,7 @@ const TransactionListItem = (props) => {
                 {/* The onClick event on Edit button will open different modal based on the type of the category */}
                 <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit}>Edit transaction</Dropdown.Item>
 
-                <Dropdown.Item onClick={handleDelete}>Delete transaction</Dropdown.Item>
+                <Dropdown.Item className="text-danger" onClick={handleDelete}>Delete transaction</Dropdown.Item>
 
               </Dropdown.Menu>
 
