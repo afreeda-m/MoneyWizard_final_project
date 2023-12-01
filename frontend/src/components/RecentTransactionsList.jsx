@@ -11,6 +11,7 @@ const  RecentTransactionsList = (props) => {
     getCategoryIconById,
     getCategoryNameById,
     getCategoryTypeById,
+    disableEditingAndDeleting,
    } = props;
 
   return <TransactionList
@@ -21,7 +22,9 @@ const  RecentTransactionsList = (props) => {
   getAccountNameById={getAccountNameById}
   getCategoryIconById={getCategoryIconById}
   getCategoryNameById={getCategoryNameById}
-  getCategoryTypeById={getCategoryTypeById}/>;
+  getCategoryTypeById={getCategoryTypeById}
+  disableEditingAndDeleting={disableEditingAndDeleting}
+  />;
 };
 
 export default RecentTransactionsList;

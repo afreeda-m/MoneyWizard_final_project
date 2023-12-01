@@ -80,7 +80,7 @@ const Dashboard = (props) => {
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
               chosenTransaction={chosenTransaction}
-
+              disableEditingAndDeleting={true}
             />
           </div>
         </Col>
