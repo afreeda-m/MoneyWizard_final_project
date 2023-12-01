@@ -93,6 +93,7 @@ function NavBar(props) {
             {/* Password Field */}
             <Form.Control
               name="password"
+              type="password"
               placeholder="Password"
               aria-label="Password"
               aria-describedby="Password Field"
