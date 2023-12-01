@@ -6,7 +6,7 @@ import { Cell, Label, Legend, Pie, PieChart, Tooltip } from "recharts";
 import AccountList from "../components/AccountList";
 import AccountsModal from "../components/AccountsModal";
 import FloatingActionButton from "../components/FloatingActionButton";
-import "../styles/Accounts.scss";
+// import "../styles/Accounts.scss";
 
 
 const Accounts = () => {
@@ -19,31 +19,31 @@ const Accounts = () => {
 
   const modalShow = () => {
     setShow(true);
-  }
+  };
 
   const deleteAccount = (account_id) => {
     axios.post('/accounts/' + account_id + '/delete')
-    .then((response) => {
-      axios.get("/accounts").then((response) => {
-        setAccounts(response.data.accounts);
+      .then((response) => {
+        axios.get("/accounts").then((response) => {
+          setAccounts(response.data.accounts);
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
       });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+  };
 
   useEffect(() => {
     axios.get('/accounts')
-    .then((response) => {
-      setAccounts(response.data.accounts)
-    });
+      .then((response) => {
+        setAccounts(response.data.accounts);
+      });
   }, []);
 
 
   const totalAccountsBalance = accounts
-  .map((account) => account.balance)
-  .reduce((a, b) => a + b, 0);
+    .map((account) => account.balance)
+    .reduce((a, b) => a + b, 0);
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#FFD300", "#8f2d56", "#BE0AFF", "#f15bb5"];
 
@@ -77,30 +77,32 @@ const Accounts = () => {
 
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
-      <div className="accounts">
-        <h1 className="accounts-title">Accounts</h1>
-        <PieChart width={1200} height={600}>
-          <Pie
-            data={accounts}
-            dataKey="balance"
-            nameKey="account_name"
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={200}
-            fill="#8884d8"
-          >
-            {accounts.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-            <Label layout="vertical" align="right" verticalAlign="middle" />
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
 
-        <Col className="h1 d-flex flex-column align-items-end text-end">
+      {/* <div className="accounts"> */}
+      <h1 className="accounts-title">Accounts</h1>
+
+      <PieChart className="mb-3" width={1200} height={600}>
+        <Pie
+          data={accounts}
+          dataKey="balance"
+          nameKey="account_name"
+          cx="50%"
+          cy="50%"
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={200}
+          fill="#8884d8"
+        >
+          {accounts.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+          <Label layout="vertical" align="right" verticalAlign="middle" />
+        </Pie>
+        <Tooltip />
+        <Legend />
+      </PieChart>
+
+      {/* <Col className="d-flex justify-content-end">
         <span class="accounts-total">
           Total:{" "}
           <NumericFormat
@@ -110,14 +112,18 @@ const Accounts = () => {
             prefix={"$"}
           />
         </span>
-        </Col>
+      </Col> */}
 
-        <AccountList accounts={accounts} deleteAccount={deleteAccount}/>
+      <AccountList
+        accounts={accounts}
+        deleteAccount={deleteAccount}
+        totalAccountsBalance={totalAccountsBalance}
+      />
 
-        {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow} updateAccounts = {setAccounts}/>}
+      {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow} updateAccounts={setAccounts} />}
 
-        <FloatingActionButton click={modalShow}/>
-      </div>
+      <FloatingActionButton click={modalShow} />
+      {/* </div> */}
     </div>
   );
 };

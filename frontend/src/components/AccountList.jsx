@@ -1,10 +1,12 @@
 import React from "react";
 import AccountListItem from "./AccountListItem";
-import '../styles/Accounts.scss';
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { NumericFormat } from "react-number-format";
+// import '../styles/Accounts.scss';
 
 const AccountList = (props) => {
 
-  const { accounts } = props;
+  const { accounts, totalAccountsBalance } = props;
 
   const listOfAccounts = accounts.map((account) => {
     return (
@@ -19,9 +21,23 @@ const AccountList = (props) => {
   });
 
   return (
-    <ul className="accounts-list">
+    <ListGroup>
+
+      <ListGroupItem className="d-flex justify-content-center">
+        <b>
+          <span>Total balance: $</span>
+          <NumericFormat
+            value={totalAccountsBalance.toFixed(2)}
+            displayType={"text"}
+            thousandSeparator={true}
+          />
+        </b>
+
+      </ListGroupItem>
+
       {listOfAccounts}
-    </ul>
+
+    </ListGroup>
   );
 };
 
