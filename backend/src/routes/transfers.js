@@ -25,9 +25,9 @@ router.post('/add', (req, res) => {
 })
 
 //Update an existing transfer in DB
-router.post('/edit', (req, res) => {
+router.post('/:transaction_id/edit', (req, res) => {
   const transferData = {
-    transactionId: req.body.transaction_id,
+    transactionId: req.params.transaction_id,
     userId: req.body.userId,
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
