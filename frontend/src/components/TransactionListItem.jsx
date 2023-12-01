@@ -27,7 +27,8 @@ const TransactionListItem = (props) => {
     isEditTransactionModalOpen,
     chooseTransaction,
     transaction,
-    getTransactions
+    getTransactions,
+    disableEditingAndDeleting
   } = props;
 
 
@@ -95,24 +96,26 @@ const TransactionListItem = (props) => {
 
           {/* 3 dots icon with dropdown list show the Edit and Delete feature for a transaction */}
           <Col xs={1} className="d-flex justify-content-end"  >
+            {/* Render the dropdown only if editing and deleting are not disabled */}
+            {!disableEditingAndDeleting && (
 
-            <Dropdown >
+              <Dropdown >
 
-              <Dropdown.Toggle variant="none" id="dropdown-basic">
-                <MoreVertIcon />
-              </Dropdown.Toggle>
+                <Dropdown.Toggle variant="none" id="dropdown-basic">
+                  <MoreVertIcon />
+                </Dropdown.Toggle>
 
-              <Dropdown.Menu>
+                <Dropdown.Menu>
 
-                {/* The onClick event on Edit button will open different modal based on the type of the category */}
-                <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit}>Edit transaction</Dropdown.Item>
+                  {/* The onClick event on Edit button will open different modal based on the type of the category */}
+                  <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit}>Edit transaction</Dropdown.Item>
 
-                <Dropdown.Item onClick={handleDelete}>Delete transaction</Dropdown.Item>
+                  <Dropdown.Item onClick={handleDelete}>Delete transaction</Dropdown.Item>
 
-              </Dropdown.Menu>
+                </Dropdown.Menu>
 
-            </Dropdown>
-
+              </Dropdown>
+            )}
           </Col>
 
         </Row>
