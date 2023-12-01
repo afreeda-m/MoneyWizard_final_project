@@ -177,7 +177,9 @@ function App() {
             />} />
 
             <Route path='/accounts' element={<Accounts />} />
-            <Route path='/reports' element={<Reports />} />
+            <Route path='/reports' element={<Reports  date={date}
+              incrementDate={incrementDate}
+              decrementDate={decrementDate}/>} />
             <Route path='/budgets' element={<Budgets />} />
             <Route path='/recurringtransactions' element={<RecurringTransactions />} />
             <Route path='/categoriesmanagement' element={<CategoriesManagement />} />
