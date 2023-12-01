@@ -7,6 +7,8 @@ import './App.scss';
 
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "./helpers/helperFunctions";
+import useApplicationData from './hooks/useApplicationData';
 import Accounts from './pages/Accounts';
 import Budgets from './pages/Budgets';
 import CategoriesManagement from './pages/CategoriesManagement';
@@ -16,20 +18,23 @@ import Layout from './pages/Layout';
 import RecurringTransactions from './pages/RecurringTransactions';
 import Reports from './pages/Reports';
 import Transactions from './pages/Transactions';
-import useApplicationData from './hooks/useApplicationData';
-import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "./helpers/helperFunctions";
 
 
 function App() {
 
   const {
     state,
+    pickTransactionDate,
     incrementDate,
     decrementDate,
     toggleAddNewModal,
     toggleEditTransactionModal,
     toggleEditTransferModal,
-    chooseTransaction
+    chooseTransaction,
+    getTransactions,
+    setPostTransactionData,
+    setIsLoggedIn,
+    setUsername,
   } = useApplicationData();
 
   const {
@@ -37,13 +42,16 @@ function App() {
     categoriesData,
     accountsData,
     date,
+    transactionDate,
     isAddTransactionModalOpen,
     isEditTransactionModalOpen,
-    isEditTransferModelOpen,
-    chosenTransaction
+    isEditTransferModalOpen,
+    chosenTransaction,
+    postTransactionData,
+    isLoggedIn,
+    username,
   } = state;
 
-  console.log(date);
   return (
     <div className='App bg-body-tertiary'>
 
@@ -83,7 +91,7 @@ function App() {
         <Routes>
 
           {/* The Root Route for Money Wizard */}
-          <Route path="/" element={<Home />}> </Route>
+          <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn = {setIsLoggedIn} setUsername={setUsername} username={username}/>}> </Route>
 
 
           {/* REACT-ROUTER: THE OUTLET COMPONENT
@@ -133,29 +141,34 @@ function App() {
             * components below. With this approach, we only need one additional
             * `Layout.jsx` component.
             */}
-          <Route element={<Layout />}>
+          <Route element={<Layout isLoggedIn={isLoggedIn} setIsLoggedIn = {setIsLoggedIn} setUsername={setUsername} username={username}/>}>
 
-            <Route path='/dashboard' element={<Dashboard />} />
+           <Route path='/dashboard' element={<Dashboard />} />
 
             <Route path='/transactions' element={<Transactions
               transactionsData={transactionsData}
               categoriesData={categoriesData}
               accountsData={accountsData}
               date={date}
-              isAddTransactionModalOpen={isAddTransactionModalOpen}
-              isEditTransactionModalOpen={isEditTransactionModalOpen}
-              isEditTransferModelOpen={isEditTransferModelOpen}
-              chosenTransaction={chosenTransaction}
               incrementDate={incrementDate}
               decrementDate={decrementDate}
+              transactionDate={transactionDate}
+              pickTransactionDate={pickTransactionDate}
+              isAddTransactionModalOpen={isAddTransactionModalOpen}
               toggleAddNewModal={toggleAddNewModal}
+              isEditTransactionModalOpen={isEditTransactionModalOpen}
               toggleEditTransactionModal={toggleEditTransactionModal}
+              isEditTransferModalOpen={isEditTransferModalOpen}
               toggleEditTransferModal={toggleEditTransferModal}
+              chosenTransaction={chosenTransaction}
               chooseTransaction={chooseTransaction}
               getAccountNameById={getAccountNameById}
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
+              getTransactions={getTransactions}
+              setPostTransactionData={setPostTransactionData}
+              postTransactionData={postTransactionData}
             />} />
 
             <Route path='/accounts' element={<Accounts />} />

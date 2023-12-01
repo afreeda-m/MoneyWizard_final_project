@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const transactionsQueries = require('../db/queries/transactions_query.js')
+const transactionsQueries = require('../db/queries/transactions_query.js');
 
+//get all transactions for a user by month and year (default current month/year)
 router.get('/', (req, res) => {
   const userId = 1; //will need to extract this from cookies (set cookie session at initial login then extract the user_id every time)
   const year = req.query.year;
@@ -15,8 +16,9 @@ router.get('/', (req, res) => {
     });
 });
 
+// Add a new transaction to the DB
 router.post('/add', (req, res) => {
-  const userId = req.body.userId
+  const userId = 1;
   const transactionData = {
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
@@ -32,56 +34,59 @@ router.post('/add', (req, res) => {
     .catch((error) => {
       console.log('Error in adding transaction to DB', error);
       res.status(500).send('Internal Server Error');
-    })
+    });
 });
 
-router.post('/delete', (req, res) => {
-  const transaction_id = req.body.transactionId;
+//Delete a transaction OR a transfer from DB
+router.post('/:transaction_id/delete', (req, res) => {
+  const transactionId = req.params.transaction_id;
 
-  transactionsQueries.deleteTransaction(transaction_id)
+  transactionsQueries.deleteTransaction(transactionId)
     .then(() => {
-      res.redirect('/transactions')
+      res.redirect('/transactions');
     })
     .catch((error) => {
       console.log('Error deleting transaction in DB', error);
       res.status(500).send('Internal Server Error');
-    })
-})
+    });
+});
 
+//Get transaction information from DB to auto-fill edit modal
 router.get('/edit', (req, res) => {
   const transactionId = req.query.transaction_id;
 
   transactionsQueries.getTransactionById(transactionId)
-  .then((transaction) => {
-    res.json(transaction);
-  })
-  .catch((error) => {
-    console.log('Error deleting transaction in DB', error);
-    res.status(500).send('Internal Server Error');
-  })
-})
+    .then((transaction) => {
+      res.json(transaction);
+    })
+    .catch((error) => {
+      console.log('Error deleting transaction in DB', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
-router.post('/edit', (req, res) => {
+//Update the DB with new transaction information
+router.post('/:transaction_id/edit', (req, res) => {
   const transactionData = {
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
     amount: req.body.amount,
-    transaction_date:
-    req.body.transaction_date,
+    transaction_date: req.body.transaction_date,
     notes: req.body.notes,
-    transaction_id: req.body.transaction_id
-  }
+    transaction_id: req.params.transaction_id
+  };
 
   transactionsQueries.editTransaction(transactionData)
     .then(() => {
-      res.redirect('/transactions')
+      res.redirect('/transactions');
     })
     .catch((error) => {
       console.log('Error in editing transaction in DB', error);
       res.status(500).send('Internal Server Error');
-    })
-})
+    });
+});
 
+//Get sum of all transactions based on category (for reports page)
 router.get('/transactionsByCategory', (req, res) => {
   const userId = 1;
   const date = req.query.date;
@@ -101,50 +106,7 @@ router.get('/transactionsByCategory', (req, res) => {
     .catch((error) => {
       console.log('Error in fetching transactions by category', error);
       res.status(500).send('Internal Server Error');
-    })
+    });
 });
-
-// router.post('/transfer', (req, res) => {
-//   const transferData = {
-//     userId: req.body.userId,
-//     categoryId: req.body.categoryId,
-//     accountFrom: req.body.accountFrom,
-//     accountTo: req.body.accountTo,
-//     amount: req.body.amount,
-//     transaction_date: req.body.transaction_date,
-//     notes: req.body.notes
-//   }
-
-//   transactionsQueries.addTransfer(transferData)
-//   .then(() => {
-//     res.redirect('/transactions')
-//   })
-//   .catch((error) => {
-//     console.log('Error in adding transfer to DB', error);
-//     res.status(500).send('Internal Server Error');
-//   })
-// })
-
-// router.post('/transfer/edit', (req, res) => {
-//   const transferData = {
-//     transactionId: req.body.transaction_id,
-//     userId: req.body.userId,
-//     categoryId: req.body.categoryId,
-//     accountFrom: req.body.accountFrom,
-//     accountTo: req.body.accountTo,
-//     amount: req.body.amount,
-//     transaction_date: req.body.transaction_date,
-//     notes: req.body.notes
-//   }
-
-//   transactionsQueries.editTransfer(transferData)
-//   .then(() => {
-//     res.redirect('/transactions')
-//   })
-//   .catch((error) => {
-//     console.log('Error in editing transfer in DB', error);
-//     res.status(500).send('Internal Server Error');
-//   })
-// })
 
 module.exports = router;

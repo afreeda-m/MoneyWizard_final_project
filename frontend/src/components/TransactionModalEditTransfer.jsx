@@ -11,15 +11,13 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DatePicker } from "@mui/x-date-pickers";
 
 
-const TransactionModalEditTransaction = (props) => {
+const TransactionModalEditTransfer = (props) => {
 
   const {
-    isEditTransactionModalOpen,
-    toggleEditTransactionModal,
-    categories,
+    isEditTransferModalOpen,
+    toggleEditTransferModal,
     accounts,
     chosenTransaction,
-    getCategoryNameById,
     getAccountNameById,
     transactionDate,
     pickTransactionDate,
@@ -27,15 +25,6 @@ const TransactionModalEditTransaction = (props) => {
     postTransactionData,
     getTransactions
   } = props;
-
-  // list of categories for the dropdown selection
-  const categoryDropdown = categories.map((category) => {
-    return (
-      <option key={category.id} value={category.id}>
-        {category.category_name}
-      </option>
-    );
-  });
 
   // list of accounts for the dropdown selection
   const accountDropdown = accounts.map((account) => {
@@ -57,7 +46,7 @@ const TransactionModalEditTransaction = (props) => {
     setPostTransactionData({
       categoryId: chosenTransaction.category_id,
       accountId: chosenTransaction.account_id,
-      accountToId: chosenTransaction.account_to_id,
+      accountToId: chosenTransaction.account_id_to,
       amount: chosenTransaction.amount,
       transaction_date: moment(chosenTransaction.transaction_date),
       notes: chosenTransaction.notes
@@ -78,7 +67,7 @@ const TransactionModalEditTransaction = (props) => {
 
     event.preventDefault();
 
-    axios.post(`/transactions/${chosenTransaction.id}/edit`, postTransactionData)
+    axios.post(`/transfer/${chosenTransaction.id}/edit`, postTransactionData)
       .then((response) => {
         getTransactions();
       })
@@ -96,24 +85,22 @@ const TransactionModalEditTransaction = (props) => {
       notes: ''
     });
 
-    toggleEditTransactionModal();
+    toggleEditTransferModal();
   };
-
 
   return (
 
     // Adjust styling for the modal. Move 130px to the right and center vertically
     <Modal
       style={{ marginLeft: "130px" }}
-      show={isEditTransactionModalOpen}
-      onHide={toggleEditTransactionModal}
+      show={isEditTransferModalOpen}
+      onHide={toggleEditTransferModal}
       onShow={handleOpen}
       size="md"
-      centered
-    >
+      centered >
 
       <Modal.Header className='d-flex justify-content-center'>
-        <Modal.Title>EDIT TRANSACTION</Modal.Title>
+        <Modal.Title>EDIT TRANSFER</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -125,23 +112,21 @@ const TransactionModalEditTransaction = (props) => {
 
             {/* Dropdown selection for Category */}
             <Form.Group xs={6} as={Col}>
-              <Form.Label >Category</Form.Label>
-              <Form.Select type="text" name="categoryId" onChange={handleInput} >
+              <Form.Label >From Account</Form.Label>
+              <Form.Select type="text" name="accountId" onChange={handleInput} >
                 <option>
-                  {chosenTransaction && getCategoryNameById(chosenTransaction.category_id, categories)}
-                  {/* {getCategoryNameById(postTransactionData.category_id, categories)} */}
+                  {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
                 </option>
-                {categoryDropdown}
-
+                {accountDropdown}
               </Form.Select>
             </Form.Group>
 
             {/* Dropdown selection for Account */}
             <Form.Group xs={6} as={Col}>
-              <Form.Label >Account</Form.Label>
-              <Form.Select type="text" name="accountId" onChange={handleInput} >
+              <Form.Label >To Account</Form.Label>
+              <Form.Select type="text" name="accountToId" onChange={handleInput}>
                 <option>
-                  {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
+                  {chosenTransaction && chosenTransaction.account_id_to && getAccountNameById(chosenTransaction.account_id_to, accounts)}
                 </option>
                 {accountDropdown}
 
@@ -201,7 +186,7 @@ const TransactionModalEditTransaction = (props) => {
       </Modal.Body>
 
       <Modal.Footer className='d-flex justify-content-center'>
-        <Button variant="secondary" onClick={toggleEditTransactionModal}>
+        <Button variant="secondary" onClick={toggleEditTransferModal}>
           Cancel
         </Button>
         <Button variant="success" onClick={handleSubmit}>
@@ -214,4 +199,4 @@ const TransactionModalEditTransaction = (props) => {
 
 };
 
-export default TransactionModalEditTransaction;
+export default TransactionModalEditTransfer;

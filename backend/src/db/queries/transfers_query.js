@@ -1,6 +1,6 @@
 const db = require('../connection.js');
 
-//Add a transfer to the transactions table and update the balance in both accounts
+//Add a transfer to DB and update the balance in both accounts
 const addTransfer = (transfer) => {
   const createTransaction = `
     INSERT INTO transactions(user_id, category_id, account_id, account_id_to, amount, transaction_date, notes)
@@ -20,8 +20,8 @@ const addTransfer = (transfer) => {
     return db.query(createTransaction, [
       transfer.userId,
       transfer.categoryId,
-      transfer.accountFrom,
-      transfer.accountTo,
+      transfer.accountId,
+      transfer.accountToId,
       transfer.amount,
       transfer.transaction_date,
       transfer.notes,
@@ -43,7 +43,7 @@ const addTransfer = (transfer) => {
   });
 }
 
-
+//Update an existing transfer in DB
 const editTransfer = (transferData) => {
   const getPreviousTransferAmountQuery = `SELECT amount, account_id, account_id_to FROM transactions WHERE id = $1;`;
 
@@ -62,7 +62,7 @@ const editTransfer = (transferData) => {
 
   const updateBalanceFromQuery = `
     UPDATE accounts
-    SET balance = balance + $1 
+    SET balance = balance + $1
     WHERE id = $2;
   `;
 
@@ -79,12 +79,10 @@ const editTransfer = (transferData) => {
   return db
     .query("begin")
     .then(() => {
-      console.log(transferData)
       // Get the previous transfer amount and account IDs
       return db.query(getPreviousTransferAmountQuery, [transferData.transactionId]);
     })
     .then((previousTransferResult) => {
-      console.log(previousTransferResult);
       previousTransferAmount = previousTransferResult.rows[0].amount;
       previousAccountId = previousTransferResult.rows[0].account_id;
       previousAccountIdTo = previousTransferResult.rows[0].account_id_to;
@@ -93,8 +91,8 @@ const editTransfer = (transferData) => {
       return db.query(updateTransferQuery, [
         transferData.transactionId,
         transferData.categoryId,
-        transferData.accountFrom,
-        transferData.accountTo,
+        transferData.accountId,
+        transferData.accountToId,
         transferData.amount,
         transferData.transaction_date,
         transferData.notes,
