@@ -2,6 +2,7 @@ INSERT INTO users (name, email, password)
 VALUES ('Rora Alem', 'rora@email.com', '123');
 
 
+
 INSERT INTO categories(category_name, type, logo_url)
 VALUES ('Food/Drinks', 'Expense', 'food.png');
 INSERT INTO categories(category_name, type, logo_url)
@@ -46,62 +47,101 @@ VALUES ('Transfer', 'Transfer', 'transfer.png');
 
 
 INSERT INTO accounts(account_name, balance, user_id, note)
-VALUES('Chequing', 2000, 1, 'Bank chequing account');
+VALUES('Chequing', 10000, 1, 'Bank chequing account');
 INSERT INTO accounts(account_name, balance, user_id, note)
-VALUES('Savings', 2000, 1, 'Bank savings account');
+VALUES('Retirement Savings', 2000, 1, 'Retirement savings from work');
 INSERT INTO accounts(account_name, balance, user_id, note)
-VALUES('Cash Wallet', 2000, 1, 'Cash in wallet');
+VALUES('Cash', 500, 1, 'Cash in Wallet');
+INSERT INTO accounts(account_name, balance, user_id, note)
+VALUES('Vacation Savings', 3000, 1, 'For vacation travel expenses');
+INSERT INTO accounts(account_name, balance, user_id, note)
+VALUES('Emergency Fund', 4000, 1, 'Emergency fund for unexpected expenses');
 
 
-INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 2, 1, 200, '2023-01-20', 'Bought some clothes');
-INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 2, 1, 150, '2023-11-15', 'Groceries');
-INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 1, 3, 40,'2023-10-05', 'Dinning Out');
-INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 1, 2, 5000, '2023-11-15', 'Recieved from client');
-INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 14, 1, 1000, '2023-10-30', 'Monthly Income');
+
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 3, 2, 30, '2023-10-10', 'Gas refill for the car');
+VALUES(1, 11, 3, 100, '2023-09-15', 'Electricity bill payment');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 5, 1, 200, '2023-09-25', 'Textbooks for the semester');
-INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 11, 3, 100, '2023-08-15', 'Electricity bill payment');
-INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 18, 2, 300, '2023-07-20', 'Rental income received');
-INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 4, 1, 50, '2023-06-10', 'Movie night with friends');
-INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 7, 3, 80, '2023-05-05', 'Family dinner');
-INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 13, 2, 150, '2023-04-12', 'Train tickets for travel');
-INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 16, 1, 500, '2023-03-18', 'Royalties received from a book sale');
-INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 14, 3, 70, '2023-02-22', 'Earned from part-time job');
-INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 8, 1, 120, '2023-01-10', 'Health checkup expenses');
+VALUES(1, 12, 3, 80, '2023-09-05', 'Mobile phone bill payment');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
 VALUES(1, 6, 2, 120, '2023-09-10', 'Home decor items');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 12, 3, 80, '2023-08-05', 'Mobile phone bill payment');
+VALUES(1, 5, 1, 200, '2023-09-25', 'Textbooks for the semester');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 1, 3, 40,'2023-09-09', 'Dinning Out');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 14, 1, 1000, '2023-09-30', 'Monthly Income');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 2, 1, 150, '2023-09-12', 'Groceries');
+INSERT INTO transactions(user_id,category_id, account_id, account_id_to, amount, transaction_date, notes)
+VALUES(1, 20, 1, 2, 150, '2023-09-01', 'Transfer from Chequing to Saving');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 14, 1, 1200, '2023-09-20', 'Consulting fee from a project');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 3, 3, 40, '2023-09-02', 'Bus fare');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 2, 1, 200, '2023-10-20', 'Bought some clothes');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 2, 1, 150, '2023-10-15', 'Groceries');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 1, 3, 40,'2023-10-05', 'Dinning Out');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 9, 1, 50, '2023-07-18', 'Sports equipment');
+VALUES(1, 14, 1, 5000, '2023-10-01', 'Recieved from client');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 14, 1, 2000, '2023-10-30', 'Monthly Income');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 10, 2, 25, '2023-06-22', 'Pet supplies');
+VALUES(1, 3, 2, 30, '2023-10-10', 'Gas refill for the car');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 15, 3, 200, '2023-05-12', 'Dividend from investments');
+VALUES(1, 11, 3, 100, '2023-10-15', 'Electricity bill payment');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 17, 1, 300, '2023-04-08', 'Rental income from a property');
+VALUES(1, 18, 2, 300, '2023-10-29', 'Rental income received');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 2, 1, 180, '2023-03-15', 'Clothing shopping');
+VALUES(1, 4, 1, 50, '2023-10-07', 'Movie night with friends');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 11, 2, 90, '2023-02-20', 'Internet bill payment');
+VALUES(1, 7, 3, 80, '2023-10-19', 'Family dinner');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
-VALUES(1, 3, 3, 40, '2023-01-05', 'Bus fare');
+VALUES(1, 13, 2, 150, '2023-04-12', 'Train tickets for travel');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 15, 1, 500, '2023-11-18', 'Royalties received from a book sale');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 14, 3, 70, '2023-11-22', 'Earned from part-time job');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 8, 1, 120, '2023-11-10', 'Health checkup expenses');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 6, 2, 120, '2023-11-28', 'Home decor items');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 12, 3, 80, '2023-11-05', 'Mobile phone bill payment');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 9, 1, 50, '2023-11-14', 'Sports equipment');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 10, 2, 25, '2023-11-22', 'Pet supplies');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 15, 3, 200, '2023-11-25', 'Dividend from investments');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 17, 1, 300, '2023-11-08', 'Rental income from a property');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 2, 1, 180, '2023-11-15', 'Clothing shopping');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 11, 2, 90, '2023-11-21', 'Internet bill payment');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 3, 3, 40, '2023-11-01', 'Bus fare');
 INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
 VALUES(1, 14, 1, 1200, '2023-11-30', 'Consulting fee from a project');
 INSERT INTO transactions(user_id, category_id, account_id, account_id_to, amount, transaction_date, notes)
-VALUES(1, 20, 1, 2, 150, '2023-11-15', 'Transfer from Chequing to Saving');
+VALUES(1, 20, 1, 2, 150, '2023-11-29', 'Transfer from Chequing to Saving');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 12, 3, 300, '2023-12-03', 'Travel expenses for holiday getaway');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 2, 1, 300, '2023-12-02', 'Christmas gifts shopping');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 2, 3, 50, '2023-12-03', 'Purchase of holiday decorations');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 7, 1, 200, '2023-12-06', 'Christmas dinner with family');
+INSERT INTO transactions(user_id, category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 13, 3, 1500, '2023-12-01', 'Year-end bonus received');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 13, 1, 2000, '2023-12-01', 'Monthly Income');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 18, 1, 800, '2023-12-04', 'Tenant rent received');
+INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
+VALUES(1, 19, 1, 100, '2023-12-06', 'Gift from grandma and grandpa');

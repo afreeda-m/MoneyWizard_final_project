@@ -1,7 +1,7 @@
 import React from "react";
-import AccountListItem from "./AccountListItem";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { NumericFormat } from "react-number-format";
+import AccountListItem from "./AccountListItem";
 // import '../styles/Accounts.scss';
 
 const AccountList = (props) => {
@@ -23,7 +23,7 @@ const AccountList = (props) => {
   return (
     <ListGroup>
 
-      <ListGroupItem className="d-flex justify-content-center">
+      <ListGroupItem className="d-flex justify-content-center" style={{ fontSize: '20px' }}>
         <b>
           <span>Total balance: $</span>
           <NumericFormat
