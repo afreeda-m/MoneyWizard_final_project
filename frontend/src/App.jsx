@@ -143,7 +143,7 @@ function App() {
             */}
           <Route element={<Layout isLoggedIn={isLoggedIn} setIsLoggedIn = {setIsLoggedIn} setUsername={setUsername} username={username}/>}>
 
-            {isLoggedIn && <Route path='/dashboard' element={<Dashboard />} />}
+           <Route path='/dashboard' element={<Dashboard />} />
 
             <Route path='/transactions' element={<Transactions
               transactionsData={transactionsData}
@@ -169,7 +169,7 @@ function App() {
               getTransactions={getTransactions}
               setPostTransactionData={setPostTransactionData}
               postTransactionData={postTransactionData}
-            />} />}
+            />} />
 
             <Route path='/accounts' element={<Accounts />} />
             <Route path='/reports' element={<Reports />} />
