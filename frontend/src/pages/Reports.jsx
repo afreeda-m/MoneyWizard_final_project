@@ -1,38 +1,38 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from 'moment';
+import React, { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import PieChart from "../components/PieChart";
-import ColumnChart from "../components/ColumnChart";
 import Col from "react-bootstrap/esm/Col";
+import ColumnChart from "../components/ColumnChart";
 import FilterBar from "../components/FilterBar";
 import IncomeExpenseList from "../components/IncomeExpenseList";
+import PieChartMoneyWizard from "../components/PieChartMoneyWizard";
 
 const Report = (props) => {
+  const {
+    date,
+    incrementDate,
+    decrementDate
+  } = props;
+
 
   // State for income and expense data
   const [incomeData, setIncomeData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
 
-  // State for date and income/expense totals
-  const [date, setDate] = useState(new Date());
+  // State for income/expense totals
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
 
-  //Add state variables to keep track of the selected month and year.
 
   // Use moment to parse the date string
   const dateObject = moment(date);
 
+//Add state variables to keep track of the selected month and year.
+
   const [selectedMonth, setSelectedMonth] = useState(dateObject.month() + 1);
   const [selectedYear, setSelectedYear] = useState(dateObject.year());
-
-  const updateSelectedMonthAndYear = (newDate) => {
-    setSelectedMonth(newDate.month() + 1);
-    setSelectedYear(newDate.year());
-  };
-
 
   useEffect(() => {
     axios.get('/transactions/transactionsByCategory', {
@@ -77,8 +77,8 @@ const Report = (props) => {
         <Col md={{ span: 6, offset: 3 }}>
           <FilterBar
             date={date}
-            setDate={setDate}
-            updateSelectedMonthAndYear={updateSelectedMonthAndYear} />
+            incrementDate={incrementDate}
+            decrementDate={decrementDate} />
         </Col>
       </Row>
       {/* ColumnChart component for displaying bar chart */}
@@ -96,10 +96,10 @@ const Report = (props) => {
       {/* PieCharts for displaying income and expense distribution */}
       <Row>
         <Col md={{ span: 4, offset: 2 }}>
-          <PieChart data={incomeData} isExpense={false} />
+          <PieChartMoneyWizard data={incomeData} isExpense={false} />
         </Col>
         <Col md={{ span: 4, offset: 2 }}>
-          <PieChart data={expenseData} isExpense={true} />
+          <PieChartMoneyWizard data={expenseData} isExpense={true} />
         </Col>
       </Row>
       {/* Lists to display individual income and expense transactions */}
