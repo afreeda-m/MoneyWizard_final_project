@@ -10,29 +10,29 @@ import IncomeExpenseList from "../components/IncomeExpenseList";
 import PieChartMoneyWizard from "../components/PieChartMoneyWizard";
 
 const Report = (props) => {
+  const {
+    date,
+    incrementDate,
+    decrementDate
+  } = props;
+
 
   // State for income and expense data
   const [incomeData, setIncomeData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
 
-  // State for date and income/expense totals
-  const [date, setDate] = useState(new Date());
+  // State for income/expense totals
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
 
-  //Add state variables to keep track of the selected month and year.
 
   // Use moment to parse the date string
   const dateObject = moment(date);
 
+//Add state variables to keep track of the selected month and year.
+
   const [selectedMonth, setSelectedMonth] = useState(dateObject.month() + 1);
   const [selectedYear, setSelectedYear] = useState(dateObject.year());
-
-  const updateSelectedMonthAndYear = (newDate) => {
-    setSelectedMonth(newDate.month() + 1);
-    setSelectedYear(newDate.year());
-  };
-
 
   useEffect(() => {
     axios.get('/transactions/transactionsByCategory', {
@@ -77,8 +77,8 @@ const Report = (props) => {
         <Col md={{ span: 6, offset: 3 }}>
           <FilterBar
             date={date}
-            setDate={setDate}
-            updateSelectedMonthAndYear={updateSelectedMonthAndYear} />
+            incrementDate={incrementDate}
+            decrementDate={decrementDate} />
         </Col>
       </Row>
       {/* ColumnChart component for displaying bar chart */}
