@@ -93,7 +93,8 @@ router.post('/categories/:category_id/delete', (req, res) => {
 });
 
 //GET categories based on the type provided
-router.get('/category/type', (req, res) => {
+router.get('/category/type/:type', (req, res) => {
+
   const type = req.params.type;
 
   dbQueries.getCategoryByType(type)
