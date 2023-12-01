@@ -1,11 +1,14 @@
+import moment from 'moment';
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import moment from 'moment';
-
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DatePicker } from "@mui/x-date-pickers";
 
 
 const TransactionModalEditTransfer = (props) => {
@@ -15,20 +18,86 @@ const TransactionModalEditTransfer = (props) => {
     toggleEditTransferModal,
     accounts,
     chosenTransaction,
-    getAccountNameById
+    getAccountNameById,
+    transactionDate,
+    pickTransactionDate,
+    setPostTransactionData,
+    postTransactionData,
+    getTransactions
   } = props;
 
   // list of accounts for the dropdown selection
   const accountDropdown = accounts.map((account) => {
     return (
-      <option key={account.id}>{account.account_name}</option>
+      <option key={account.id} value={account.id}>
+        {account.account_name}
+      </option>
     );
   });
+
+  // Function to update transaction_date for DatePicker
+  const handleDateChange = (newDate) => {
+    setPostTransactionData({ ...postTransactionData, transaction_date: newDate });
+    pickTransactionDate(newDate);
+  };
+
+  // Update postTransactionData state to the target Transaction for editing when opening the Modal
+  const handleOpen = () => {
+    setPostTransactionData({
+      categoryId: chosenTransaction.category_id,
+      accountId: chosenTransaction.account_id,
+      accountToId: chosenTransaction.account_id_to,
+      amount: chosenTransaction.amount,
+      transaction_date: moment(chosenTransaction.transaction_date),
+      notes: chosenTransaction.notes
+    });
+  };
+
+  // Update postTransactionDate whenever there is a change in the form
+  const handleInput = (event) => {
+
+    // Convert data to number expect for notes
+    const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
+
+    // Update postTransactionData state on each input change
+    setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
+  };
+
+  const handleSubmit = (event) => {
+
+    event.preventDefault();
+
+    axios.post(`/transfer/${chosenTransaction.id}/edit`, postTransactionData)
+      .then((response) => {
+        getTransactions();
+      })
+      .catch((error) => {
+        console.error("Error editing transaction:", error);
+      });
+
+    // Reset 'postTransactionData' state to default after submitting data to backend
+    setPostTransactionData({
+      categoryId: null,
+      accountId: null,
+      accountToId: null,
+      amount: null,
+      transaction_date: moment(),
+      notes: ''
+    });
+
+    toggleEditTransferModal();
+  };
 
   return (
 
     // Adjust styling for the modal. Move 130px to the right and center vertically
-    <Modal style={{ marginLeft: "130px" }} show={isEditTransferModalOpen} onHide={toggleEditTransferModal} size="md" centered >
+    <Modal
+      style={{ marginLeft: "130px" }}
+      show={isEditTransferModalOpen}
+      onHide={toggleEditTransferModal}
+      onShow={handleOpen}
+      size="md"
+      centered >
 
       <Modal.Header className='d-flex justify-content-center'>
         <Modal.Title>EDIT TRANSFER</Modal.Title>
@@ -41,15 +110,10 @@ const TransactionModalEditTransfer = (props) => {
           {/* 2 input fields in the same row for Category selection, Account selection */}
           <Row className='d-flex align-items-center mb-3' >
 
-            {/* Placeholder for category logo when a category is selected
-                <Col className='d-flex justify-content-center' xs={2}>
-                  <img src="bank.png" />
-                </Col> */}
-
             {/* Dropdown selection for Category */}
             <Form.Group xs={6} as={Col}>
               <Form.Label >From Account</Form.Label>
-              <Form.Select >
+              <Form.Select type="text" name="accountId" onChange={handleInput} >
                 <option>
                   {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
                 </option>
@@ -60,9 +124,9 @@ const TransactionModalEditTransfer = (props) => {
             {/* Dropdown selection for Account */}
             <Form.Group xs={6} as={Col}>
               <Form.Label >To Account</Form.Label>
-              <Form.Select >
+              <Form.Select type="text" name="accountToId" onChange={handleInput}>
                 <option>
-                  {chosenTransaction && chosenTransaction.type === "Transfer" && getAccountNameById(chosenTransaction.account_to_id, accounts)}
+                  {chosenTransaction && chosenTransaction.account_id_to && getAccountNameById(chosenTransaction.account_id_to, accounts)}
                 </option>
                 {accountDropdown}
 
@@ -78,7 +142,11 @@ const TransactionModalEditTransfer = (props) => {
               <Form.Label >Amount</Form.Label>
               <InputGroup>
                 <InputGroup.Text >$</InputGroup.Text>
-                <Form.Control defaultValue={chosenTransaction && chosenTransaction.amount} />
+                <Form.Control
+                  name="amount"
+                  onChange={handleInput}
+                  defaultValue={chosenTransaction && chosenTransaction.amount}
+                />
               </InputGroup>
             </Form.Group>
           </Row>
@@ -87,7 +155,16 @@ const TransactionModalEditTransfer = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label >Date</Form.Label>
-              <Form.Control defaultValue={chosenTransaction && moment(chosenTransaction.transaction_date).format("YYYY-MM-DD")} />
+              {/* Date picker box */}
+              <div>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <DatePicker
+                    sx={{ width: "50%" }}
+                    value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
+                    onChange={handleDateChange}
+                  />
+                </LocalizationProvider>
+              </div>
             </Form.Group>
           </Row>
 
@@ -95,7 +172,12 @@ const TransactionModalEditTransfer = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label >Notes</Form.Label>
-              <Form.Control as="textarea" defaultValue={chosenTransaction && chosenTransaction.notes} />
+              <Form.Control
+                as="textarea"
+                name="notes"
+                onChange={handleInput}
+                defaultValue={chosenTransaction && chosenTransaction.notes}
+              />
             </Form.Group>
           </Row>
 
@@ -107,7 +189,7 @@ const TransactionModalEditTransfer = (props) => {
         <Button variant="secondary" onClick={toggleEditTransferModal}>
           Cancel
         </Button>
-        <Button variant="success" onClick={toggleEditTransferModal}>
+        <Button variant="success" onClick={handleSubmit}>
           Update
         </Button>
       </Modal.Footer>
