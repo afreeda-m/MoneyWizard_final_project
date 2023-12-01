@@ -18,7 +18,8 @@ const TransactionList = (props) => {
     isEditTransactionModalOpen,
     isEditTransferModalOpen,
     chooseTransaction,
-    getTransactions
+    getTransactions,
+    disableEditingAndDeleting,
   } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
@@ -46,6 +47,7 @@ const TransactionList = (props) => {
         chooseTransaction={chooseTransaction}
         transaction={transaction}
         getTransactions={getTransactions}
+        disableEditingAndDeleting={disableEditingAndDeleting} // New prop for disabling editing and deleting transactions on Dashboard
       />
 
     );
