@@ -5,6 +5,8 @@ import { useEffect, useReducer } from "react";
 export const ACTIONS = {
   SET_TRANSACTIONS_DATA: 'SET_TRANSACTION_DATA',
   SET_ACCOUNTS_AND_CATEGORIES_DATA: 'SET_ACCOUNTS_AND_CATEGORIES_DATA',
+  SET_ACCOUNTS_DATA: 'SET_ACCOUNTS_DATA',
+  SET_CATEGORIES_DATA: 'SET_CATEGORIES_DATA',
   SET_TRANSACTION_DATE: 'SET_TRANSACTION_DATE',
   SET_DATE: 'SET_DATE',
   INCREMENT_DATE: 'INCREMENT_DATE',
@@ -23,12 +25,16 @@ function reducer(state, action) {
 
 
     // ACTION FOR RETRIEVING DATA FROM BACKEND SERVER
-    // Update transactionsData state when open the app
+    // Update transactionsData state
     case ACTIONS.SET_TRANSACTIONS_DATA:
       return { ...state, transactionsData: action.transactionsData };
-    // Update categoriesData and accountsData states when open the app --> To be revised if we should separate these into two actions. For now I combined them as a temporary workaround
-    case ACTIONS.SET_ACCOUNTS_AND_CATEGORIES_DATA:
-      return { ...state, accountsData: action.accountsData, categoriesData: action.categoriesData };
+    // Update accountsData state
+    case ACTIONS.SET_ACCOUNTS_DATA:
+      return { ...state, accountsData: action.accountsData };
+    // Update categoriesData state
+    case ACTIONS.SET_CATEGORIES_DATA:
+      return { ...state, categoriesData: action.categoriesData };
+
 
     // Update transactionDate when picking transaction date
     case ACTIONS.SET_TRANSACTION_DATE:
@@ -43,10 +49,10 @@ function reducer(state, action) {
       return { ...state, date: action.newDate };
 
     case ACTIONS.SET_LOGGED_IN:
-      return {...state, isLoggedIn: action.isLoggedIn}
+      return { ...state, isLoggedIn: action.isLoggedIn };
 
     case ACTIONS.SET_USERNAME:
-      return {...state, username: action.username}
+      return { ...state, username: action.username };
 
     // ACTION FOR TRANSACTION RELATED COMPONENTS
     // Update state to Open/Close the Add New Transaction modal
@@ -134,15 +140,15 @@ const useApplicationData = () => {
       type: ACTIONS.SET_LOGGED_IN,
       isLoggedIn: loggedIn
     });
-  }
+  };
 
 
   const setUsername = (username) => {
     dispatch({
       type: ACTIONS.SET_USERNAME,
       username: username
-    })
-  }
+    });
+  };
 
   // FUNCTION FOR TRANSACTION/TRANSFER RELATED PAGE
   const toggleAddNewModal = () => {
@@ -166,6 +172,9 @@ const useApplicationData = () => {
       transaction
     });
   };
+
+  // FUNCTION TO FETCH DATA FROM BACKEND FOR TRANASCTIONS, ACCOUNTS AND CATEGORIES
+  // Function to fetch transactions and update transactionsData state
   const getTransactions = () => {
     fetch('http://localhost:8080/transactions?' + new URLSearchParams({
       month: moment(state.date).format("MM"),
@@ -180,33 +189,36 @@ const useApplicationData = () => {
         console.error('Error fetching transactions data:', error);
       });
   };
+  // Function to fetch accounts and update accountsData state
+  const getAccounts = async () => {
+    const response = await axios.get('/accounts');
+    dispatch({
+      type: ACTIONS.SET_ACCOUNTS_DATA,
+      accountsData: response.data.accounts
+    });
+  };
+  // Function to fetch categories and update categoriesData state
+  const getCategories = async () => {
+    const response = await axios.get('/categories');
+    dispatch({
+      type: ACTIONS.SET_CATEGORIES_DATA,
+      categoriesData: response.data
+    });
+  };
 
 
-  // Fetch transactions data from backend server, dependent on the 'date' state
+  // Fetch transactions data from backend server, dependent on the 'date' state upon loading the app
   useEffect(() => {
-
     getTransactions();
-
     // Dependent on the 'date' state
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.date]);
 
-  // Fetch categories and accounts data from backend server
+  // Fetch categories and accounts data from backend server upon loading the app
   useEffect(() => {
-    const fetchCategories = axios.get('http://localhost:8080/categories');
-    const fetchAccounts = axios.get('http://localhost:8080/accounts');
-
-    Promise.all([fetchCategories, fetchAccounts])
-      .then((response) => {
-        const [categoriesResponse, accountsResponse] = response;
-        dispatch({
-          type: ACTIONS.SET_ACCOUNTS_AND_CATEGORIES_DATA,
-          accountsData: accountsResponse.data.accounts,
-          categoriesData: categoriesResponse.data
-        });
-      })
-      .catch((error) => { console.log("Error fetching categories and accounts data:", error); });
-    // No dependency for categories and accounts data, only retrieve when the page reload
+    getAccounts();
+    getCategories();
+    // No dependency for categories and accounts data, only retrieve on reload
   }, []);
 
   useEffect(() => {
@@ -219,15 +231,15 @@ const useApplicationData = () => {
       withCredentials: true,
     })
       .then((response) => {
-        if(response.status == 200 && response.data.name){
+        if (response.status == 200 && response.data.name) {
           setIsLoggedIn(true);
           setUsername(response.data.name);
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
-  }, [])
+  }, []);
 
   return {
     state,
