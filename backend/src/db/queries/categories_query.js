@@ -1,32 +1,22 @@
 const db = require('../connection.js');
 
-//get categories by user's ID
-const getCategoriesByUserId = () => {
-  const queryString = `SELECT * FROM categories WHERE user_id IS NULL;`
+//get all categories where user_id is null AND where user_id is provided
+const getCategoriesByUserId = (userId) => {
+  const queryString = `
+    SELECT *
+    FROM categories
+    WHERE (user_id IS NULL OR user_id = $1);
+  `;
+
   return db
-    .query(queryString)
+    .query(queryString, [userId])
     .then((data) => {
-      return data.rows
+      return data.rows;
     })
     .catch((error) => {
       console.log("Unable to get categories by user_id", error);
-    })
-}
-
-// get categories by their ID
-const getCategoryById = (categoryId) => {
-  const queryString = `SELECT * FROM categories WHERE id = $1;`;
-
-  return db
-    .query(queryString, [categoryId])
-    .then((data) => {
-      return data.rows[0];
-    })
-    .catch((error) => {
-      console.error('Error fetching category by ID:', error);
-      throw error;
     });
-};
+}
 
 //Add new category
 const addCategory = (categoryData, userId) => {
@@ -110,10 +100,8 @@ const getCategoryByType = (type) => {
 module.exports = {
 
   getCategoriesByUserId,
-  getCategoryById,
   addCategory,
   updateCategory,
   removeCategory,
   getCategoryByType
-
 };
