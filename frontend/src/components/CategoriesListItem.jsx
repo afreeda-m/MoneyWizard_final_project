@@ -1,38 +1,63 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import axios from 'axios';
 import React from 'react';
-import { Dropdown } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Image from 'react-bootstrap/Image';
+import Row from 'react-bootstrap/Row';
+import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 
 const CategoriesListItem = (props) => {
 
-  const { categoryId, categoryLogo, categoryName, categoryType, deleteCategory } = props;
+  const { categoryId, categoryIcon, categoryName, getCategories } = props;
 
-  const logo = `/frontend/public/images/${categoryLogo}`;
+  const handleDelete = () => {
+    axios.post(`/categories/${categoryId}/delete`)
+      .then((response) => {
+        console.log('logging from handleDelete:', response);
+        getCategories();
+      })
+      .catch((error) => {
+        console.error('Error deleting category:', error);
+      });
+  };
+
 
   return (
+    <ListGroupItem className="p-2" style={{ width: "30vw" }}>
+      {/* Using React Bootstrap Grid layout with 1 row and 3 columns */}
+      <Container>
+        <Row className="d-flex align-items-center">
 
-    <tr>
-      {/* {`/backend/src/public/images/${categoryLogo}`} */}
-      <td><img alt="Category Logo" src={logo}/></td>
-      <td>{categoryName}</td>
-      <td>
-        <Dropdown>
+          {/* 1st column for category icon */}
+          <Col className="d-flex justify-content-center" xs={2}>
+            <Image src={categoryIcon} />
+          </Col>
 
-          <Dropdown.Toggle variant="none" id="dropdown-basic">
-            <MoreVertIcon />
-          </Dropdown.Toggle>
+          {/* 2nd column for category name */}
+          <Col xs={9}>
+            {categoryName}
+          </Col>
 
-          <Dropdown.Menu>
+          {/* 3rd column for the 3 dots dropdown button */}
+          <Col className="d-flex justify-content-end" xs={1}>
+            <Dropdown>
 
-            {/* The onClick event on Edit button will open different modal based on the type of the category */}
+              <Dropdown.Toggle variant="none" id="dropdown-basic">
+                <MoreVertIcon />
+              </Dropdown.Toggle>
 
-            <Dropdown.Item className="text-danger text-center" onClick={() => deleteCategory(categoryId, categoryType)}>Delete</Dropdown.Item>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={handleDelete}>Delete category</Dropdown.Item>
+              </Dropdown.Menu>
 
-          </Dropdown.Menu>
+            </Dropdown>
+          </Col>
 
-        </Dropdown>
-      </td>
-    </tr>
-
+        </Row>
+      </Container>
+    </ListGroupItem>
 
   );
 };
