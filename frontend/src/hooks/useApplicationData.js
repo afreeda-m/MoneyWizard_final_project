@@ -4,11 +4,9 @@ import { useEffect, useReducer } from "react";
 
 export const ACTIONS = {
   SET_TRANSACTIONS_DATA: 'SET_TRANSACTION_DATA',
-  SET_ACCOUNTS_AND_CATEGORIES_DATA: 'SET_ACCOUNTS_AND_CATEGORIES_DATA',
   SET_ACCOUNTS_DATA: 'SET_ACCOUNTS_DATA',
   SET_CATEGORIES_DATA: 'SET_CATEGORIES_DATA',
   SET_TRANSACTION_DATE: 'SET_TRANSACTION_DATE',
-  SET_DATE: 'SET_DATE',
   INCREMENT_DATE: 'INCREMENT_DATE',
   DECREMENT_DATE: 'DECREMENT_DATE',
   TOGGLE_ADD_NEW_TRANSACTION_MODAL: 'TOGGLE_ADD_NEW_TRANSACTION_MODAL',
@@ -18,6 +16,8 @@ export const ACTIONS = {
   SET_POST_TRANSACTION_DATA: 'SET_POST_TRANSACTION_DATA',
   SET_LOGGED_IN: 'SET_LOGGED_IN',
   SET_USERNAME: 'SET_USERNAME',
+  TOGGLE_ADD_NEW_CATEGORY_MODAL: 'TOGGLE_ADD_NEW_CATEGORY_MODAL',
+  SET_POST_CATEGORY_DATA: 'SET_POST_CATEGORY_DATA'
 };
 
 function reducer(state, action) {
@@ -41,16 +41,14 @@ function reducer(state, action) {
       return { ...state, transactionDate: action.transactionDate };
 
     // ACTION FOR FILTER BAR COMPONENT
-    // Update date state when click on the right arrow on filter bar
     case ACTIONS.INCREMENT_DATE:
       return { ...state, date: action.newDate };
-    // Update date state when click on the left arrow on filter bar
     case ACTIONS.DECREMENT_DATE:
       return { ...state, date: action.newDate };
 
+    // ACTION FOR USER AUTHENTICATION
     case ACTIONS.SET_LOGGED_IN:
       return { ...state, isLoggedIn: action.isLoggedIn };
-
     case ACTIONS.SET_USERNAME:
       return { ...state, username: action.username };
 
@@ -67,9 +65,17 @@ function reducer(state, action) {
     // Update chosenTransaction state with the clicked transaction
     case ACTIONS.SELECT_TRANSACTION:
       return { ...state, chosenTransaction: action.transaction };
-
+    // Update postTransactionData state upon editing in the Modal
     case ACTIONS.SET_POST_TRANSACTION_DATA:
       return { ...state, postTransactionData: action.postTransactionData };
+
+    // ACTION FOR CATEGORY RELATED COMPONENTS
+    // Update state to Open/Close the Add New Category Modal
+    case ACTIONS.TOGGLE_ADD_NEW_CATEGORY_MODAL:
+      return { ...state, isAddCategoryModalOpen: !state.isAddCategoryModalOpen };
+    // Update postCategoryData state upon editing in the Modal
+    case ACTIONS.SET_POST_CATEGORY_DATA:
+      return { ...state, postCategoryData: action.postCategoryData };
 
     default:
       throw new Error(
@@ -82,15 +88,20 @@ const useApplicationData = () => {
 
   const [state, dispatch] = useReducer(reducer,
     {
+      // DATA STATES FOR THE APPLICATION
       transactionsData: [],
       categoriesData: [],
       accountsData: [],
-      date: moment().format("YYYY-MM"), // state for filterBar
-      transactionDate: moment(), // state for DatePicker
+
+      // STATE FOR THE FILTER BAR
+      date: moment().format("YYYY-MM"),
+
+      // TRANSACTION PAGE RELATED STATES
       isAddTransactionModalOpen: false,
       isEditTransactionModalOpen: false,
       isEditTransferModalOpen: false,
-      chosenTransaction: null, // state to pull data and autofill edit form for Transaction/Transfer
+      transactionDate: moment(), // state for DatePicker in the Modal
+      chosenTransaction: null, // state for the target Transaction/Transfer when editing/deleting
       postTransactionData: { // state for Transaction/Transfer related form submission
         categoryId: null,
         accountId: null,
@@ -99,19 +110,21 @@ const useApplicationData = () => {
         transaction_date: moment(),
         notes: ''
       },
+
+      // CATEGORY PAGE RELATED STATES
+      isAddCategoryModalOpen: false,
+      postCategoryData: { // state for form control in the Add New Category Modal
+        category_name: null,
+        type: null,
+        logo_url: null,
+        user_id: null
+      },
+
+      // STATES FOR USER AUTHENTICATION
       isLoggedIn: false,
       username: '',
     }
   );
-
-  // FUNCTION FOR FORM SUBMISSION
-  const setPostTransactionData = (data) => {
-    dispatch({
-      type: ACTIONS.SET_POST_TRANSACTION_DATA,
-      postTransactionData: data
-    });
-  };
-
 
   // FUNCTION FOR PICKING TRANSACTION DATE
   const pickTransactionDate = (newDate) => {
@@ -135,14 +148,13 @@ const useApplicationData = () => {
     });
   };
 
+  // FUNCTION FOR USER AUTHENTICATION
   const setIsLoggedIn = (loggedIn) => {
     dispatch({
       type: ACTIONS.SET_LOGGED_IN,
       isLoggedIn: loggedIn
     });
   };
-
-
   const setUsername = (username) => {
     dispatch({
       type: ACTIONS.SET_USERNAME,
@@ -173,8 +185,34 @@ const useApplicationData = () => {
     });
   };
 
+  // FUNCTION FOR CATEGORY RELATED PAGE
+  const toggleAddCategoryModal = () =>
+    dispatch({
+      type: ACTIONS.TOGGLE_ADD_NEW_CATEGORY_MODAL
+    });
+
+  // FUNCTION FOR FORM SUBMISSION
+  // Transaction/Transfer related Modals
+  const setPostTransactionData = (data) => {
+    dispatch({
+      type: ACTIONS.SET_POST_TRANSACTION_DATA,
+      postTransactionData: data
+    });
+  };
+  // Category Modal
+  const setPostCategoryData = (data) => {
+    dispatch({
+      type: ACTIONS.SET_POST_CATEGORY_DATA,
+      postCategoryData: data
+    });
+  };
+
+
+
+
+
   // FUNCTION TO FETCH DATA FROM BACKEND FOR TRANASCTIONS, ACCOUNTS AND CATEGORIES
-  // Function to fetch transactions and update transactionsData state
+  // Fetch transactions and update transactionsData state
   const getTransactions = () => {
     fetch('http://localhost:8080/transactions?' + new URLSearchParams({
       month: moment(state.date).format("MM"),
@@ -189,7 +227,7 @@ const useApplicationData = () => {
         console.error('Error fetching transactions data:', error);
       });
   };
-  // Function to fetch accounts and update accountsData state
+  // Fetch accounts and update accountsData state
   const getAccounts = async () => {
     const response = await axios.get('/accounts');
     dispatch({
@@ -197,7 +235,7 @@ const useApplicationData = () => {
       accountsData: response.data.accounts
     });
   };
-  // Function to fetch categories and update categoriesData state
+  // Fetch categories and update categoriesData state
   const getCategories = async () => {
     const response = await axios.get('/categories');
     dispatch({
@@ -207,7 +245,7 @@ const useApplicationData = () => {
   };
 
 
-  // Fetch transactions data from backend server, dependent on the 'date' state upon loading the app
+  // Fetch transactions data from backend server upon loading the app
   useEffect(() => {
     getTransactions();
     // Dependent on the 'date' state
@@ -220,6 +258,7 @@ const useApplicationData = () => {
     getCategories();
     // No dependency for categories and accounts data, only retrieve on reload
   }, []);
+
 
   useEffect(() => {
     axios({
@@ -241,6 +280,7 @@ const useApplicationData = () => {
       });
   }, []);
 
+
   return {
     state,
     pickTransactionDate,
@@ -255,7 +295,9 @@ const useApplicationData = () => {
     getCategories,
     setPostTransactionData,
     setIsLoggedIn,
-    setUsername
+    setUsername,
+    toggleAddCategoryModal,
+    setPostCategoryData
   };
 
 };
