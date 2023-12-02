@@ -11,7 +11,9 @@ const CategoriesManagement = (props) => {
     categoriesData,
     getCategories,
     isAddCategoryModalOpen,
-    toggleAddCategoryModal
+    toggleAddCategoryModal,
+    postCategoryData,
+    setPostCategoryData
   } = props;
 
   const incomeCategories = categoriesData.filter((category) => category.type === "Income");
@@ -50,6 +52,8 @@ const CategoriesManagement = (props) => {
       <CategoriesModalAddNew
         isAddCategoryModalOpen={isAddCategoryModalOpen}
         toggleAddCategoryModal={toggleAddCategoryModal}
+        postCategoryData={postCategoryData}
+        setPostCategoryData={setPostCategoryData}
       />
 
     </div>
