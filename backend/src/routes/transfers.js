@@ -5,7 +5,7 @@ const transfersQueries = require('../db/queries/transfers_query.js')
 //Add new transfer to the DB
 router.post('/add', (req, res) => {
   const transferData = {
-    userId: 1,
+    userId: 1, //req.session.user_id;
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
     accountToId: req.body.accountToId,
@@ -28,7 +28,7 @@ router.post('/add', (req, res) => {
 router.post('/:transaction_id/edit', (req, res) => {
   const transferData = {
     transactionId: req.params.transaction_id,
-    userId: req.body.userId,
+    userId: req.body.userId, //req.session.user_id;
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
     accountToId: req.body.accountToId,

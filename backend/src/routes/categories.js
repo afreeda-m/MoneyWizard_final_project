@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const dbQueries = require('../db/queries/categories_query.js')
 
-// GET categories for a user
+// GET categories for a user and all default categories
 router.get('/categories', (req, res) => {
   const userId = 1;
+  // const userId = req.session.user_id;
 
   dbQueries.getCategoriesByUserId(userId)
     .then(categories => res.json(categories))
@@ -35,6 +36,7 @@ router.get('/categories/:id', (req, res) => {
 // POST add a new category
 router.post('/categories/add', (req, res) => {
   const userId = 1;
+  // const userId = req.session.user_id;
   const { category_name, type, logo_url } = req.body;
 
   // Validate input
@@ -61,6 +63,7 @@ router.post('/categories/:category_id/edit', (req, res) => {
 
   const categoryData = { category_name, type, logo_url };
   const userId = 1;
+  // const userId = req.session.user_id;
 
   // Call the database function to edit the category
   dbQueries.updateCategory(categoryId, categoryData, userId)
@@ -82,6 +85,7 @@ router.post('/categories/:category_id/edit', (req, res) => {
 router.post('/categories/:category_id/delete', (req, res) => {
   const categoryId = req.params.category_id;
   const userId = 1;
+  // const userId = req.session.user_id;
 
   console.log("BE Category Deletion Route Triggered!");
 

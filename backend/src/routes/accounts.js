@@ -47,6 +47,7 @@ router.get('/accounts/:id', (req, res) => {
 
 // POST add a new account
 router.post('/accounts/add', (req, res) => {
+  // const userId = req.session.user_id;
   const userId = 1;
   const { account_name, balance, note } = req.body;
 
@@ -74,6 +75,7 @@ router.post('/accounts/:account_id/edit', (req, res) => {
 
   const accountData = { account_name, balance, note };
   const userId = 1;
+  // const userId = req.session.user_id;
 
   // Call the database function to edit the account
   dbQueries.updateAccount(accountId, accountData, userId)
@@ -95,6 +97,7 @@ router.post('/accounts/:account_id/edit', (req, res) => {
 router.post('/accounts/:account_id/delete', (req, res) => {
   const accountId = req.params.account_id;
   const userId = 1;
+  // const userId = req.session.user_id;
 
   // Call the database function to delete the account
   dbQueries.removeAccount(accountId, userId)

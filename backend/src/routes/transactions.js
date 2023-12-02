@@ -4,7 +4,8 @@ const transactionsQueries = require('../db/queries/transactions_query.js');
 
 //get all transactions for a user by month and year (default current month/year)
 router.get('/', (req, res) => {
-  const userId = 1; //will need to extract this from cookies (set cookie session at initial login then extract the user_id every time)
+  const userId = 1;
+  // const userId = req.session.user_id;
   const year = req.query.year;
   const month = req.query.month;
 
@@ -19,6 +20,7 @@ router.get('/', (req, res) => {
 // Add a new transaction to the DB
 router.post('/add', (req, res) => {
   const userId = 1;
+  // const userId = req.session.user_id;
   const transactionData = {
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
@@ -89,6 +91,7 @@ router.post('/:transaction_id/edit', (req, res) => {
 //Get sum of all transactions based on category (for reports page)
 router.get('/transactionsByCategory', (req, res) => {
   const userId = 1;
+  // const userId = req.session.user_id;
   const date = req.query.date;
 
   let year = null;

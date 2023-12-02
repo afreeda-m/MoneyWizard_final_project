@@ -1,33 +1,6 @@
 const db = require('../connection.js');
 
-// //get categories by user's ID
-// const getCategoriesByUserId = () => {
-//   const queryString = `SELECT * FROM categories WHERE user_id IS NULL;`
-//   return db
-//     .query(queryString)
-//     .then((data) => {
-//       return data.rows
-//     })
-//     .catch((error) => {
-//       console.log("Unable to get categories by user_id", error);
-//     })
-// }
-
-// // get categories by their ID
-// const getCategoryById = (categoryId) => {
-//   const queryString = `SELECT * FROM categories WHERE id = $1;`;
-
-//   return db
-//     .query(queryString, [categoryId])
-//     .then((data) => {
-//       return data.rows[0];
-//     })
-//     .catch((error) => {
-//       console.error('Error fetching category by ID:', error);
-//       throw error;
-//     });
-// };
-
+//get all categories where user_id is null AND where user_id is provided
 const getCategoriesByUserId = (userId) => {
   const queryString = `
     SELECT *
