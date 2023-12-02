@@ -59,7 +59,7 @@ const TransactionListItem = (props) => {
 
 
   return (
-    <ListGroupItem className="p-2" style={{ width: "50vw" }} >
+    <ListGroupItem className="p-2" style={{ width: "40vw" }} >
       <Container>
 
         <Row className="d-flex align-items-center">
