@@ -37,6 +37,8 @@ function App() {
     setPostTransactionData,
     setIsLoggedIn,
     setUsername,
+    toggleAddCategoryModal,
+    setPostCategoryData
   } = useApplicationData();
 
   const {
@@ -52,6 +54,8 @@ function App() {
     postTransactionData,
     isLoggedIn,
     username,
+    isAddCategoryModalOpen,
+    postCategoryData
   } = state;
 
   return (
@@ -198,6 +202,10 @@ function App() {
             <Route path='/categoriesmanagement' element={<CategoriesManagement
               categoriesData={categoriesData}
               getCategories={getCategories}
+              isAddCategoryModalOpen={isAddCategoryModalOpen}
+              toggleAddCategoryModal={toggleAddCategoryModal}
+              postCategoryData={postCategoryData}
+              setPostCategoryData={setPostCategoryData}
             />} />
 
             {/* <Route path='/budgets' element={<Budgets />} />
