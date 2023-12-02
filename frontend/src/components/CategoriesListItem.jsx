@@ -12,6 +12,9 @@ const CategoriesListItem = (props) => {
 
   const { categoryId, categoryIcon, categoryName, getCategories } = props;
 
+
+  // Function for deleting a category
+  // TO BE DISCUSSED: Can user delete base categories, if not then maybe we should send an alert box when a base category is being deleted
   const handleDelete = () => {
     axios.post(`/categories/${categoryId}/delete`)
       .then((response) => {
