@@ -1,7 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
-import Col from "react-bootstrap/Col";
-import { NumericFormat } from "react-number-format";
 import { Cell, Label, Legend, Pie, PieChart, Tooltip } from "recharts";
 import AccountList from "../components/AccountList";
 import AccountsModal from "../components/AccountsModal";
@@ -101,18 +99,6 @@ const Accounts = () => {
         <Tooltip />
         <Legend />
       </PieChart>
-
-      {/* <Col className="d-flex justify-content-end">
-        <span class="accounts-total">
-          Total:{" "}
-          <NumericFormat
-            value={totalAccountsBalance.toFixed(2)}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"$"}
-          />
-        </span>
-      </Col> */}
 
       <AccountList
         accounts={accounts}

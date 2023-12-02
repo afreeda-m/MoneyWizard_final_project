@@ -251,6 +251,8 @@ const useApplicationData = () => {
     toggleEditTransferModal,
     chooseTransaction,
     getTransactions,
+    getAccounts,
+    getCategories,
     setPostTransactionData,
     setIsLoggedIn,
     setUsername
