@@ -54,6 +54,7 @@ const CategoriesManagement = (props) => {
         toggleAddCategoryModal={toggleAddCategoryModal}
         postCategoryData={postCategoryData}
         setPostCategoryData={setPostCategoryData}
+        getCategories={getCategories}
       />
 
     </div>
