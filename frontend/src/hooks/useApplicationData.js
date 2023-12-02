@@ -116,6 +116,7 @@ const useApplicationData = () => {
       postCategoryData: { // state for form control in the Add New Category Modal
         category_name: null,
         type: null,
+        logo_url: null,
         user_id: null
       },
 
