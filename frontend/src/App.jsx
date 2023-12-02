@@ -10,12 +10,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "./helpers/helperFunctions";
 import useApplicationData from './hooks/useApplicationData';
 import Accounts from './pages/Accounts';
-import Budgets from './pages/Budgets';
+// import Budgets from './pages/Budgets';
+// import RecurringTransactions from './pages/RecurringTransactions';
 import CategoriesManagement from './pages/CategoriesManagement';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import Layout from './pages/Layout';
-import RecurringTransactions from './pages/RecurringTransactions';
 import Reports from './pages/Reports';
 import Transactions from './pages/Transactions';
 
@@ -32,6 +32,8 @@ function App() {
     toggleEditTransferModal,
     chooseTransaction,
     getTransactions,
+    getAccounts,
+    getCategories,
     setPostTransactionData,
     setIsLoggedIn,
     setUsername,
@@ -91,7 +93,7 @@ function App() {
         <Routes>
 
           {/* The Root Route for Money Wizard */}
-          <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn = {setIsLoggedIn} setUsername={setUsername} username={username}/>}> </Route>
+          <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} username={username} />}> </Route>
 
 
           {/* REACT-ROUTER: THE OUTLET COMPONENT
@@ -141,18 +143,23 @@ function App() {
             * components below. With this approach, we only need one additional
             * `Layout.jsx` component.
             */}
-          <Route element={<Layout isLoggedIn={isLoggedIn} setIsLoggedIn = {setIsLoggedIn} setUsername={setUsername} username={username}/>}>
+          <Route element={<Layout
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            setUsername={setUsername}
+            username={username}
+          />}>
 
             <Route path='/dashboard' element={<Dashboard
-            transactionsData={transactionsData}
-            categoriesData={categoriesData}
-            accountsData={accountsData}
-            chooseTransaction={chooseTransaction}
-            getAccountNameById={getAccountNameById}
-            getCategoryIconById={getCategoryIconById}
-            getCategoryNameById={getCategoryNameById}
-            getCategoryTypeById={getCategoryTypeById}/>}
-             />
+              transactionsData={transactionsData}
+              categoriesData={categoriesData}
+              accountsData={accountsData}
+              chooseTransaction={chooseTransaction}
+              getAccountNameById={getAccountNameById}
+              getCategoryIconById={getCategoryIconById}
+              getCategoryNameById={getCategoryNameById}
+              getCategoryTypeById={getCategoryTypeById}
+            />} />
 
             <Route path='/transactions' element={<Transactions
               transactionsData={transactionsData}
@@ -181,12 +188,20 @@ function App() {
             />} />
 
             <Route path='/accounts' element={<Accounts />} />
-            <Route path='/reports' element={<Reports  date={date}
+
+            <Route path='/reports' element={<Reports
+              date={date}
               incrementDate={incrementDate}
-              decrementDate={decrementDate}/>} />
-            <Route path='/budgets' element={<Budgets />} />
-            <Route path='/recurringtransactions' element={<RecurringTransactions />} />
-            <Route path='/categoriesmanagement' element={<CategoriesManagement />} />
+              decrementDate={decrementDate}
+            />} />
+
+            <Route path='/categoriesmanagement' element={<CategoriesManagement
+              categoriesData={categoriesData}
+              getCategories={getCategories}
+            />} />
+
+            {/* <Route path='/budgets' element={<Budgets />} />
+            <Route path='/recurringtransactions' element={<RecurringTransactions />} /> */}
 
           </Route>
 
