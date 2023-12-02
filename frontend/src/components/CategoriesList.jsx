@@ -9,6 +9,7 @@ function CategoriesList(props) {
 
   const incomeCategories = props.incomeCategories;
   const expenseCategories = props.expenseCategories;
+  const deleteCategory = props.deleteCategory;
 
 
   return (
@@ -44,8 +45,11 @@ function CategoriesList(props) {
                 <CategoriesListItem
                   key={incomeCategory.id}
 
+                  categoryId={incomeCategory.id}
                   categoryLogo={incomeCategory.logo_url}
                   categoryName={incomeCategory.category_name}
+                  categoryType={"Income"}
+                  deleteCategory={deleteCategory}
                 />
 
               ))}
@@ -83,8 +87,12 @@ function CategoriesList(props) {
                 <CategoriesListItem
                   key={expenseCategory.id}
 
+                  categoryId={expenseCategory.id}
                   categoryLogo={expenseCategory.logo_url}
                   categoryName={expenseCategory.category_name}
+                  categoryType={"Expense"}
+                  deleteCategory={deleteCategory}
+
                 />
 
               ))}
