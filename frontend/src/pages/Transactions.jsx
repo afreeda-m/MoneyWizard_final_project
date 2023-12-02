@@ -59,6 +59,7 @@ const Transactions = (props) => {
         chooseTransaction={chooseTransaction}
         getTransactions={getTransactions}
       />
+      
       <div onClick={toggleAddNewModal}>
         <FloatingActionButton />
       </div>
