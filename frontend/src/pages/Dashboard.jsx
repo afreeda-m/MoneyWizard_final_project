@@ -87,16 +87,19 @@ const Dashboard = (props) => {
       <h1>Dashboard</h1>
 
       <div className="dashboard">
+
+        {/*  GRID BOX -1 */}
         <div className="box box1">
           <div className="chartBox">
-          <PieChartMoneyWizard data={[
-            { label: 'Income', value: totalIncome, type: "Income" },
-            { label: 'Expense', value: totalExpense, type: "Expense" },
-          ]} />
+            <PieChartMoneyWizard data={[
+              { label: 'Income', value: totalIncome, type: "Income" },
+              { label: 'Expense', value: totalExpense, type: "Expense" },
+            ]} />
+          </div>
         </div>
-        </div>
-        <div className="box box2">
 
+        {/* BOX -2 */}
+        <div className="box box2">
           <span>TOTAL BALANCE</span>
           <span className="percentage">
             <h1>{" "}</h1>
@@ -105,11 +108,12 @@ const Dashboard = (props) => {
               displayType={"text"}
               thousandSeparator={true}
               prefix={"$"}
-            /></span>
+            />
+          </span>
         </div>
 
+        {/* BOX-3 */}
         <div className="box box3">
-          {/* summary */}
           <div className="texts">
 
             {/* Render a list of accounts with amounts */}
@@ -120,10 +124,10 @@ const Dashboard = (props) => {
                 </li>
               ))}
             </ul>
-
           </div>
         </div>
 
+        {/* BOX -4 */}
         <div className="box box4">
           <div className="summary-container">
             <h5 className="text-success">Income ${totalIncome}</h5>
@@ -131,9 +135,10 @@ const Dashboard = (props) => {
             <h5>Total: ${totalIncome - totalExpense}</h5>
           </div>
         </div>
-
+        {/* BOX -5 */}
         <div className="box box7"><MonthlyBalanceChart /></div>
 
+        {/* BOX -6 */}
         <div className="box box8">
           <h1>Recent Transactions </h1>
           < RecentTransactionsList
@@ -146,9 +151,10 @@ const Dashboard = (props) => {
             getCategoryTypeById={getCategoryTypeById}
             chosenTransaction={chosenTransaction}
             disableEditingAndDeleting={true}
-          /></div>
+          />
+        </div>
 
-        <div className="box box9">box9</div>
+        <div className="box box9">box7</div>
       </div>
 
     </Container >
