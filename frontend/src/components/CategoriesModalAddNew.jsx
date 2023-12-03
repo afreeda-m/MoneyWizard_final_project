@@ -80,7 +80,7 @@ function CategoriesModalAddNew(props) {
         <Form.Group className='mb-3'>
           <Form.Label >Category type</Form.Label>
           <Form.Select type="text" name="type" onChange={handleInput}>
-            <option></option>
+            <option>Choose a type</option>
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>
           </Form.Select>
