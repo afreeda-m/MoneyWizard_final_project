@@ -1,89 +1,158 @@
+// /* dashboard */
+.dashboard{
 
-/* dashboard */
-.main-container {
-  grid-area: main;
-  overflow-y: auto;
-  padding: 20px 20px;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.main-title {
-  display: flex;
-  justify-content: space-between;
-}
-
-.main-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin: 15px 0;
+  gap: 20px;
+  grid-template-columns: repeat(2,1fr); // 2columns same width
+  grid-auto-rows: minmax(180px, auto);
+
+  h1{
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .box{
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #384256;
+    text-align: center;
+
+  }
+  .box1{
+    grid-column: span 1;
+    grid-row: span 3
+  }
+
+  .box5{
+    grid-column: span 1;
+    grid-row: span 3
+  }
+  .box7{
+    grid-column: span 2;
+    grid-row: span 2;
+  }
 }
 
-.card {
+.chartInfo {
+  flex: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 8px 15px;
-  border-radius: 5px;
-  width: 600px;
-  height: 180px;
 }
 
-// .card {
+.chart {
+  width: 100%;
+  height: 100%
+}
 
-//   transition: background-color 0.3s ease; /* Add transition for a smooth effect */
+.texts {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
 
-//   /* Initial styles */
-//   &:hover {
-//     background-color: #e0e0e0; /* Change background color on hover */
-//   }
+.percentage {
+  font-weight: bold;
+  font-size: 20px;
+}
 
-//   &:focus {
-//     outline: 2px solid #007bff; /* Add focus outline */
-//   }
+.duration{
+  font-size: 14px;
+}
+
+
+// .main-container {
+//   grid-area: main;
+//   overflow-y: auto;
+//   padding: 20px 20px;
+//   color: rgba(255, 255, 255, 0.95);
 // }
 
-// /* Add focus styles for keyboard navigation */
-// .card:focus {
-//   box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
-// }
-
-// .card:first-child {
-//   background-color: #8884d8;
-// }
-
-// .card:nth-child(2) {
-//   background-color: #82ca9d;
-// }
-
-// .card:nth-child(3) {
-//   background-color: #FF8042;
-// }
-
-
-// .card-inner {
+// .main-title {
 //   display: flex;
-//   align-items: center;
 //   justify-content: space-between;
 // }
 
-// .card-inner > .card_icon {
-//   font-size: 25px;
-// }
-
-// .charts {
+// .main-cards {
 //   display: grid;
 //   grid-template-columns: 1fr 1fr;
-//   gap: 20px;
-//   margin-top: 60px;
-//   height: 300px;
+//   gap: 30px;
+//   margin: 15px 0;
 // }
-// .recent-transactions {
-//   display: grid;
-//   grid-template-columns: 1fr;
-//   background-color: #FF8042;
-//   gap: 60px;
-//   margin-top: 90px;
-//   height: 300px;
+
+// .card {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   padding: 8px 15px;
+//   border-radius: 5px;
+//   width: 400px;
+//   height: 400px;
 // }
-/* End dashoboard  */
+
+
+// .monthly-balance-chart-title {
+//   font-size: 18px;
+//   font-weight: bold;
+//   margin-bottom: 20px;
+// }
+
+
+// // .card {
+
+// //   transition: background-color 0.3s ease; /* Add transition for a smooth effect */
+
+// //   /* Initial styles */
+// //   &:hover {
+// //     background-color: #e0e0e0; /* Change background color on hover */
+// //   }
+
+// //   &:focus {
+// //     outline: 2px solid #007bff; /* Add focus outline */
+// //   }
+// // }
+
+// // /* Add focus styles for keyboard navigation */
+// // .card:focus {
+// //   box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
+// // }
+
+// // .card:first-child {
+// //   background-color: #8884d8;
+// // }
+
+// // .card:nth-child(2) {
+// //   background-color: #82ca9d;
+// // }
+
+// // .card:nth-child(3) {
+// //   background-color: #FF8042;
+// // }
+
+
+// // .card-inner {
+// //   display: flex;
+// //   align-items: center;
+// //   justify-content: space-between;
+// // }
+
+// // .card-inner > .card_icon {
+// //   font-size: 25px;
+// // }
+
+// // .charts {
+// //   display: grid;
+// //   grid-template-columns: 1fr 1fr;
+// //   gap: 20px;
+// //   margin-top: 60px;
+// //   height: 300px;
+// // }
+// // .recent-transactions {
+// //   display: grid;
+// //   grid-template-columns: 1fr;
+// //   background-color: #FF8042;
+// //   gap: 60px;
+// //   margin-top: 90px;
+// //   height: 300px;
+// // }
+// /* End dashoboard  */

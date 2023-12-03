@@ -95,10 +95,10 @@ const Report = (props) => {
       </Row>
       {/* PieCharts for displaying income and expense distribution */}
       <Row>
-        <Col md={{ span: 4, offset: 2 }}>
+        <Col md={{ span: 3, offset: 2 }}>
           <PieChartMoneyWizard data={incomeData} isExpense={false} />
         </Col>
-        <Col md={{ span: 4, offset: 2 }}>
+        <Col md={{ span: 3, offset: 2 }}>
           <PieChartMoneyWizard data={expenseData} isExpense={true} />
         </Col>
       </Row>
