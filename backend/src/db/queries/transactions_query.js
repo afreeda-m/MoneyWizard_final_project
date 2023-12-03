@@ -29,6 +29,50 @@ const getTransactionsByUserId = (userId, year = null, month = null) => {
     });
 };
 
+//show 6months ago transactions for a user based on month and year, default is current month and year
+const getTransactionsByMonth = (userId, year = null, month = null) => {
+  let queryString = `SELECT * FROM transactions WHERE user_id = $1 {date_filter} ORDER BY transaction_date;`;
+
+  let queryParams = [userId];
+
+   // Initialize endDate to the current date
+   let endDate = new Date();
+
+   // Check if year and month are provided, and if so, set endDate to the last day of the specified month
+   if (year != null && month != null) {
+     endDate = new Date(year, month);
+   }
+
+   // Format the endDate to ISO format and extract the date part
+   let endDateString = endDate.toISOString().split('T')[0];
+
+   // Create a new Date object based on endDate to calculate the start date (6 months ago)
+   let startDateString = new Date(endDate);
+   startDateString.setMonth(endDate.getMonth() - 6);
+
+   // Format the startDateString to ISO format and extract the date part
+   startDateString = startDateString.toISOString().split('T')[0];
+
+   // Construct the filterString for the date range using the BETWEEN operator in the SQL query
+   let filterString = `AND transaction_date BETWEEN $2 AND $3`;
+
+   // Add start and end date parameters to the queryParams array
+   queryParams.push(startDateString, endDateString);
+
+   // Replace the {date_filter} placeholder in the queryString with the constructed filterString
+   queryString = queryString.replace("{date_filter}", filterString);
+
+
+  return db
+    .query(queryString, queryParams)
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((error) => {
+      console.log("Unable to get transactions by month", error);
+    });
+};
+
 
 //Add new transaction to DB and update balance in respective accounts
 const addTransaction = (userId, transactionData) => {
@@ -293,5 +337,6 @@ module.exports = {
   deleteTransaction,
   getTransactionById,
   editTransaction,
-  getTransactionsByCategoryId
+  getTransactionsByCategoryId,
+  getTransactionsByMonth
 };

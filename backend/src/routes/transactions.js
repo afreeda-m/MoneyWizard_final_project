@@ -17,6 +17,20 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/monthlyTransactions', (req, res) => {
+  const userId = 1; //will need to extract this from cookies (set cookie session at initial login then extract the user_id every time)
+  const year = req.query.year;
+  const month = req.query.month;
+
+  transactionsQueries.getTransactionsByMonth(userId, year, month)
+    .then(transactions => res.json(transactions))
+    .catch(error => {
+      console.error('Error fetching transactions:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+
 // Add a new transaction to the DB
 router.post('/add', (req, res) => {
   const userId = 1;
