@@ -77,6 +77,14 @@ const Report = (props) => {
     // Display a message or notification when there is no data
     return (
       <Container className='mt-5'>
+        <Row className="justify-content-md-center">
+            <Col >
+              <FilterBar
+                date={date}
+                incrementDate={incrementDate}
+                decrementDate={decrementDate} />
+            </Col>
+          </Row>
         <Row >
           <Col className='justify-content-md-center'>
             <Alert variant="success">
