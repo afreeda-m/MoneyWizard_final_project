@@ -3,11 +3,13 @@ import moment from 'moment';
 import React, { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from "react-bootstrap/esm/Col";
+import Col from "react-bootstrap/Col";
+import Alert from "react-bootstrap/Alert";
 import ColumnChart from "../components/ColumnChart";
 import FilterBar from "../components/FilterBar";
 import IncomeExpenseList from "../components/IncomeExpenseList";
 import PieChartMoneyWizard from "../components/PieChartMoneyWizard";
+import "../styles/Reports.scss";
 
 const Report = (props) => {
   const {
@@ -15,7 +17,6 @@ const Report = (props) => {
     incrementDate,
     decrementDate
   } = props;
-
 
   // State for income and expense data
   const [incomeData, setIncomeData] = useState([]);
@@ -29,7 +30,7 @@ const Report = (props) => {
   // Use moment to parse the date string
   const dateObject = moment(date);
 
-//Add state variables to keep track of the selected month and year.
+  //Add state variables to keep track of the selected month and year.
 
   const [selectedMonth, setSelectedMonth] = useState(dateObject.month() + 1);
   const [selectedYear, setSelectedYear] = useState(dateObject.year());
@@ -68,59 +69,82 @@ const Report = (props) => {
       .catch(error => {
         console.error('Error fetching income and expense distribution data:', error);
       });
-  }, [date, selectedMonth, selectedYear]);
+  }, [date]);
+  // Check if there is no data
+  const hasData = incomeData.length > 0 && expenseData.length > 0;
 
+  if (!hasData) {
+    // Display a message or notification when there is no data
+    return (
+      <Container className='mt-5'>
+        <Row >
+          <Col className='justify-content-md-center'>
+            <Alert variant="success">
+              <Alert.Heading>Hello!</Alert.Heading>
+              <p>
+                No data available to display charts.
+              </p>
+              <hr />
+              <p className="mb-0">
+                Consider adding some transactions to see meaningful charts!
+              </p>
+            </Alert>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
   return (
     <Container className="mt-5">
-      {/* FilterBar component for selecting the date */}
-      <Row className="justify-content-md-center">
-        <Col md={{ span: 6, offset: 3 }}>
-          <FilterBar
-            date={date}
-            incrementDate={incrementDate}
-            decrementDate={decrementDate} />
-        </Col>
-      </Row>
-      {/* ColumnChart component for displaying bar chart */}
-      <Row className="justify-content-md-center">
-        <Col md={{ span: 8, offset: 2 }}>
-          <ColumnChart
-            data={[
-              { category: 'income', income: totalIncome, month: selectedMonth, year: selectedYear },
-              { category: 'expense', expense: totalExpense, month: selectedMonth, year: selectedYear },
-            ]}
-            totalIncome={totalIncome}
-            totalExpense={totalExpense} />
-        </Col>
-      </Row>
-      {/* PieCharts for displaying income and expense distribution */}
-      <Row>
-        <Col md={{ span: 3, offset: 2 }}>
+
+      <div className="reports">
+        <div className="box box1">
+          {/* FilterBar component for selecting the date */}
+          <Row className="justify-content-md-center">
+            <Col >
+              <FilterBar
+                date={date}
+                incrementDate={incrementDate}
+                decrementDate={decrementDate} />
+            </Col>
+          </Row>
+
+          {/* ColumnChart component for displaying bar chart */}
+          <Row className="justify-content-md-center">
+            <Col>
+              <ColumnChart
+                data={[
+                  { category: 'income', income: totalIncome, month: selectedMonth, year: selectedYear },
+                  { category: 'expense', expense: totalExpense, month: selectedMonth, year: selectedYear },
+                ]}
+                totalIncome={totalIncome}
+                totalExpense={totalExpense} />
+            </Col>
+          </Row>
+        </div>
+
+        {/* PieCharts for displaying income and expense distribution */}
+        <div className="box box2 justify-content-md-center">
           <PieChartMoneyWizard data={incomeData} isExpense={false} />
-        </Col>
-        <Col md={{ span: 3, offset: 2 }}>
+        </div>
+        <div className="box box3 justify-content-md-center">
           <PieChartMoneyWizard data={expenseData} isExpense={true} />
-        </Col>
-      </Row>
-      {/* Lists to display individual income and expense transactions */}
-      <Row className="d-flex space-between">
-        <Col md={{ span: 4, offset: 2 }}>
-          <Col><h4>Income</h4></Col>
-          <Col>
-            {incomeData.map((transaction, index) => (
-              <IncomeExpenseList key={index} transaction={transaction} />
-            ))}
-          </Col>
-        </Col>
-        <Col md={{ span: 4, offset: 2 }}>
-          <h4>Expense</h4>
-          <Col>
-            {expenseData.map((transaction, index) => (
-              <IncomeExpenseList key={index} transaction={transaction} />
-            ))}
-          </Col>
-        </Col>
-      </Row>
+        </div>
+
+        {/* Lists to display individual income and expense transactions */}
+        <div className="box box4 text-center">
+          {incomeData.map((transaction, index) => (
+            <IncomeExpenseList key={index} transaction={transaction} />
+          ))}
+        </div>
+
+        <div className="box box5 text-center">
+          {expenseData.map((transaction, index) => (
+            <IncomeExpenseList key={index} transaction={transaction} />
+          ))}
+        </div>
+      </div>
+
     </Container>
   );
 };
