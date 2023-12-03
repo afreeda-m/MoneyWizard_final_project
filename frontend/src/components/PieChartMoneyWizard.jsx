@@ -6,21 +6,7 @@ import Col from 'react-bootstrap/Col';
 
 const PieChartComponent = ({ data, isExpense}) => {
 
-  // Check if there is no data
-  const hasData = data.length > 0;
-
-  if (!hasData) {
-    // Display a message or notification when there is no data
-    return (
-      <Container className='mt-5'>
-        <Row className="shadow p-3 mb-5 bg-white rounded" style={{ border: '1px solid #ccc' }}>
-          <Col className='justify-content-md-center'>
-            <p>No {isExpense ? 'expense' : 'income'} data available for charts.</p>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
+  
   // Calculate total for percentage calculation
   const total = data.reduce((total, item) => total + parseFloat(item.value), 0);
 
