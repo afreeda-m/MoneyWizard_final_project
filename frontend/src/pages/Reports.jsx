@@ -15,76 +15,90 @@ const Report = (props) => {
   const {
     date,
     incrementDate,
-    decrementDate
+    decrementDate,
+    transactionsByCategoryData,
+    categoriesData,
+    getCategoryIconById,
+    getCategoryNameById
   } = props;
+
+
+  const incomeTransactions = transactionsByCategoryData.filter((transaction) => transaction.type === "Income");
+  const expenseTransactions = transactionsByCategoryData.filter((transaction) => transaction.type === "Expense");
+
+
+  // console.log('transaction by category:', transactionsByCategoryData);
+  console.log('New income data:', incomeTransactions);
+  console.log('New expense data:', expenseTransactions);
 
   // State for income and expense data
   const [incomeData, setIncomeData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
 
-  // State for income/expense totals
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalExpense, setTotalExpense] = useState(0);
+  // // State for income/expense totals
+  // const [totalIncome, setTotalIncome] = useState(0);
+  // const [totalExpense, setTotalExpense] = useState(0);
 
 
-  // Use moment to parse the date string
-  const dateObject = moment(date);
+  // // Use moment to parse the date string
+  // const dateObject = moment(date);
 
   //Add state variables to keep track of the selected month and year.
 
-  const [selectedMonth, setSelectedMonth] = useState(dateObject.month() + 1);
-  const [selectedYear, setSelectedYear] = useState(dateObject.year());
+  // const [selectedMonth, setSelectedMonth] = useState(dateObject.month() + 1);
+  // const [selectedYear, setSelectedYear] = useState(dateObject.year());
 
-  useEffect(() => {
-    axios.get('/transactions/transactionsByCategory', {
-      params: {
-        date: moment(date).format('YYYY-MM-DD'),
-        selectedMonth: selectedMonth,
-        selectedYear: selectedYear,
-      },
-    })
-      .then(response => {
-        // Transform the response data for use in charts
-        const dataForRecharts = response.data.map(item => ({
-          label: item.category_name,
-          value: item.sum,
-          type: item.type,
-        }));
+  // useEffect(() => {
+  //   axios.get('/transactions/transactionsByCategory', {
+  //     params: {
+  //       date: moment(date).format('YYYY-MM-DD'),
+  //       selectedMonth: selectedMonth,
+  //       selectedYear: selectedYear,
+  //     },
+  //   })
+  //     .then(response => {
+  //       // Transform the response data for use in charts
+  //       const dataForRecharts = response.data.map(item => ({
+  //         label: item.category_name,
+  //         value: item.sum,
+  //         type: item.type,
+  //       }));
 
-        // Separate income and expense data based on the 'type' property
-        const incomeCategoryList = dataForRecharts.filter(item => item.type === 'Income');
-        const expenseCategoryList = dataForRecharts.filter(item => item.type === 'Expense');
+  //       // Separate income and expense data based on the 'type' property
+  //       const incomeCategoryList = dataForRecharts.filter(item => item.type === 'Income');
+  //       const expenseCategoryList = dataForRecharts.filter(item => item.type === 'Expense');
 
-        // Set the filtered data in state
-        setIncomeData(incomeCategoryList);
-        setExpenseData(expenseCategoryList);
+  //       // Set the filtered data in state
+  //       setIncomeData(incomeCategoryList);
+  //       setExpenseData(expenseCategoryList);
 
-        // Calculate and set total income and expense amounts
-        const totalIncomeAmount = incomeCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
-        const totalExpenseAmount = expenseCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
+  //       // Calculate and set total income and expense amounts
+  //       const totalIncomeAmount = incomeCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
+  //       const totalExpenseAmount = expenseCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
 
-        setTotalIncome(totalIncomeAmount);
-        setTotalExpense(totalExpenseAmount);
-      })
-      .catch(error => {
-        console.error('Error fetching income and expense distribution data:', error);
-      });
-  }, [date]);
+  //       setTotalIncome(totalIncomeAmount);
+  //       setTotalExpense(totalExpenseAmount);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching income and expense distribution data:', error);
+  //     });
+  // }, [date]);
   // Check if there is no data
-  const hasData = incomeData.length > 0 && expenseData.length > 0;
+
+  const hasData = transactionsByCategoryData.length > 0;
 
   if (!hasData) {
     // Display a message or notification when there is no data
     return (
       <Container className='mt-5'>
         <Row className="justify-content-md-center">
-            <Col >
-              <FilterBar
-                date={date}
-                incrementDate={incrementDate}
-                decrementDate={decrementDate} />
-            </Col>
-          </Row>
+          <Col >
+            <FilterBar
+              date={date}
+              incrementDate={incrementDate}
+              decrementDate={decrementDate} />
+          </Col>
+        </Row>
         <Row >
           <Col className='justify-content-md-center'>
             <Alert variant="success">
@@ -120,36 +134,52 @@ const Report = (props) => {
           {/* ColumnChart component for displaying bar chart */}
           <Row className="justify-content-md-center">
             <Col>
-              <ColumnChart
+              {/* <ColumnChart
                 data={[
                   { category: 'income', income: totalIncome, month: selectedMonth, year: selectedYear },
                   { category: 'expense', expense: totalExpense, month: selectedMonth, year: selectedYear },
                 ]}
                 totalIncome={totalIncome}
-                totalExpense={totalExpense} />
+                totalExpense={totalExpense} /> */}
             </Col>
           </Row>
         </div>
 
         {/* PieCharts for displaying income and expense distribution */}
         <div className="box box2 justify-content-md-center">
-          <PieChartMoneyWizard data={incomeData} isExpense={false} />
+          <PieChartMoneyWizard data={incomeTransactions} isExpense={false} />
         </div>
         <div className="box box3 justify-content-md-center">
-          <PieChartMoneyWizard data={expenseData} isExpense={true} />
+          <PieChartMoneyWizard data={expenseTransactions} isExpense={true} />
         </div>
 
         {/* Lists to display individual income and expense transactions */}
         <div className="box box4 text-center">
-          {incomeData.map((transaction, index) => (
-            <IncomeExpenseList key={index} transaction={transaction} />
+
+          {incomeTransactions.map((transaction, index) => (
+            <IncomeExpenseList
+              key={index}
+              categoriesData={categoriesData}
+              transaction={transaction}
+              getCategoryIconById={getCategoryIconById}
+              getCategoryNameById={getCategoryNameById}
+            />
           ))}
+
         </div>
 
         <div className="box box5 text-center">
-          {expenseData.map((transaction, index) => (
-            <IncomeExpenseList key={index} transaction={transaction} />
+
+          {expenseTransactions.map((transaction, index) => (
+            <IncomeExpenseList
+              key={index}
+              categoriesData={categoriesData}
+              transaction={transaction}
+              getCategoryIconById={getCategoryIconById}
+              getCategoryNameById={getCategoryNameById}
+            />
           ))}
+
         </div>
       </div>
 
