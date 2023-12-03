@@ -17,7 +17,8 @@ export const ACTIONS = {
   SET_LOGGED_IN: 'SET_LOGGED_IN',
   SET_USERNAME: 'SET_USERNAME',
   TOGGLE_ADD_NEW_CATEGORY_MODAL: 'TOGGLE_ADD_NEW_CATEGORY_MODAL',
-  SET_POST_CATEGORY_DATA: 'SET_POST_CATEGORY_DATA'
+  SET_POST_CATEGORY_DATA: 'SET_POST_CATEGORY_DATA',
+  SET_ICONS_DATA: 'SET_ICONS_DATA'
 };
 
 function reducer(state, action) {
@@ -34,6 +35,9 @@ function reducer(state, action) {
     // Update categoriesData state
     case ACTIONS.SET_CATEGORIES_DATA:
       return { ...state, categoriesData: action.categoriesData };
+
+    case ACTIONS.SET_ICONS_DATA:
+      return { ...state, iconsData: action.iconsData };
 
 
     // Update transactionDate when picking transaction date
@@ -119,6 +123,7 @@ const useApplicationData = () => {
         logo_url: null,
         user_id: null
       },
+      iconsData: [],
 
       // STATES FOR USER AUTHENTICATION
       isLoggedIn: false,
@@ -244,6 +249,13 @@ const useApplicationData = () => {
     });
   };
 
+  const getIcons = async () => {
+    const response = await axios.get('/icons');
+    dispatch({
+      type: ACTIONS.SET_ICONS_DATA,
+      iconsData: response.data
+    });
+  };
 
   // Fetch transactions data from backend server upon loading the app
   useEffect(() => {
@@ -256,6 +268,7 @@ const useApplicationData = () => {
   useEffect(() => {
     getAccounts();
     getCategories();
+    getIcons();
     // No dependency for categories and accounts data, only retrieve on reload
   }, []);
 
@@ -293,6 +306,7 @@ const useApplicationData = () => {
     getTransactions,
     getAccounts,
     getCategories,
+    getIcons,
     setPostTransactionData,
     setIsLoggedIn,
     setUsername,

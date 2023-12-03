@@ -9,6 +9,7 @@ const CategoriesManagement = (props) => {
 
   const {
     categoriesData,
+    iconsData,
     getCategories,
     isAddCategoryModalOpen,
     toggleAddCategoryModal,
@@ -55,6 +56,7 @@ const CategoriesManagement = (props) => {
         postCategoryData={postCategoryData}
         setPostCategoryData={setPostCategoryData}
         getCategories={getCategories}
+        iconsData={iconsData}
       />
 
     </div>

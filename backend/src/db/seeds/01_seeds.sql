@@ -145,3 +145,27 @@ INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_da
 VALUES(1, 18, 1, 800, '2023-12-04', 'Tenant rent received');
 INSERT INTO transactions(user_id,category_id, account_id, amount, transaction_date, notes)
 VALUES(1, 19, 1, 100, '2023-12-06', 'Gift from grandma and grandpa');
+
+INSERT INTO icons (logo_url)
+VALUES
+  ('food.png'),
+  ('shopping.png'),
+  ('transportation.png'),
+  ('entertainment.png'),
+  ('education.png'),
+  ('house.png'),
+  ('family.png'),
+  ('healthcare.png'),
+  ('sports.png'),
+  ('pets.png'),
+  ('phone.png'),
+  ('travel.png'),
+  ('salary.png'),
+  ('jobs.png'),
+  ('royalties.png'),
+  ('pension.png'),
+  ('investment.png'),
+  ('apartment.png'),
+  ('gift.png'),
+  ('shopping-basket.png'),
+  ('transfer.png');
