@@ -48,14 +48,7 @@ const MonthlyBalanceChart = () => {
     setMonthlyData(resultData);
   }, [transactionsData]);
 
-  // Custom Y-axis tick component for formatting
-  const CustomYAxisTick = ({ x, y, payload }) => (
-    <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={16} textAnchor="end" fill="#666">
-        ${payload.value}
-      </text>
-    </g>
-  );
+
 
   // Custom tooltip component for formatting
   const CustomTooltip = ({ active, payload, label }) => {
@@ -82,10 +75,14 @@ const MonthlyBalanceChart = () => {
             <BarChart data={monthlyData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month">
-                <Label value="Month" position="insideBottom" offset={-10} />
+
               </XAxis>
               <YAxis tickFormatter={(value) => `$${value}`} />
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip
+                 content={<CustomTooltip />}
+                 contentStyle={{background: "transparent", border:"none"}}
+                 labelStyle={{display:"none"}}
+                 cursor={{fill:"none"}} />
               <Bar dataKey="balance" fill="#82ca9d" name="Monthly Balance" />
             </BarChart>
           </ResponsiveContainer>
