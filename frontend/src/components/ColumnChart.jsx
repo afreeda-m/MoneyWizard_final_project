@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, Label, LabelList } from 'recharts';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,6 +7,18 @@ import Col from 'react-bootstrap/Col';
 
 const ColumnChart = ({ data }) => {
 
+  // Custom tooltip component for formatting
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${label} : $${payload[0].value}`}</p>
+        </div>
+      );
+    }
+
+    return null;
+  };
   return (
     <Container className="mt-5">
       <Row className="mt-3">
@@ -16,19 +28,31 @@ const ColumnChart = ({ data }) => {
             {/* Create a responsive container for the bar chart */}
             <ResponsiveContainer width="100%" height="100%">
               {/* Define the BarChart component with data and margin */}
-              <BarChart data={data} >
-                {/* Define the X-axis with the dataKey as "category" */}
-                <XAxis dataKey="category" />
-                {/* Define the Y-axis */}
-                <YAxis />
-                {/* Enable tooltip for displaying data */}
-                <Tooltip />
-                {/* Enable legend for displaying data series */}
+              <BarChart
+                width={600}
+                height={300}
+                data={data}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <YAxis>
+                  {/* Title for Y-Axis */}
+                  <Label value="Amount" angle={-90} position="insideLeft" />
+                </YAxis>
+                <Tooltip
+                  content={<CustomTooltip />}
+                  contentStyle={{ background: "transparent", border: "none" }}
+                  labelStyle={{ display: "none" }}
+                  cursor={{ fill: "none" }} />
                 <Legend />
-                {/* Create a bar for "income" with a unique color */}
-                <Bar dataKey="income" stackId="1" fill="#8884d8" />
-                {/* Create a bar for "expense" with a unique color */}
-                <Bar dataKey="expense" stackId="1" fill="#82ca9d" />
+                <Bar dataKey="income" fill="#82ca9d" name="Income" >
+                  <LabelList dataKey="income" position="top" />
+                </Bar>
+                <Bar dataKey="expense" fill="#8884d8" name="Expense" >
+                  <LabelList dataKey="expense" position="top" />
+                </Bar>
+                {/* Title for the entire chart */}
+                <Label value="Total Income and Expense Chart" position="top" />
               </BarChart>
             </ResponsiveContainer>
           </div>
