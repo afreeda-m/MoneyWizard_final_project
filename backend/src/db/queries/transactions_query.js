@@ -302,7 +302,7 @@ const editTransaction = (transactionData) => {
 //Show the sum of transactions by category for a given month/year timeframe
 const getTransactionsByCategoryId = (userId, year = null, month = null) => {
   // {date_filter} is a placeholder depending on date being passed in
-  let queryString = `SELECT type, category_name, sum(amount) FROM transactions JOIN categories ON categories.id = category_id WHERE transactions.user_Id = $1 {date_filter} GROUP BY type, category_name;`;
+  let queryString = `SELECT type, category_id, category_name, sum(amount) FROM transactions JOIN categories ON categories.id = category_id WHERE transactions.user_Id = $1 {date_filter} GROUP BY type, category_name, category_id;`;
 
   let queryParams = [userId];
 
