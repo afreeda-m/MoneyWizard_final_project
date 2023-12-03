@@ -156,11 +156,11 @@ const Report = (props) => {
         {/* Lists to display individual income and expense transactions */}
         <div className="box box4 text-center">
 
-          {incomeTransactions.map((transaction, index) => (
+          {incomeTransactions.map((category, index) => (
             <IncomeExpenseList
               key={index}
               categoriesData={categoriesData}
-              transaction={transaction}
+              category={category}
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
             />
@@ -170,11 +170,11 @@ const Report = (props) => {
 
         <div className="box box5 text-center">
 
-          {expenseTransactions.map((transaction, index) => (
+          {expenseTransactions.map((category, index) => (
             <IncomeExpenseList
               key={index}
               categoriesData={categoriesData}
-              transaction={transaction}
+              category={category}
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
             />
