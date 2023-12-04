@@ -4,12 +4,13 @@ import React, { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import Col from "react-bootstrap/Col";
 import Container from 'react-bootstrap/Container';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import ColumnChart from "../components/ColumnChart";
 import FilterBar from "../components/FilterBar";
 import IncomeExpenseList from "../components/IncomeExpenseList";
+import IncomeExpenseListNew from "../components/IncomeExpenseListNew";
 import PieChartMoneyWizard from "../components/PieChartMoneyWizard";
-import ListGroup from 'react-bootstrap/ListGroup';
 import "../styles/Reports.scss";
 
 const Report = (props) => {
@@ -43,8 +44,6 @@ const Report = (props) => {
   return (
     <Container className="mt-5 d-flex flex-column justify-content-center">
 
-
-
       {/* FilterBar component for selecting the date */}
       <Row className="justify-content-center">
         <Col>
@@ -71,58 +70,26 @@ const Report = (props) => {
             </Col>
           </Row>
 
-
-
-
-
-          {/* PieCharts for displaying income and expense distribution */}
-          <Row className='d-flex justify-content-center'>
-
-            <Col>
-              <PieChartMoneyWizard data={incomeCategories} isExpense={false} />
+          <Row >
+            <Col xs={6}>
+              <IncomeExpenseListNew
+                categoriesDataByType={incomeCategories}
+                categoriesData={categoriesData}
+                getCategoryIconById={getCategoryIconById}
+                getCategoryNameById={getCategoryNameById}
+              />
             </Col>
 
-            <Col>
-              <PieChartMoneyWizard data={expenseCategories} isExpense={true} />
-            </Col>
-
-          </Row>
-
-
-
-          {/* Lists to display individual income and expense transactions */}
-          <Row className="d-flex flex-row justify-md-content-center pb-5">
-
-            <Col md={{ span: 4, offset: 0 }} className="ms-4">
-
-              <Col>
-                {incomeCategories.map((category, index) => (
-                  <IncomeExpenseList
-                    key={index}
-                    category={category}
-                    categoriesData={categoriesData}
-                    getCategoryIconById={getCategoryIconById}
-                    getCategoryNameById={getCategoryNameById}
-                  />
-                ))}
-              </Col>
-
-              <Col>
-                <ListGroup >
-
-                  {expenseCategories.map((category, index) => (
-                    <IncomeExpenseList
-                      key={index}
-                      category={category}
-                      categoriesData={categoriesData}
-                      getCategoryIconById={getCategoryIconById}
-                      getCategoryNameById={getCategoryNameById}
-                    />
-                  ))}
-                </ListGroup>
-              </Col>
+            <Col xs={6}>
+              <IncomeExpenseListNew
+                categoriesDataByType={expenseCategories}
+                categoriesData={categoriesData}
+                getCategoryIconById={getCategoryIconById}
+                getCategoryNameById={getCategoryNameById}
+              />
             </Col>
           </Row>
+
         </>
         :
         <Row >
