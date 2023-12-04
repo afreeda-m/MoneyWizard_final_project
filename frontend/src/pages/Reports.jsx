@@ -26,88 +26,88 @@ const Report = (props) => {
   const totalIncome = incomeCategories.reduce((total, category) => total + parseFloat(category.sum), 0);
   const totalExpense = expenseCategories.reduce((total, category) => total + parseFloat(category.sum), 0);
 
-
-
-  console.log('New income data:', incomeCategories);
-  console.log('New expense data:', expenseCategories);
-
-
   return (
-    <Container className="mt-5 d-flex flex-column justify-content-center">
+    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5">
 
-      {/* FilterBar component for selecting the date */}
-      <Row className="justify-content-center">
-        <Col>
-          <FilterBar
-            date={date}
-            incrementDate={incrementDate}
-            decrementDate={decrementDate} />
-        </Col>
-      </Row>
+      <h1>Reports</h1>
 
-      {/* Show notification of no data if there is no transaction during the target period and render the information if there are transactions */}
-      {transactionsByCategoryData.length > 0
-        ?
-        <>
-          {/* ColumnChart component for displaying bar chart */}
-          <Row >
-            <Col>
-              <ColumnChart
-                data={[
-                  { category: 'income', income: totalIncome, month: moment(date).format("MM"), year: moment(date).format("YYYY") },
-                  { category: 'expense', expense: totalExpense, month: moment(date).format("MM"), year: moment(date).format("YYYY") },
-                ]}
-                totalIncome={totalIncome}
-                totalExpense={totalExpense} />
-            </Col>
-          </Row>
+      <Container className="mt-5 d-flex flex-column justify-content-center">
 
-          <Row>
-
-            <Container className='d-flex flex-column'>
-              <Row>
-                <Col xs={6} className="text-center">
-                  <IncomeExpenseList
-                    categoriesDataByType={incomeCategories}
-                    categoriesData={categoriesData}
-                    getCategoryIconById={getCategoryIconById}
-                    getCategoryNameById={getCategoryNameById}
-                    isIncome={true}
-                  />
-                </Col>
-
-                <Col xs={6} className="text-center">
-                  <IncomeExpenseList
-                    categoriesDataByType={expenseCategories}
-                    categoriesData={categoriesData}
-                    getCategoryIconById={getCategoryIconById}
-                    getCategoryNameById={getCategoryNameById}
-                    isIncome={false}
-                  />
-                </Col>
-              </Row>
-
-            </Container>
-          </Row>
-        </>
-        :
-        <Row >
-          <Col className='justify-content-md-center'>
-            <Alert variant="success">
-              <Alert.Heading>Hello!</Alert.Heading>
-              <p>
-                No data available to display charts.
-              </p>
-              <hr />
-              <p className="mb-0">
-                Consider adding some transactions to see meaningful charts!
-              </p>
-            </Alert>
+        {/* FilterBar component for selecting the date */}
+        <Row className="justify-content-center">
+          <Col>
+            <FilterBar
+              date={date}
+              incrementDate={incrementDate}
+              decrementDate={decrementDate} />
           </Col>
         </Row>
-      }
 
-    </Container>
+        {/* Show notification of no data if there is no transaction during the target period and render the information if there are transactions */}
+        {transactionsByCategoryData.length > 0
+          ?
+          <>
+            {/* ColumnChart component for displaying bar chart */}
+            {/* <Row>
+            <Col>
+            <ColumnChart
+            data={[
+              { category: 'income', income: totalIncome, month: moment(date).format("MM"), year: moment(date).format("YYYY") },
+              { category: 'expense', expense: totalExpense, month: moment(date).format("MM"), year: moment(date).format("YYYY") },
+            ]}
+            totalIncome={totalIncome}
+            totalExpense={totalExpense} />
+            </Col>
+          </Row> */}
+
+            <Row>
+              <Container className='d-flex justify-content-center'>
+                <Row>
+                  <Col xs={6} style={{ width: "50%" }}>
+                    <IncomeExpenseList
+                      categoriesDataByType={incomeCategories}
+                      categoriesData={categoriesData}
+                      getCategoryIconById={getCategoryIconById}
+                      getCategoryNameById={getCategoryNameById}
+                      isIncome={true}
+                      total={totalIncome}
+                    />
+                  </Col>
+
+                  <Col xs={6} style={{ width: "50%" }}>
+                    <IncomeExpenseList
+                      categoriesDataByType={expenseCategories}
+                      categoriesData={categoriesData}
+                      getCategoryIconById={getCategoryIconById}
+                      getCategoryNameById={getCategoryNameById}
+                      isIncome={false}
+                      total={totalExpense}
+                    />
+                  </Col>
+                </Row>
+              </Container>
+            </Row>
+
+          </>
+          :
+          <Row >
+            <Col className='justify-content-md-center'>
+              <Alert variant="success">
+                <Alert.Heading>Hello!</Alert.Heading>
+                <p>
+                  No data available to display charts.
+                </p>
+                <hr />
+                <p className="mb-0">
+                  Consider adding some transactions to see meaningful charts!
+                </p>
+              </Alert>
+            </Col>
+          </Row>
+        }
+
+      </Container>
+    </div>
   );
 };
 
