@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, Label, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Line,LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import moment from 'moment';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
@@ -66,26 +66,27 @@ const MonthlyBalanceChart = () => {
     <Container>
       <Row>
         <Col>
-          <p className="monthly-balance-chart-title">Monthly Balance Chart</p>
+          <p className="monthly-balance-chart-title"><b>Past 6 Months Balance Chart</b></p>
         </Col>
       </Row>
       <Row>
         <Col>
           <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={monthlyData}>
+            <LineChart data={monthlyData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month">
+              <XAxis dataKey="month" />
 
-              </XAxis>
               <YAxis tickFormatter={(value) => `$${value}`} />
               <Tooltip
-                 content={<CustomTooltip />}
-                 contentStyle={{background: "transparent", border:"none"}}
-                 labelStyle={{display:"none"}}
-                 cursor={{fill:"none"}} />
-              <Bar dataKey="balance" fill="#82ca9d" name="Monthly Balance" />
-            </BarChart>
+                content={<CustomTooltip />}
+                contentStyle={{ background: "transparent", border: "none" }}
+                labelStyle={{ display: "none" }}
+                cursor={{ fill: "none" }}
+              />
+              <Line type="monotone" dataKey="balance" stroke="#82ca9d" name="Monthly Balance" />
+            </LineChart>
           </ResponsiveContainer>
+
         </Col>
       </Row>
     </Container>
