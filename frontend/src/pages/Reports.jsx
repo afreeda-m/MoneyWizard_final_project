@@ -71,10 +71,10 @@ const Report = (props) => {
   }, [date, selectedMonth, selectedYear]);
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 d-flex flex-column justify-content-center">
       {/* FilterBar component for selecting the date */}
-      <Row className="justify-content-md-center">
-        <Col md={{ span: 6, offset: 3 }}>
+      <Row className="justify-content-center">
+        <Col>
           <FilterBar
             date={date}
             incrementDate={incrementDate}
@@ -82,8 +82,8 @@ const Report = (props) => {
         </Col>
       </Row>
       {/* ColumnChart component for displaying bar chart */}
-      <Row className="justify-content-md-center">
-        <Col md={{ span: 8, offset: 2 }}>
+      <Row className="justify-content-center">
+        <Col>
           <ColumnChart
             data={[
               { category: 'income', income: totalIncome, month: selectedMonth, year: selectedYear },
@@ -94,17 +94,17 @@ const Report = (props) => {
         </Col>
       </Row>
       {/* PieCharts for displaying income and expense distribution */}
-      <Row>
-        <Col md={{ span: 3, offset: 2 }}>
+      <Row className='d-flex justify-content-center'>
+        <Col>
           <PieChartMoneyWizard data={incomeData} isExpense={false} />
         </Col>
-        <Col md={{ span: 3, offset: 2 }}>
+        <Col>
           <PieChartMoneyWizard data={expenseData} isExpense={true} />
         </Col>
       </Row>
       {/* Lists to display individual income and expense transactions */}
-      <Row className="d-flex space-between">
-        <Col md={{ span: 4, offset: 2 }}>
+      <Row className="d-flex flex-row justify-md-content-center pb-5">
+        <Col md={{ span: 4, offset: 0 }} className="ms-4">
           <Col><h4>Income</h4></Col>
           <Col>
             {incomeData.map((transaction, index) => (

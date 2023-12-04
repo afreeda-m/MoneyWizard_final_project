@@ -1,16 +1,16 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 
 const ColumnChart = ({ data }) => {
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 d-flex justify-content-center">
       <Row className="mt-3">
-        <Col md={{ span: 6, offset: 3 }}>
+        <Col>
           {/* Display the bar chart with shadow and border */}
           <div className="shadow p-3 mb-5 bg-white rounded" style={{ border: '1px solid #ccc', width: '400px', height: '400px' }}>
             {/* Create a responsive container for the bar chart */}
