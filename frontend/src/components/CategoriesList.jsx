@@ -15,6 +15,7 @@ function CategoriesList(props) {
         categoryName={category.category_name}
         categoryIcon={`/images/${category.logo_url}`}
         getCategories={getCategories}
+        categoryUserId={category.user_id}
       />
     );
   });

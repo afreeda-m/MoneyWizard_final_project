@@ -10,7 +10,13 @@ import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
 
 const CategoriesListItem = (props) => {
 
-  const { categoryId, categoryIcon, categoryName, getCategories } = props;
+  const {
+    categoryId,
+    categoryIcon,
+    categoryName,
+    getCategories,
+    categoryUserId
+  } = props;
 
 
   // Function for deleting a category
@@ -52,7 +58,13 @@ const CategoriesListItem = (props) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={handleDelete}>Delete category</Dropdown.Item>
+                {/* disable the delete feature for preset categories */}
+                {categoryUserId === null
+                  ?
+                  <Dropdown.Item disabled>Delete category</Dropdown.Item>
+                  :
+                  <Dropdown.Item onClick={handleDelete}>Delete category</Dropdown.Item>
+                }
               </Dropdown.Menu>
 
             </Dropdown>

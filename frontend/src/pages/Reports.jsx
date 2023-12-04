@@ -39,64 +39,46 @@ const Report = (props) => {
   // const [totalIncome, setTotalIncome] = useState(0);
   // const [totalExpense, setTotalExpense] = useState(0);
 
-
-  // // Use moment to parse the date string
-  // const dateObject = moment(date);
-
-  //Add state variables to keep track of the selected month and year.
-
-  // const [selectedMonth, setSelectedMonth] = useState(dateObject.month() + 1);
-  // const [selectedYear, setSelectedYear] = useState(dateObject.year());
-
-  // useEffect(() => {
-  //   axios.get('/transactions/transactionsByCategory', {
-  //     params: {
-  //       date: moment(date).format('YYYY-MM-DD'),
-  //       selectedMonth: selectedMonth,
-  //       selectedYear: selectedYear,
-  //     },
-  //   })
-  //     .then(response => {
-  //       // Transform the response data for use in charts
-  //       const dataForRecharts = response.data.map(item => ({
-  //         label: item.category_name,
-  //         value: item.sum,
-  //         type: item.type,
-  //       }));
-
-  //       // Separate income and expense data based on the 'type' property
-  //       const incomeCategoryList = dataForRecharts.filter(item => item.type === 'Income');
-  //       const expenseCategoryList = dataForRecharts.filter(item => item.type === 'Expense');
-
-  //       // Set the filtered data in state
-  //       setIncomeData(incomeCategoryList);
-  //       setExpenseData(expenseCategoryList);
-
-  //       // Calculate and set total income and expense amounts
-  //       const totalIncomeAmount = incomeCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
-  //       const totalExpenseAmount = expenseCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
-
-  //       setTotalIncome(totalIncomeAmount);
-  //       setTotalExpense(totalExpenseAmount);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching income and expense distribution data:', error);
-  //     });
-  // }, [date]);
-  // Check if there is no data
-
-  const hasData = transactionsByCategoryData.length > 0;
-
-  if (!hasData) {
-    // Display a message or notification when there is no data
-    return (
-      <Container className='mt-5'>
-        <Row className="justify-content-md-center">
-          <Col >
-            <FilterBar
-              date={date}
-              incrementDate={incrementDate}
-              decrementDate={decrementDate} />
+  return (
+    <Container className="mt-5 d-flex flex-column justify-content-center">
+      {/* FilterBar component for selecting the date */}
+      <Row className="justify-content-center">
+        <Col>
+          <FilterBar
+            date={date}
+            incrementDate={incrementDate}
+            decrementDate={decrementDate} />
+        </Col>
+      </Row>
+      {/* ColumnChart component for displaying bar chart */}
+      <Row className="justify-content-center">
+        <Col>
+          <ColumnChart
+            data={[
+              { category: 'income', income: totalIncome, month: selectedMonth, year: selectedYear },
+              { category: 'expense', expense: totalExpense, month: selectedMonth, year: selectedYear },
+            ]}
+            totalIncome={totalIncome}
+            totalExpense={totalExpense} />
+        </Col>
+      </Row>
+      {/* PieCharts for displaying income and expense distribution */}
+      <Row className='d-flex justify-content-center'>
+        <Col>
+          <PieChartMoneyWizard data={incomeData} isExpense={false} />
+        </Col>
+        <Col>
+          <PieChartMoneyWizard data={expenseData} isExpense={true} />
+        </Col>
+      </Row>
+      {/* Lists to display individual income and expense transactions */}
+      <Row className="d-flex flex-row justify-md-content-center pb-5">
+        <Col md={{ span: 4, offset: 0 }} className="ms-4">
+          <Col><h4>Income</h4></Col>
+          <Col>
+            {incomeData.map((transaction, index) => (
+              <IncomeExpenseList key={index} transaction={transaction} />
+            ))}
           </Col>
         </Row>
         <Row >
@@ -116,75 +98,75 @@ const Report = (props) => {
       </Container>
     );
   }
-  return (
-    <Container className="mt-5">
+//   return (
+//     <Container className="mt-5">
 
-      <div className="reports">
-        <div className="box box1">
-          {/* FilterBar component for selecting the date */}
-          <Row className="justify-content-md-center">
-            <Col >
-              <FilterBar
-                date={date}
-                incrementDate={incrementDate}
-                decrementDate={decrementDate} />
-            </Col>
-          </Row>
+//       <div className="reports">
+//         <div className="box box1">
+//           {/* FilterBar component for selecting the date */}
+//           <Row className="justify-content-md-center">
+//             <Col >
+//               <FilterBar
+//                 date={date}
+//                 incrementDate={incrementDate}
+//                 decrementDate={decrementDate} />
+//             </Col>
+//           </Row>
 
-          {/* ColumnChart component for displaying bar chart */}
-          <Row className="justify-content-md-center">
-            <Col>
-              {/* <ColumnChart
-                data={[
-                  { category: 'income', income: totalIncome, month: selectedMonth, year: selectedYear },
-                  { category: 'expense', expense: totalExpense, month: selectedMonth, year: selectedYear },
-                ]}
-                totalIncome={totalIncome}
-                totalExpense={totalExpense} /> */}
-            </Col>
-          </Row>
-        </div>
+//           {/* ColumnChart component for displaying bar chart */}
+//           <Row className="justify-content-md-center">
+//             <Col>
+//               {/* <ColumnChart
+//                 data={[
+//                   { category: 'income', income: totalIncome, month: selectedMonth, year: selectedYear },
+//                   { category: 'expense', expense: totalExpense, month: selectedMonth, year: selectedYear },
+//                 ]}
+//                 totalIncome={totalIncome}
+//                 totalExpense={totalExpense} /> */}
+//             </Col>
+//           </Row>
+//         </div>
 
-        {/* PieCharts for displaying income and expense distribution */}
-        <div className="box box2 justify-content-md-center">
-          <PieChartMoneyWizard data={incomeTransactions} isExpense={false} />
-        </div>
-        <div className="box box3 justify-content-md-center">
-          <PieChartMoneyWizard data={expenseTransactions} isExpense={true} />
-        </div>
+//         {/* PieCharts for displaying income and expense distribution */}
+//         <div className="box box2 justify-content-md-center">
+//           <PieChartMoneyWizard data={incomeTransactions} isExpense={false} />
+//         </div>
+//         <div className="box box3 justify-content-md-center">
+//           <PieChartMoneyWizard data={expenseTransactions} isExpense={true} />
+//         </div>
 
-        {/* Lists to display individual income and expense transactions */}
-        <div className="box box4 text-center">
+//         {/* Lists to display individual income and expense transactions */}
+//         <div className="box box4 text-center">
 
-          {incomeTransactions.map((category, index) => (
-            <IncomeExpenseList
-              key={index}
-              categoriesData={categoriesData}
-              category={category}
-              getCategoryIconById={getCategoryIconById}
-              getCategoryNameById={getCategoryNameById}
-            />
-          ))}
+//           {incomeTransactions.map((category, index) => (
+//             <IncomeExpenseList
+//               key={index}
+//               categoriesData={categoriesData}
+//               category={category}
+//               getCategoryIconById={getCategoryIconById}
+//               getCategoryNameById={getCategoryNameById}
+//             />
+//           ))}
 
-        </div>
+//         </div>
 
-        <div className="box box5 text-center">
+//         <div className="box box5 text-center">
 
-          {expenseTransactions.map((category, index) => (
-            <IncomeExpenseList
-              key={index}
-              categoriesData={categoriesData}
-              category={category}
-              getCategoryIconById={getCategoryIconById}
-              getCategoryNameById={getCategoryNameById}
-            />
-          ))}
+//           {expenseTransactions.map((category, index) => (
+//             <IncomeExpenseList
+//               key={index}
+//               categoriesData={categoriesData}
+//               category={category}
+//               getCategoryIconById={getCategoryIconById}
+//               getCategoryNameById={getCategoryNameById}
+//             />
+//           ))}
 
-        </div>
-      </div>
+//         </div>
+//       </div>
 
-    </Container>
-  );
-};
+// //     </Container>
+// //   );
+// };
 
 export default Report;

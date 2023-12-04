@@ -45,6 +45,7 @@ function App() {
     transactionsData,
     categoriesData,
     accountsData,
+    iconsData,
     date,
     transactionDate,
     isAddTransactionModalOpen,
@@ -206,6 +207,7 @@ function App() {
 
             <Route path='/categoriesmanagement' element={<CategoriesManagement
               categoriesData={categoriesData}
+              iconsData={iconsData}
               getCategories={getCategories}
               isAddCategoryModalOpen={isAddCategoryModalOpen}
               toggleAddCategoryModal={toggleAddCategoryModal}
