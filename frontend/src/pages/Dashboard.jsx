@@ -60,9 +60,6 @@ const Dashboard = (props) => {
         const totalIncomeAmount = incomeCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
         const totalExpenseAmount = expenseCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
 
-        // Log total income amount to the console
-        console.log("total", totalIncomeAmount);
-
         // Set total income and expense amounts in state
         setTotalIncome(totalIncomeAmount);
         setTotalExpense(totalExpenseAmount);
@@ -93,38 +90,14 @@ const Dashboard = (props) => {
 
         {/*  GRID BOX - PIE CHART*/}
         <div className="box box1">
-          <div className="chartBox"><p><b>Income and Expense overview chart</b></p>
+          <div className="chartBox"><h2 className="card-name">Income and Expense overview chart</h2>
             <PieChartMoneyWizard data={[
               { label: 'Income', value: totalIncome, type: "Income" },
               { label: 'Expense', value: totalExpense, type: "Expense" },
             ]} />
           </div>
         </div>
-        {/* BOX -This month */}
-        <div className="box box4">
-          <Row className="d-flex justify-content-between">
-            <Col><FaChartPie size={60} className="text-secondary mb-3" /></Col>
-            <Col><div className="d-flex justify-content-between mt-1">
-              <div className=""></div>
-              <div className="text-center"><b>This month</b></div>
-              <div className="big_text_1 text-end text-success" >${totalIncome}</div>
-            </div>
-              <div className="d-flex justify-content-between mt-1">
-                <div className=""> </div>
-                <div className="big_text_1 text-end text-danger">-  ${totalExpense}</div>
-              </div>
-              <div className="d-flex">
-                <div className="col-5"></div>
-                <hr className="col my-1"></hr>
-              </div>
-              <div className="d-flex justify-content-between">
-                <div className=""></div>
-                <div className="big_text_1 text-end text-success" >${totalIncome - totalExpense}</div>
-              </div></Col>
-          </Row>
 
-
-        </div>
 
         {/* BOX -TOTAL BALANCE */}
         <div className="box box2">
@@ -140,6 +113,53 @@ const Dashboard = (props) => {
           </span>
         </div>
 
+        {/* BOX -This month */}
+        <div className="box box4">
+          <Row className="d-flex justify-content-between">
+            <Col><FaChartPie size={60} className="text-secondary mb-3" /></Col>
+            <Col>
+              <div className="d-flex justify-content-between mt-1">
+                <div className=""></div>
+                <div className="text-center d-flex justify-content-between"><h5 className="card-name">This month</h5></div>
+                <div className="big_text_1 text-end text-success" >
+                  <NumericFormat
+                    value={totalIncome.toFixed(2)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  /></div>
+              </div>
+              <div className="d-flex justify-content-between mt-1">
+                <div className=""> </div>
+                <div className="big_text_1 text-end text-danger">-
+                  <NumericFormat
+                    value={totalExpense.toFixed(2)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  />
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="col-5"></div>
+                <hr className="col my-1"></hr>
+              </div>
+              <div className="d-flex justify-content-between">
+                <div className=""></div>
+                <div className="big_text_1 text-end text-success" >
+                  <NumericFormat
+                    value={(totalIncome - totalExpense).toFixed(2)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  />
+
+                </div>
+              </div></Col>
+          </Row>
+
+
+        </div>
 
         {/* BOX- MY ACCOUNTS*/}
         <div className="box box3">
@@ -169,15 +189,20 @@ const Dashboard = (props) => {
         </div>
 
 
-        {/* BOX -MONTHLY BALANCE CHART */}
+        {/* BOX -MONTHLY BALANCE LINE CHART */}
         <div className="box box7">
+          <Row>
+            <Col>
+              <h2 className="card-name">Past 6 Months Balance Chart</h2>
+            </Col>
+          </Row>
           <MonthlyBalanceChart />
         </div>
 
         {/* BOX -RECENT TRANSACTIONS */}
         <div className="box box8">
           <h1 className="card-name">RECENT TRANSACTIONS </h1>
-          
+
           < RecentTransactionsList
             transactionsData={top5RecentTransactions}
             categoriesData={categoriesData}
