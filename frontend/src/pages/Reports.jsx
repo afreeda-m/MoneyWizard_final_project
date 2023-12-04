@@ -103,8 +103,8 @@ const Report = (props) => {
         </Col>
       </Row>
       {/* Lists to display individual income and expense transactions */}
-      <Row className="d-flex flex-row justify-content-center pt-5">
-        <Col md={{ span: 4, offset: 0 }}>
+      <Row className="d-flex flex-row justify-md-content-center pb-5">
+        <Col md={{ span: 4, offset: 0 }} className="ms-4">
           <Col><h4>Income</h4></Col>
           <Col>
             {incomeData.map((transaction, index) => (
