@@ -1,16 +1,11 @@
-import axios from "axios";
 import moment from 'moment';
-import React, { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import Col from "react-bootstrap/Col";
 import Container from 'react-bootstrap/Container';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import ColumnChart from "../components/ColumnChart";
 import FilterBar from "../components/FilterBar";
 import IncomeExpenseList from "../components/IncomeExpenseList";
-import IncomeExpenseListNew from "../components/IncomeExpenseListNew";
-import PieChartMoneyWizard from "../components/PieChartMoneyWizard";
 import "../styles/Reports.scss";
 
 const Report = (props) => {
@@ -31,11 +26,7 @@ const Report = (props) => {
   const totalIncome = incomeCategories.reduce((total, category) => total + parseFloat(category.sum), 0);
   const totalExpense = expenseCategories.reduce((total, category) => total + parseFloat(category.sum), 0);
 
-  // console.log("log totalIncome:", totalIncome);
-  // console.log("log totalExpense:", totalExpense);
 
-  // console.log(moment(date).format("MM"));
-  // console.log(moment(date).format("YYYY"));
 
   console.log('New income data:', incomeCategories);
   console.log('New expense data:', expenseCategories);
@@ -54,6 +45,7 @@ const Report = (props) => {
         </Col>
       </Row>
 
+      {/* Show notification of no data if there is no transaction during the target period and render the information if there are transactions */}
       {transactionsByCategoryData.length > 0
         ?
         <>
@@ -72,7 +64,7 @@ const Report = (props) => {
 
           <Row >
             <Col xs={6}>
-              <IncomeExpenseListNew
+              <IncomeExpenseList
                 categoriesDataByType={incomeCategories}
                 categoriesData={categoriesData}
                 getCategoryIconById={getCategoryIconById}
@@ -81,7 +73,7 @@ const Report = (props) => {
             </Col>
 
             <Col xs={6}>
-              <IncomeExpenseListNew
+              <IncomeExpenseList
                 categoriesDataByType={expenseCategories}
                 categoriesData={categoriesData}
                 getCategoryIconById={getCategoryIconById}
