@@ -64,11 +64,7 @@ const MonthlyBalanceChart = () => {
   };
   return (
     <Container>
-      <Row>
-        <Col>
-          <p className="monthly-balance-chart-title"><b>Past 6 Months Balance Chart</b></p>
-        </Col>
-      </Row>
+      
       <Row>
         <Col>
           <ResponsiveContainer width="100%" height={400}>
