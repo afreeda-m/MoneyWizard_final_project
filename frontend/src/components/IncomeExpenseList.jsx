@@ -16,9 +16,9 @@ const IncomeExpenseList = (props) => {
   // const logoURL = getCategoryIconById(category.category_id, categoriesData)
 
   return (
+    
 
-
-    <ListGroupItem className="p-1" style={{ width: "50vw" }}>
+<ListGroupItem className="p-1" style={{ width: "50vw" }}>
       <Container>
         <Row className="d-flex align-items-center">
           <Col className="d-flex justify-content-center" xs={1}>
