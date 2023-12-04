@@ -79,7 +79,7 @@ const Accounts = () => {
       {/* <div className="accounts"> */}
       <h1 className="accounts-title">Accounts</h1>
 
-      <PieChart className="mb-3" width={1200} height={600}>
+      <PieChart className="mb-3" width={500} height={500}>
         <Pie
           data={accounts}
           dataKey="balance"
@@ -88,7 +88,7 @@ const Accounts = () => {
           cy="50%"
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={200}
+          outerRadius={180}
           fill="#8884d8"
         >
           {accounts.map((entry, index) => (
