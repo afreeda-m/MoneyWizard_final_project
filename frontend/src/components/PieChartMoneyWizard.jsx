@@ -71,7 +71,7 @@ const PieChartComponent = ({ data, isExpense }) => {
       <Row>
         <Col className='justify-content-md-center'>
           {/* Display the bar chart with shadow and border */}
-          <div  style={{  width: '500px', height: '400px' }}>
+          <div  style={{  width: '100%' }}>
             <PieChart width={600} height={400}>
               <Pie
                 dataKey="percentage"
