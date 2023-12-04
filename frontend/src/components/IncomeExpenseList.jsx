@@ -10,7 +10,8 @@ function IncomeExpenseList(props) {
     categoriesDataByType,
     categoriesData,
     getCategoryIconById,
-    getCategoryNameById
+    getCategoryNameById,
+    isIncome
 
   } = props;
 
@@ -32,9 +33,11 @@ function IncomeExpenseList(props) {
   return (
     <div className='d-flex flex-column justify-content-center' style={{ border: "1px solid" }}>
 
-      <h1>Income</h1>
+      <h1>
+        {isIncome === true ? "Income" : "Expense"}
+      </h1>
 
-      <Row style={{ border: "1px solid" }}>
+      <Row style={{ border: "1px solid", width: "80%" }}>
         <PieChartComponent
           data={categoriesDataByType}
         />
@@ -42,8 +45,8 @@ function IncomeExpenseList(props) {
 
 
       <Row style={{ width: "80%", border: "1px solid" }}>
-        <ListGroup>
 
+        <ListGroup>
           {listOfItems}
         </ListGroup>
 
