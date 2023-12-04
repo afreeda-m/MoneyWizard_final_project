@@ -24,7 +24,7 @@ const ColumnChart = ({ data }) => {
       <Row className="mt-3">
         <Col>
           {/* Display the bar chart with shadow and border */}
-          <div className="shadow p-3 mb-5 bg-white rounded" style={{ border: '1px solid #ccc', width: '400px', height: '400px' }}>
+          <div className="shadow p-3 mb-5 bg-white rounded" style={{ border: '1px solid #ccc', width: '350px', height: '350px' }}>
             {/* Create a responsive container for the bar chart */}
             <ResponsiveContainer width="100%" height="100%">
               {/* Define the BarChart component with data and margin */}

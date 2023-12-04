@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
+import { NumericFormat } from "react-number-format";
 
 
 const IncomeExpenseListItem = (props) => {
@@ -14,37 +15,41 @@ const IncomeExpenseListItem = (props) => {
     getCategoryNameById,
   } = props;
 
-  // const logoURL = getCategoryIconById(category.category_id, categoriesData)
+  const logoURL = getCategoryIconById(category.category_id, categoriesData);
 
   return (
 
-    <ListGroupItem className="p-1" style={{ width: "50vw" }}>
+    <ListGroupItem className="p-1" style={{ width: "100%" }}>
       <Container>
         <Row className="d-flex align-items-center">
-          <Col className="d-flex justify-content-center" xs={1}>
 
-            {/* <img src={`/images/${logoURL}`}/> */}
-            <img src="/images/bank.png" />
-
+          <Col xs={2}>
+            <img src={`/images/${logoURL}`} alt={logoURL} />
           </Col>
-          <Col xs={3}>
+
+          <Col xs={8}>
             <div>
-              <b><h6>{category.category_name}</h6></b>
-              {/* <b><h6>{getCategoryNameById(category.category_id, categoriesData)}</h6></b> */}
-            </div>
-            <div>
-              {/* Additional details if needed */}
+              <b><h6>{getCategoryNameById(category.category_id, categoriesData)}</h6></b>
             </div>
           </Col>
+
           <Col xs={2}>
             {/* Amount shows in red for expense and green for income */}
-            <div className={category.type === "Expense" ? "text-danger" : "text-success"}>
-              <b><i>{category.sum}</i></b>
-            </div>
+            <b>
+              <NumericFormat
+                className={category.type === "Expense" ? "text-danger" : "text-success"}
+                value={category.sum}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+              />
+            </b>
           </Col>
+
         </Row>
       </Container>
     </ListGroupItem>
+
   );
 };
 

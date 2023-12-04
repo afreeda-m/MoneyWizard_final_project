@@ -1,51 +1,75 @@
-import React from "react";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
+import React from 'react';
+import Row from 'react-bootstrap/esm/Row';
+import IncomeExpenseListItem from './IncomeExpenseListItem';
+import PieChartComponent from './PieChartMoneyWizard';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { NumericFormat } from 'react-number-format';
 
-const IncomeExpenseList = (props) => {
+function IncomeExpenseList(props) {
 
   const {
-    category,
+    categoriesDataByType,
     categoriesData,
     getCategoryIconById,
     getCategoryNameById,
+    isIncome,
+    total
+
   } = props;
 
-  // const logoURL = getCategoryIconById(category.category_id, categoriesData)
+
+  const listOfItems = categoriesDataByType.map((category) => {
+    return (
+      <IncomeExpenseListItem
+        key={category.category_id}
+        category={category}
+        categoriesData={categoriesData}
+        getCategoryIconById={getCategoryIconById}
+        getCategoryNameById={getCategoryNameById}
+      />
+    );
+  });
+
 
   return (
-    
+    <div className='d-flex flex-column justify-content-start align-items-center' >
 
-<ListGroupItem className="p-1" style={{ width: "50vw" }}>
-      <Container>
-        <Row className="d-flex align-items-center">
-          <Col className="d-flex justify-content-center" xs={1}>
+      <h3>
+        {isIncome === true ? "Income" : "Expense"}
+      </h3>
 
-            {/* <img src={`/images/${logoURL}`}/> */}
-            <img src="/images/bank.png" />
+      <Row >
+        <PieChartComponent
+          data={categoriesDataByType}
+        />
+      </Row>
 
-          </Col>
-          <Col xs={3}>
-            <div>
-              <b><h6>{category.category_name}</h6></b>
-              {/* <b><h6>{getCategoryNameById(category.category_id, categoriesData)}</h6></b> */}
-            </div>
-            <div>
-              {/* Additional details if needed */}
-            </div>
-          </Col>
-          <Col xs={2}>
-            {/* Amount shows in red for expense and green for income */}
-            <div className={category.type === "Expense" ? "text-danger" : "text-success"}>
-              <b><i>{category.sum}</i></b>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </ListGroupItem>
+
+      <Row style={{ width: "100%" }}>
+
+        <ListGroup >
+          <ListGroupItem className="d-flex justify-content-center" style={{ fontSize: '20px' }}>
+            <b>
+              <u>
+                <span>{isIncome === true ? "Total Income: $" : "Total Expense: $"}</span>
+                <NumericFormat
+                  value={total}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                />
+              </u>
+            </b>
+          </ListGroupItem>
+
+          {listOfItems}
+
+        </ListGroup>
+
+      </Row>
+
+    </div>
+
   );
-};
+}
 
 export default IncomeExpenseList;
