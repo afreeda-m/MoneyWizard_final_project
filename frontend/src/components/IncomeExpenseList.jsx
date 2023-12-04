@@ -2,7 +2,8 @@ import React from 'react';
 import Row from 'react-bootstrap/esm/Row';
 import IncomeExpenseListItem from './IncomeExpenseListItem';
 import PieChartComponent from './PieChartMoneyWizard';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { NumericFormat } from 'react-number-format';
 
 function IncomeExpenseList(props) {
 
@@ -11,7 +12,8 @@ function IncomeExpenseList(props) {
     categoriesData,
     getCategoryIconById,
     getCategoryNameById,
-    isIncome
+    isIncome,
+    total
 
   } = props;
 
@@ -29,25 +31,38 @@ function IncomeExpenseList(props) {
   });
 
 
-
   return (
-    <div className='d-flex flex-column justify-content-center' style={{ border: "1px solid" }}>
+    <div className='d-flex flex-column justify-content-start align-items-center' >
 
-      <h1>
+      <h3>
         {isIncome === true ? "Income" : "Expense"}
-      </h1>
+      </h3>
 
-      <Row style={{ border: "1px solid", width: "80%" }}>
+      <Row >
         <PieChartComponent
           data={categoriesDataByType}
         />
       </Row>
 
 
-      <Row style={{ width: "80%", border: "1px solid" }}>
+      <Row style={{ width: "100%" }}>
 
-        <ListGroup>
+        <ListGroup >
+          <ListGroupItem className="d-flex justify-content-center" style={{ fontSize: '20px' }}>
+            <b>
+              <u>
+                <span>{isIncome === true ? "Total Income: $" : "Total Expense: $"}</span>
+                <NumericFormat
+                  value={total}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                />
+              </u>
+            </b>
+          </ListGroupItem>
+
           {listOfItems}
+
         </ListGroup>
 
       </Row>
