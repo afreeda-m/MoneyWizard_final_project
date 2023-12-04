@@ -6,16 +6,16 @@ import { Cell, Label, Legend, Pie, PieChart, Tooltip } from "recharts";
 
 const PieChartComponent = ({ data, isExpense }) => {
 
-  
+
   // Calculate total for percentage calculation
-  const total = data.reduce((total, item) => total + parseFloat(item.value), 0);
+  const total = data.reduce((total, item) => total + parseFloat(item.sum), 0);
 
   // Calculate percentage for each category
   const dataWithPercentage = data.map(item => ({
-    label: item.label,
+    label: item.category_name,
     value: parseFloat(item.value),
     type: item.type,
-    percentage: (parseFloat(item.value) / total) * 100,
+    percentage: (parseFloat(item.sum) / total) * 100,
   }));
 
   // Define fixed colors for the chart segments
