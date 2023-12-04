@@ -106,15 +106,18 @@ router.post('/:transaction_id/edit', (req, res) => {
 router.get('/transactionsByCategory', (req, res) => {
   const userId = 1;
   // const userId = req.session.user_id;
-  const date = req.query.date;
 
-  let year = null;
-  let month = null;
-  if (date) {
-    split = date.split("-");
-    year = parseInt(split[0]);
-    month = parseInt(split[1]);
-  }
+  const year = req.query.year;
+  const month = req.query.month;
+
+  // const date = req.query.date;
+  // let year = null;
+  // let month = null;
+  // if (date) {
+  //   split = date.split("-");
+  //   year = parseInt(split[0]);
+  //   month = parseInt(split[1]);
+  // }
 
   transactionsQueries.getTransactionsByCategoryId(userId, year, month)
     .then((data) => {

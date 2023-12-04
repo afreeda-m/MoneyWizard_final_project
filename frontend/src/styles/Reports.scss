@@ -1,0 +1,36 @@
+.reports{
+
+  display: grid;
+  gap: 20px;
+  //grid-template-columns: repeat(2,1fr); // 2columns same width
+  grid-auto-rows: auto;
+
+  grid-auto-columns: 45%;
+
+
+  h1{
+
+    margin-bottom: 20px;
+  }
+
+  .box{
+    padding: 20px;
+    border-radius: 10px;
+    
+    text-align: center;
+
+  }
+  .box2{
+    grid-column: span 1;
+    grid-row: span 3
+  }
+
+  .box3{
+    grid-column: span 1;
+    grid-row: span 3
+  }
+  .box1{
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}

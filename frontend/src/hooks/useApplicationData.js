@@ -18,6 +18,7 @@ export const ACTIONS = {
   SET_USERNAME: 'SET_USERNAME',
   TOGGLE_ADD_NEW_CATEGORY_MODAL: 'TOGGLE_ADD_NEW_CATEGORY_MODAL',
   SET_POST_CATEGORY_DATA: 'SET_POST_CATEGORY_DATA',
+  SET_TRANSACTIONS_BY_CATEGORY_DATA: 'SET_TRANSACTIONS_BY_CATEGORY_DATA'
   SET_ICONS_DATA: 'SET_ICONS_DATA'
 };
 
@@ -81,6 +82,11 @@ function reducer(state, action) {
     case ACTIONS.SET_POST_CATEGORY_DATA:
       return { ...state, postCategoryData: action.postCategoryData };
 
+    // ACTION FOR REPORT COMPONENT
+    case ACTIONS.SET_TRANSACTIONS_BY_CATEGORY_DATA:
+      return { ...state, transactionsByCategoryData: action.transactionsByCategoryData };
+
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -128,6 +134,10 @@ const useApplicationData = () => {
       // STATES FOR USER AUTHENTICATION
       isLoggedIn: false,
       username: '',
+
+      // STATES FOR REPORT PAGE
+      transactionsByCategoryData: []
+
     }
   );
 
@@ -248,6 +258,17 @@ const useApplicationData = () => {
       categoriesData: response.data
     });
   };
+  const getTransactionsByCategory = async () => {
+    const response = await axios.get('/transactions/transactionsByCategory?' + new URLSearchParams({
+      month: moment(state.date).format("MM"),
+      year: moment(state.date).format("YYYY")
+    }));
+    dispatch({
+      type: ACTIONS.SET_TRANSACTIONS_BY_CATEGORY_DATA,
+      transactionsByCategoryData: response.data
+    });
+  };
+  // console.log('Logging transactionsByCat from hook:', state.transactionsByCategoryData);
 
   const getIcons = async () => {
     const response = await axios.get('/icons');
@@ -256,10 +277,11 @@ const useApplicationData = () => {
       iconsData: response.data
     });
   };
-
+  
   // Fetch transactions data from backend server upon loading the app
   useEffect(() => {
     getTransactions();
+    getTransactionsByCategory();
     // Dependent on the 'date' state
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.date]);
@@ -311,7 +333,8 @@ const useApplicationData = () => {
     setIsLoggedIn,
     setUsername,
     toggleAddCategoryModal,
-    setPostCategoryData
+    setPostCategoryData,
+    getTransactionsByCategory
   };
 
 };

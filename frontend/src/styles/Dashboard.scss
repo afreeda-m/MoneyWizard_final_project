@@ -1,35 +1,96 @@
-// /* dashboard */
-.dashboard{
+/* dashboard */
+.dashboard {
 
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(2,1fr); // 2columns same width
-  grid-auto-rows: minmax(180px, auto);
+  grid-template-columns: repeat(2, 1fr); // 2columns same width
+  // grid-auto-rows: minmax(180px, auto);
+  background: #f5f5f5;
 
-  h1{
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-
-  .box{
+  .box {
     padding: 20px;
     border-radius: 10px;
-    border: 1px solid #384256;
+    //border: 1px solid #384256;
     text-align: center;
+    background: #fff;
+    box-shadow: 0 7px 25px 0 rgb(0, 0, 0, 0.08);
+    // transition: background-color 0.3s ease;
 
   }
-  .box1{
+
+  .box1 {
     grid-column: span 1;
     grid-row: span 3
   }
 
-  .box5{
+  .box5 {
     grid-column: span 1;
     grid-row: span 3
   }
-  .box7{
+
+  .box7 {
     grid-column: span 2;
     grid-row: span 2;
+  }
+  .box8 {
+    grid-column: span 2;
+    grid-row: span 1;
+    
+  }
+  .box9.card_hover {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .big_text_1 {
+    font-size: 1.1rem;
+  }
+
+  .text-end {
+    text-align: right;
+  }
+
+  .number {
+    font-size: 35px;
+    font-weight: 500;
+
+  }
+
+  .card-name {
+    color: #888;
+    font-weight: 600;
+  }
+
+  .no-bullets {
+    list-style: none;
+  }
+
+  // .box:hover{
+  //   background: #e0e0e0;
+  // }
+  .card:hover .big_text_1 {
+    color: #fff;
+  }
+
+  .box {
+
+    transition: background-color 0.3s ease;
+    /* Add transition for a smooth effect */
+
+    /* Initial styles */
+    &:hover {
+      background-color: #b6d5be;
+      /* Change background color on hover */
+    }
+
+    // &:focus {
+    //   outline: 2px solid #007bff;
+    //   /* Add focus outline */
+    // }
+  }
+  .icon-box{
+    font-size: 45px;
+    color:#e0e0e0 ;
   }
 }
 
@@ -56,103 +117,9 @@
   font-size: 20px;
 }
 
-.duration{
+.duration {
   font-size: 14px;
 }
 
 
-// .main-container {
-//   grid-area: main;
-//   overflow-y: auto;
-//   padding: 20px 20px;
-//   color: rgba(255, 255, 255, 0.95);
-// }
-
-// .main-title {
-//   display: flex;
-//   justify-content: space-between;
-// }
-
-// .main-cards {
-//   display: grid;
-//   grid-template-columns: 1fr 1fr;
-//   gap: 30px;
-//   margin: 15px 0;
-// }
-
-// .card {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   padding: 8px 15px;
-//   border-radius: 5px;
-//   width: 400px;
-//   height: 400px;
-// }
-
-
-// .monthly-balance-chart-title {
-//   font-size: 18px;
-//   font-weight: bold;
-//   margin-bottom: 20px;
-// }
-
-
-// // .card {
-
-// //   transition: background-color 0.3s ease; /* Add transition for a smooth effect */
-
-// //   /* Initial styles */
-// //   &:hover {
-// //     background-color: #e0e0e0; /* Change background color on hover */
-// //   }
-
-// //   &:focus {
-// //     outline: 2px solid #007bff; /* Add focus outline */
-// //   }
-// // }
-
-// // /* Add focus styles for keyboard navigation */
-// // .card:focus {
-// //   box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
-// // }
-
-// // .card:first-child {
-// //   background-color: #8884d8;
-// // }
-
-// // .card:nth-child(2) {
-// //   background-color: #82ca9d;
-// // }
-
-// // .card:nth-child(3) {
-// //   background-color: #FF8042;
-// // }
-
-
-// // .card-inner {
-// //   display: flex;
-// //   align-items: center;
-// //   justify-content: space-between;
-// // }
-
-// // .card-inner > .card_icon {
-// //   font-size: 25px;
-// // }
-
-// // .charts {
-// //   display: grid;
-// //   grid-template-columns: 1fr 1fr;
-// //   gap: 20px;
-// //   margin-top: 60px;
-// //   height: 300px;
-// // }
-// // .recent-transactions {
-// //   display: grid;
-// //   grid-template-columns: 1fr;
-// //   background-color: #FF8042;
-// //   gap: 60px;
-// //   margin-top: 90px;
-// //   height: 300px;
-// // }
-// /* End dashoboard  */
+/* End dashoboard  */

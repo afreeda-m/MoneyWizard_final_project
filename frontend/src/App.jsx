@@ -56,7 +56,8 @@ function App() {
     isLoggedIn,
     username,
     isAddCategoryModalOpen,
-    postCategoryData
+    postCategoryData,
+    transactionsByCategoryData
   } = state;
 
   return (
@@ -198,6 +199,10 @@ function App() {
               date={date}
               incrementDate={incrementDate}
               decrementDate={decrementDate}
+              categoriesData={categoriesData}
+              transactionsByCategoryData={transactionsByCategoryData}
+              getCategoryIconById={getCategoryIconById}
+              getCategoryNameById={getCategoryNameById}
             />} />
 
             <Route path='/categoriesmanagement' element={<CategoriesManagement
