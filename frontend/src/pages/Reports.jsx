@@ -1,10 +1,10 @@
 import axios from "axios";
 import moment from 'moment';
 import React, { useEffect, useState } from "react";
+import Alert from "react-bootstrap/Alert";
+import Col from "react-bootstrap/Col";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from "react-bootstrap/Col";
-import Alert from "react-bootstrap/Alert";
 import ColumnChart from "../components/ColumnChart";
 import FilterBar from "../components/FilterBar";
 import IncomeExpenseList from "../components/IncomeExpenseList";
@@ -80,7 +80,8 @@ const Report = (props) => {
               <IncomeExpenseList key={index} transaction={transaction} />
             ))}
           </Col>
-        </Row>
+        </Col>
+       </Row>
         <Row >
           <Col className='justify-content-md-center'>
             <Alert variant="success">

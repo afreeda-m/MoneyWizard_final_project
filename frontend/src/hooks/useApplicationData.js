@@ -18,7 +18,7 @@ export const ACTIONS = {
   SET_USERNAME: 'SET_USERNAME',
   TOGGLE_ADD_NEW_CATEGORY_MODAL: 'TOGGLE_ADD_NEW_CATEGORY_MODAL',
   SET_POST_CATEGORY_DATA: 'SET_POST_CATEGORY_DATA',
-  SET_TRANSACTIONS_BY_CATEGORY_DATA: 'SET_TRANSACTIONS_BY_CATEGORY_DATA'
+  SET_TRANSACTIONS_BY_CATEGORY_DATA: 'SET_TRANSACTIONS_BY_CATEGORY_DATA',
   SET_ICONS_DATA: 'SET_ICONS_DATA'
 };
 
@@ -277,7 +277,7 @@ const useApplicationData = () => {
       iconsData: response.data
     });
   };
-  
+
   // Fetch transactions data from backend server upon loading the app
   useEffect(() => {
     getTransactions();
