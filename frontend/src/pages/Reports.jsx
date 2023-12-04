@@ -50,7 +50,7 @@ const Report = (props) => {
         ?
         <>
           {/* ColumnChart component for displaying bar chart */}
-          <Row className="justify-content-center">
+          <Row >
             <Col>
               <ColumnChart
                 data={[
@@ -62,26 +62,33 @@ const Report = (props) => {
             </Col>
           </Row>
 
-          <Row >
-            <Col xs={6}>
-              <IncomeExpenseList
-                categoriesDataByType={incomeCategories}
-                categoriesData={categoriesData}
-                getCategoryIconById={getCategoryIconById}
-                getCategoryNameById={getCategoryNameById}
-              />
-            </Col>
+          <Row>
 
-            <Col xs={6}>
-              <IncomeExpenseList
-                categoriesDataByType={expenseCategories}
-                categoriesData={categoriesData}
-                getCategoryIconById={getCategoryIconById}
-                getCategoryNameById={getCategoryNameById}
-              />
-            </Col>
+            <Container className='d-flex flex-column'>
+              <Row>
+                <Col xs={6} className="text-center">
+                  <IncomeExpenseList
+                    categoriesDataByType={incomeCategories}
+                    categoriesData={categoriesData}
+                    getCategoryIconById={getCategoryIconById}
+                    getCategoryNameById={getCategoryNameById}
+                    isIncome={true}
+                  />
+                </Col>
+
+                <Col xs={6} className="text-center">
+                  <IncomeExpenseList
+                    categoriesDataByType={expenseCategories}
+                    categoriesData={categoriesData}
+                    getCategoryIconById={getCategoryIconById}
+                    getCategoryNameById={getCategoryNameById}
+                    isIncome={false}
+                  />
+                </Col>
+              </Row>
+
+            </Container>
           </Row>
-
         </>
         :
         <Row >
