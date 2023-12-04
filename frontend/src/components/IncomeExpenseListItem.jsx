@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
+import { NumericFormat } from "react-number-format";
 
 
 const IncomeExpenseListItem = (props) => {
@@ -14,10 +15,7 @@ const IncomeExpenseListItem = (props) => {
     getCategoryNameById,
   } = props;
 
-  console.log(category);
   const logoURL = getCategoryIconById(category.category_id, categoriesData);
-
-
 
   return (
 
@@ -37,14 +35,21 @@ const IncomeExpenseListItem = (props) => {
 
           <Col xs={2}>
             {/* Amount shows in red for expense and green for income */}
-            <div className={category.type === "Expense" ? "text-danger" : "text-success"}>
-              <b><i>{category.sum}</i></b>
-            </div>
+            <b>
+              <NumericFormat
+                className={category.type === "Expense" ? "text-danger" : "text-success"}
+                value={category.sum}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+              />
+            </b>
           </Col>
 
         </Row>
       </Container>
     </ListGroupItem>
+
   );
 };
 
