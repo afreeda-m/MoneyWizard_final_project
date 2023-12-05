@@ -60,26 +60,26 @@
   // .box:hover{
   //   background: #e0e0e0;
   // }
-  .card:hover .big_text_1 {
-    color: #fff;
-  }
+  // .card:hover .big_text_1 {
+  //   color: #fff;
+  // }
 
-  .box {
+  // .box {
 
-    transition: background-color 0.3s ease;
-    /* Add transition for a smooth effect */
+  //   transition: background-color 0.3s ease;
+  //   /* Add transition for a smooth effect */
 
-    /* Initial styles */
-    &:hover {
-      background-color: #b6d5be;
-      /* Change background color on hover */
-    }
+  //   /* Initial styles */
+  //   &:hover {
+  //     background-color: #b6d5be;
+  //     /* Change background color on hover */
+  //   }
 
-    // &:focus {
-    //   outline: 2px solid #007bff;
-    //   /* Add focus outline */
-    // }
-  }
+  //   // &:focus {
+  //   //   outline: 2px solid #007bff;
+  //   //   /* Add focus outline */
+  //   // }
+  // }
   .icon-box{
     font-size: 45px;
     color:#e0e0e0 ;
