@@ -278,21 +278,58 @@ const useApplicationData = () => {
     });
   };
 
-  // Fetch transactions data from backend server upon loading the app
+  // // Fetch transactions data from backend server upon loading the app
+  // useEffect(() => {
+  //   getTransactions();
+  //   getTransactionsByCategory();
+  //   // Dependent on the 'date' state
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [state.date]);
+
+  // // Fetch categories and accounts data from backend server upon loading the app
+  // useEffect(() => {
+  //   getAccounts();
+  //   getCategories();
+  //   getIcons();
+  //   // No dependency for categories and accounts data, only retrieve on reload
+  // }, []);
+
   useEffect(() => {
-    getTransactions();
-    getTransactionsByCategory();
-    // Dependent on the 'date' state
+    // For accounts, categories and icons, which should only run once on mount.
+    const fetchStaticData = async () => {
+      try {
+        const accountsPromise = getAccounts();
+        const categoriesPromise = getCategories();
+        const iconsPromise = getIcons();
+
+        await Promise.all([accountsPromise, categoriesPromise, iconsPromise]);
+      } catch (error) {
+        console.error('Error fetching static data:', error);
+      }
+    };
+
+    fetchStaticData();
+  }, []); // Empty dependency array indicates it should run on mount only.
+
+  useEffect(() => {
+    // For transactions and transactions by category, which depend on `state.date`.
+    const fetchDynamicData = async () => {
+      try {
+        const transactionsPromise = getTransactions();
+        const transactionsByCategoryPromise = getTransactionsByCategory();
+
+        await Promise.all([transactionsPromise, transactionsByCategoryPromise]);
+      } catch (error) {
+        console.error('Error fetching transactions data:', error);
+      }
+    };
+
+    if (state.date) {
+      fetchDynamicData();
+    }
+    // state.date is a dependency for this useEffect.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.date]);
-
-  // Fetch categories and accounts data from backend server upon loading the app
-  useEffect(() => {
-    getAccounts();
-    getCategories();
-    getIcons();
-    // No dependency for categories and accounts data, only retrieve on reload
-  }, []);
 
 
   useEffect(() => {
