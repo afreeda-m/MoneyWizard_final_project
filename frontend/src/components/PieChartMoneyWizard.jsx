@@ -67,7 +67,7 @@ const PieChartComponent = ({ data, isExpense }) => {
   };
 
   return (
-    <Container className='mt-5'>
+    <Container >
       <Row>
         <Col className='justify-content-md-center'>
           {/* Display the bar chart with shadow and border */}
