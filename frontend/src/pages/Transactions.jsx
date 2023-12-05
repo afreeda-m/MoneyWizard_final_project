@@ -33,7 +33,7 @@ const Transactions = (props) => {
   } = props;
 
   return (
-    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" style={{width: "100%", paddingTop: "50px"}} >
+    <div className="d-flex flex-column align-items-center bg-body-tertiary" style={{width: "100%", paddingTop: "50px"}} >
 
       <FilterBar
         date={date}

@@ -27,7 +27,7 @@ const Report = (props) => {
   const totalExpense = expenseCategories.reduce((total, category) => total + parseFloat(category.sum), 0);
 
   return (
-    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" style={{ paddingTop: "50px"}}>
+    <div className="d-flex flex-column align-items-center bg-body-tertiary" style={{ paddingTop: "50px"}}>
 
       <Container className="d-flex flex-column justify-content-center">
 

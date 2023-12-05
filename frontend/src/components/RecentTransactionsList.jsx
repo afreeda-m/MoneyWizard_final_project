@@ -24,6 +24,7 @@ const  RecentTransactionsList = (props) => {
   getCategoryNameById={getCategoryNameById}
   getCategoryTypeById={getCategoryTypeById}
   disableEditingAndDeleting={disableEditingAndDeleting}
+  width={"100%"}
   />;
 };
 
