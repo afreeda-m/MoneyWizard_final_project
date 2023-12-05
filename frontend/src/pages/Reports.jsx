@@ -29,8 +29,6 @@ const Report = (props) => {
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5">
 
-      <h1>Reports</h1>
-
       <Container className="d-flex flex-column justify-content-center">
 
         {/* FilterBar component for selecting the date */}
