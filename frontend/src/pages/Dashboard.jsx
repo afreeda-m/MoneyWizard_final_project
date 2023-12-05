@@ -8,7 +8,7 @@ import { NumericFormat } from "react-number-format";
 import RecentTransactionsList from "../components/RecentTransactionsList";
 import "../styles/Dashboard.scss";
 import MonthlyBalanceChart from "../components/MonthlyBalanceChart";
-import PieChartMoneyWizard from "./../components/PieChartMoneyWizard";
+import PieChartComponent from "./../components/PieChartMoneyWizard";
 import "../styles/Dashboard.scss";
 import { AiOutlineBank } from 'react-icons/ai';
 import { FaChartPie } from 'react-icons/fa';
@@ -23,56 +23,17 @@ const Dashboard = (props) => {
     getCategoryIconById,
     getCategoryNameById,
     getCategoryTypeById,
+    transactionsByCategoryData
 
   } = props;
-  console.log(accountsData);
-  // State for income and expense data
-  const [incomeData, setIncomeData] = useState([]);
-  const [expenseData, setExpenseData] = useState([]);
 
-  // State for income/expense totals
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalExpense, setTotalExpense] = useState(0);
+  // Separate data into income and expense categories
+  const incomeCategories = transactionsByCategoryData.filter((transaction) => transaction.type === "Income");
+  const expenseCategories = transactionsByCategoryData.filter((transaction) => transaction.type === "Expense");
 
-  useEffect(() => {
-    // Define an async function to fetch data
-    const fetchData = async () => {
-      try {
-        // Fetch data from the API endpoint
-        const response = await axios.get('/transactions/transactionsByCategory');
-
-        // Transform the response data for use in charts
-        const dataForRecharts = response.data.map(item => ({
-          label: item.category_name,
-          value: item.sum,
-          type: item.type,
-        }));
-
-        // Separate data into income and expense categories
-        const incomeCategoryList = dataForRecharts.filter(item => item.type === 'Income');
-        const expenseCategoryList = dataForRecharts.filter(item => item.type === 'Expense');
-
-        // Set the filtered data in state
-        setIncomeData(incomeCategoryList);
-        setExpenseData(expenseCategoryList);
-
-        // Calculate and set total income and expense amounts
-        const totalIncomeAmount = incomeCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
-        const totalExpenseAmount = expenseCategoryList.reduce((total, item) => total + parseFloat(item.value), 0);
-
-        // Set total income and expense amounts in state
-        setTotalIncome(totalIncomeAmount);
-        setTotalExpense(totalExpenseAmount);
-      } catch (error) {
-        // Handle errors during data fetching
-        console.error('Error fetching income and expense distribution data:', error);
-      }
-    };
-
-    // Call the fetchData function when the component mounts (empty dependency array)
-    fetchData();
-  }, []);
-
+  // Calculate and set total income and expense amounts
+  const totalIncome = incomeCategories.reduce((total, category) => total + parseFloat(category.sum), 0);
+  const totalExpense = expenseCategories.reduce((total, category) => total + parseFloat(category.sum), 0);
 
   // calculate total balance for all accounts
   const totalAccountsBalance = accountsData
@@ -91,7 +52,7 @@ const Dashboard = (props) => {
         {/*  GRID BOX - PIE CHART*/}
         <div className="box box1">
           <div className="chartBox"><h2 className="card-name">Income and Expense overview chart</h2>
-            <PieChartMoneyWizard data={[
+            <PieChartComponent data={[
               { label: 'Income', value: totalIncome, type: "Income" },
               { label: 'Expense', value: totalExpense, type: "Expense" },
             ]} />
