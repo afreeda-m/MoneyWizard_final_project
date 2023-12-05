@@ -19,7 +19,7 @@ const IncomeExpenseListItem = (props) => {
 
   return (
 
-    <ListGroupItem className="p-1" style={{ width: "100%" }}>
+    <ListGroupItem className="p-2" style={{ width: "100%" }}>
       <Container>
         <Row className="d-flex align-items-center">
 
@@ -29,16 +29,16 @@ const IncomeExpenseListItem = (props) => {
 
           <Col xs={8}>
             <div>
-              <b><h6>{getCategoryNameById(category.category_id, categoriesData)}</h6></b>
+              <b>{getCategoryNameById(category.category_id, categoriesData)}</b>
             </div>
           </Col>
 
-          <Col xs={2}>
+          <Col xs={2} className="d-flex justify-content-end">
             {/* Amount shows in red for expense and green for income */}
             <b>
               <NumericFormat
                 className={category.type === "Expense" ? "text-danger" : "text-success"}
-                value={category.sum}
+                value={parseFloat(category.sum).toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"$"}
