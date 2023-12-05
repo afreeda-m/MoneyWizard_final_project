@@ -55,8 +55,8 @@ const Dashboard = (props) => {
         <div className="box box1">
           <div className="chartBox"><h2 className="card-name">Income and Expense overview chart</h2>
             <PieChartComponent data={[
-              { label: 'Income', value: totalIncome, type: "Income" },
-              { label: 'Expense', value: totalExpense, type: "Expense" },
+              { category_name: 'income', sum: totalIncome, type: "Income" },
+              { category_name: 'expense', sum: totalExpense, type: "Expense" },
             ]} />
           </div>
         </div>
