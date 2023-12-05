@@ -190,14 +190,14 @@ const Dashboard = (props) => {
 
 
         {/* BOX -MONTHLY BALANCE LINE CHART */}
-        {/* <div className="box box5">
+        <div className="box box5">
           <Row>
             <Col>
               <h3 className="card-name">Past 6 Months Balance Chart</h3>
             </Col>
           </Row>
           <MonthlyBalanceChart />
-        </div> */}
+        </div>
 
 
 
