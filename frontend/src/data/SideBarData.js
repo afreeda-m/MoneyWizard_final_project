@@ -22,15 +22,15 @@ export const SideBarData = [
     cName: 'side-bar-item'
   },
   {
-    title: 'Accounts',
-    path: '/accounts',
-    icon: <SavingsIcon />,
-    cName: 'side-bar-item'
-  },
-  {
     title: 'Reports',
     path: '/reports',
     icon: <RequestQuoteIcon />,
+    cName: 'side-bar-item'
+  },
+  {
+    title: 'Accounts',
+    path: '/accounts',
+    icon: <SavingsIcon />,
     cName: 'side-bar-item'
   },
   // {

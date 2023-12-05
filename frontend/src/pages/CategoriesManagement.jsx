@@ -24,8 +24,6 @@ const CategoriesManagement = (props) => {
 
     <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5">
 
-      <h1 className='mb-5'>Categories Management</h1>
-
       {/* Render category list with React Bootstrap Tabs component */}
       <Tabs defaultActiveKey="income" transition={false} justify style={{ width: "30vw" }}>
 

@@ -59,7 +59,7 @@ const TransactionListItem = (props) => {
 
 
   return (
-    <ListGroupItem className="p-2" style={{ width: "40vw" }} >
+    <ListGroupItem className="p-2" style={{ width: "100%" }} >
       <Container>
 
         <Row className="d-flex align-items-center">
@@ -101,20 +101,20 @@ const TransactionListItem = (props) => {
           </Col >
 
           {/* 3 dots icon with dropdown list show the Edit and Delete feature for a transaction */}
-          <Col xs={1} className="d-flex justify-content-end"  >
+          <Col xs={1}  >
             {/* Render the dropdown only if editing and deleting are not disabled */}
             {!disableEditingAndDeleting && (
 
               <Dropdown >
 
-                <Dropdown.Toggle variant="none" id="dropdown-basic">
+                <Dropdown.Toggle variant="none" id="dropdown-basic" style={{ width: "1rem" }}>
                   <MoreVertIcon />
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
 
-                {/* The onClick event on Edit button will open different modal based on the type of the category */}
-                <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit} >Edit transaction</Dropdown.Item>
+                  {/* The onClick event on Edit button will open different modal based on the type of the category */}
+                  <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit} >Edit transaction</Dropdown.Item>
 
                   <Dropdown.Item onClick={handleDelete} className='text-danger'>Delete transaction</Dropdown.Item>
 

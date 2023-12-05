@@ -22,7 +22,7 @@ const AccountListItem = (props) => {
   };
 
   return (
-    <ListGroupItem className="p-2" style={{ width: "40vw" }} >
+    <ListGroupItem className="p-2" style={{ width: "100%" }} >
       <Container>
 
         <Row className="d-flex align-items-center">
@@ -49,9 +49,9 @@ const AccountListItem = (props) => {
             </>
           </Col>
 
-          <Col xs={1} className="d-flex justify-content-end">
+          <Col xs={1}>
             <Dropdown>
-              <Dropdown.Toggle variant="none" id="dropdown-basic">
+              <Dropdown.Toggle variant="none" id="dropdown-basic" style={{ width: "1rem" }}>
                 <MoreVertIcon />
               </Dropdown.Toggle>
 

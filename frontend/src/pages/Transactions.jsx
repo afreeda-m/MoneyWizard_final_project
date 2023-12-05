@@ -33,9 +33,7 @@ const Transactions = (props) => {
   } = props;
 
   return (
-    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
-
-      <h1>Transactions</h1>
+    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" style={{width: "100%"}} >
 
       <FilterBar
         date={date}
@@ -59,7 +57,7 @@ const Transactions = (props) => {
         chooseTransaction={chooseTransaction}
         getTransactions={getTransactions}
       />
-      
+
       <div onClick={toggleAddNewModal}>
         <FloatingActionButton />
       </div>

@@ -1,13 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Navbar from 'react-bootstrap/Navbar';
-import { FaBullseye } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function NavBar(props) {
+
   const navigate = useNavigate();
 
   const { isLoggedIn, setIsLoggedIn, setUsername, username } = props;
@@ -29,7 +28,7 @@ function NavBar(props) {
       data: value,
     })
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setIsLoggedIn(true);
           setUsername(response.data.name);
           navigate("/dashboard");
@@ -50,7 +49,7 @@ function NavBar(props) {
       }
     })
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setIsLoggedIn(false);
           setUsername('');
           navigate("/");
@@ -63,14 +62,39 @@ function NavBar(props) {
       });
   };
 
+  // Utilize useLocation from react-router-dom to get the current pathname
+  const location = useLocation();
+  const { pathname } = location;
+
+  // Return the page name based on the current path
+  const getPageHeading = () => {
+    switch (pathname) {
+      case '/':
+        return 'Money Wizard';
+      case '/dashboard':
+        return 'Dashboard';
+      case '/transactions':
+        return 'Transactions';
+      case '/accounts':
+        return 'Accounts';
+      case '/reports':
+        return 'Reports';
+      case '/categoriesmanagement':
+        return 'Categories Management';
+      default:
+        return 'Money Wizard';
+    }
+  };
+
   return (
 
-    <Navbar className="bg-primary d-flex justify-content-center align-items-between px-4">
+    <Navbar className="bg-primary px-4" style={{ height: "5rem" }}>
 
       {/* BRAND NAME */}
       <Navbar.Brand href="#home" className='text-light'>
+        {getPageHeading()}
+      </Navbar.Brand>
 
-        Money Wizard</Navbar.Brand>
       <Navbar.Toggle />
 
 
@@ -108,7 +132,7 @@ function NavBar(props) {
           </Form>}
 
         {isLoggedIn &&
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center mt-2">
 
             <span className="text-secondary h5">Hello {username}</span>
 
