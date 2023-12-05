@@ -34,8 +34,7 @@ export default function PermanentDrawerLeft() {
   const theme = createTheme({
     typography: {
       fontFamily: [
-        'Source Code Pro',
-        'monospace'
+        'Open Sans', 'sans-serif'
       ].join(','),
       // fontSize: 15,
     }
@@ -46,7 +45,7 @@ export default function PermanentDrawerLeft() {
 
     <ThemeProvider theme={theme}>
 
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', textTransform: 'uppercase' }}>
 
         <CssBaseline />
 
