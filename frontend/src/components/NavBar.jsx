@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 function NavBar(props) {
   const navigate = useNavigate();
 
-  const {isLoggedIn, setIsLoggedIn, setUsername, username} = props;
+  const { isLoggedIn, setIsLoggedIn, setUsername, username } = props;
 
   const submitLogin = (event) => {
     event.preventDefault();
@@ -29,13 +29,13 @@ function NavBar(props) {
       data: value,
     })
       .then((response) => {
-        if(response.status == 200){
+        if (response.status == 200) {
           setIsLoggedIn(true);
           setUsername(response.data.name);
           navigate("/dashboard");
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
   };
@@ -49,28 +49,27 @@ function NavBar(props) {
         "Content-Type": "application/json",
       }
     })
-    .then((response) => {
-      if(response.status == 200) {
-        setIsLoggedIn(false);
-        setUsername('');
-        navigate("/");
-      }else{
-        console.log("Couldn't log user out", response);
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+      .then((response) => {
+        if (response.status == 200) {
+          setIsLoggedIn(false);
+          setUsername('');
+          navigate("/");
+        } else {
+          console.log("Couldn't log user out", response);
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
 
   return (
 
-    <Navbar className="bg-success d-flex justify-content-center align-items-between px-4">
+    <Navbar className="bg-primary d-flex justify-content-center align-items-between px-4">
 
       {/* BRAND NAME */}
       <Navbar.Brand href="#home" className='text-light'>
 
-        <FaBullseye size={45} className="mb-2 text-white" style={{ marginRight: "1rem" }} />
         Money Wizard</Navbar.Brand>
       <Navbar.Toggle />
 
@@ -79,37 +78,46 @@ function NavBar(props) {
       <Navbar.Collapse className="justify-content-end">
 
         {/* LOGIN FORM */}
-        {!isLoggedIn && <Form inline="true" id="login-form" onSubmit={submitLogin}>
-          <InputGroup>
+        {!isLoggedIn &&
+          <Form inline="true" id="login-form" onSubmit={submitLogin}>
+            <InputGroup className="d-flex align-items-center">
 
-            {/* Username Field */}
-            <Form.Control
-              name="username"
-              placeholder="Username"
-              aria-label="Username"
-              aria-describedby="Username Field"
-            />
+              {/* Username Field */}
+              <Form.Control
+                name="username"
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="Username Field"
+                className="mx-1"
+              />
 
-            {/* Password Field */}
-            <Form.Control
-              name="password"
-              type="password"
-              placeholder="Password"
-              aria-label="Password"
-              aria-describedby="Password Field"
-            />
+              {/* Password Field */}
+              <Form.Control
+                name="password"
+                type="password"
+                placeholder="Password"
+                aria-label="Password"
+                aria-describedby="Password Field"
+                className="me-1"
+              />
 
+              {/* Submit Button */}
+              <Button variant="secondary" type="submit" form="login-form" className="h1 mb-0">Login</Button>
 
-            {/* Submit Button */}
-            <Button type="submit" form="login-form">Login</Button>
+            </InputGroup>
+          </Form>}
 
-          </InputGroup>
-        </Form>}
+        {isLoggedIn &&
+          <div className="d-flex align-items-center">
 
-        {isLoggedIn && <div><span>Hello {username}</span><Button onClick={performLogout}>Logout</Button></div>}
+            <span className="text-secondary h5">Hello {username}</span>
 
-      {/* CODE TO DISPLAY SIGNED IN USER */}
-      {/* <Navbar.Text>
+            <Button variant="secondary" onClick={performLogout} className="h1 ms-4">Logout</Button>
+
+          </div>}
+
+        {/* CODE TO DISPLAY SIGNED IN USER */}
+        {/* <Navbar.Text>
             Signed in as: <a href="#login">Mark Otto</a>
           </Navbar.Text> */}
 
