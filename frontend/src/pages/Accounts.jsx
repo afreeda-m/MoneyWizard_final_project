@@ -74,7 +74,7 @@ const Accounts = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center bg-body-tertiary" style={{ paddingTop: "50px"}} >
+    <div className="d-flex flex-column align-items-center bg-body-tertiary mb-5" style={{ paddingTop: "50px"}} >
 
       <h3>Accounts breakdown</h3>
 
