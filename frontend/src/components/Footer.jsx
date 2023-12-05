@@ -6,7 +6,7 @@ function Footer() {
   return (
 
     // `bg-body-tertiary`: Give its the same colour as the NavBar.
-    <footer className='navbar-expand navbar-light bg-body-tertiary'>
+    <footer className='navbar-expand navbar-light bg-body-tertiary' style={{marginTop: "auto"}}>
 
       <Container>
 

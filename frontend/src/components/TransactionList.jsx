@@ -20,6 +20,7 @@ const TransactionList = (props) => {
     chooseTransaction,
     getTransactions,
     disableEditingAndDeleting,
+    width
   } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
@@ -59,7 +60,7 @@ const TransactionList = (props) => {
 
   return (
 
-    <ListGroup style={{width: "50%"}}>
+    <ListGroup style={{width: width ? width : "50%"}}>
       {listOfTransactions}
     </ListGroup>
 

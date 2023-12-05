@@ -74,9 +74,9 @@ const Accounts = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5" >
+    <div className="d-flex flex-column align-items-center bg-body-tertiary" style={{ paddingTop: "50px"}} >
 
-  <h3>Accounts breakdown</h3>
+      <h3>Accounts breakdown</h3>
 
       <PieChart className="mb-3" width={500} height={500}>
         <Pie

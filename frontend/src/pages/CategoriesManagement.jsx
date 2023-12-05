@@ -22,7 +22,7 @@ const CategoriesManagement = (props) => {
 
   return (
 
-    <div className="d-flex flex-column align-items-center bg-body-tertiary mt-5">
+    <div className="d-flex flex-column align-items-center bg-body-tertiary" style={{ paddingTop: "50px" }}>
 
       {/* Render category list with React Bootstrap Tabs component */}
       <Tabs defaultActiveKey="income" transition={false} justify style={{ width: "30vw" }}>

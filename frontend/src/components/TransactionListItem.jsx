@@ -64,11 +64,11 @@ const TransactionListItem = (props) => {
 
         <Row className="d-flex align-items-center">
 
-          <Col className="d-flex justify-content-center" xs={1} >
+          <Col className="d-flex justify-content-center" xs={!disableEditingAndDeleting ? 1 : 2} >
             <Image src={categoryIcon} />
           </Col>
 
-          <Col xs={4} >
+          <Col xs={!disableEditingAndDeleting ? 4 : 3} className='d-flex flex-column align-items-start'>
             <div>
               <b> {categoryName} </b>
             </div>
@@ -84,7 +84,7 @@ const TransactionListItem = (props) => {
 
           </Col>
 
-          <Col xs={2} className="d-flex flex-column align-items-end" >
+          <Col xs={!disableEditingAndDeleting ? 2 : 3} className="d-flex flex-column align-items-end" >
             <b>
               {/* Amount shows in red for expense, green for income and blue for transfer*/}
               <NumericFormat
@@ -101,9 +101,9 @@ const TransactionListItem = (props) => {
           </Col >
 
           {/* 3 dots icon with dropdown list show the Edit and Delete feature for a transaction */}
+            {!disableEditingAndDeleting && (
           <Col xs={1}  >
             {/* Render the dropdown only if editing and deleting are not disabled */}
-            {!disableEditingAndDeleting && (
 
               <Dropdown >
 
@@ -121,8 +121,8 @@ const TransactionListItem = (props) => {
                 </Dropdown.Menu>
 
               </Dropdown>
-            )}
           </Col>
+            )}
 
         </Row>
 
