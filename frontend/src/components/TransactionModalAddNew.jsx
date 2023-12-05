@@ -158,8 +158,6 @@ const TransactionModalAddNew = (props) => {
           {/* TRANSACTION TAB using grid layout */}
           <Tab eventKey="transaction" title="TRANSACTION">
 
-            <Form >
-
               {/* 2 input fields in the same row for Category selection, Account selection */}
               <Row className='mb-3' >
 
@@ -222,8 +220,6 @@ const TransactionModalAddNew = (props) => {
                   <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
                 </Form.Group>
               </Row>
-
-            </Form>
 
             {/* 'Close' and 'Save' buttons for the TRANSACTION tab */}
             <div className='d-flex justify-content-around mb-2'>
