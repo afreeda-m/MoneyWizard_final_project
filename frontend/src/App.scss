@@ -3,8 +3,10 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~bootswatch/dist/lux/bootswatch";
 
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;1,300&display=swap');
+
 * {
-  font-family: sans-serif;
+  font-family: 'Source Code Pro', sans-serif;
 }
 
 // body {

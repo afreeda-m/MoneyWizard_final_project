@@ -88,7 +88,7 @@ function NavBar(props) {
 
   return (
 
-    <Navbar className="bg-primary px-4" style={{ height: "5rem" }}>
+    <Navbar className="bg-primary px-4" style={{ height: "5rem", position: "fixed", width: "calc(100% - 250px)" }}>
 
       {/* BRAND NAME */}
       <Navbar.Brand href="#home" className='text-light'>

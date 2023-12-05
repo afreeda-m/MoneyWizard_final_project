@@ -14,6 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { SideBarData } from "../data/SideBarData";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 
 // The sidebar's width in pixels.
@@ -30,77 +31,92 @@ export default function PermanentDrawerLeft() {
   const location = useLocation();
 
 
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        'Source Code Pro',
+        'monospace'
+      ].join(','),
+      // fontSize: 15,
+    }
+  });
+
+
   return (
-    <Box sx={{ display: 'flex' }}>
 
-      <CssBaseline />
+    <ThemeProvider theme={theme}>
+
+      <Box sx={{ display: 'flex' }}>
+
+        <CssBaseline />
 
 
-      {/* THE MATERIAL-UI SIDEBAR & ITS ELEMENTS */}
-      <Drawer
+        {/* THE MATERIAL-UI SIDEBAR & ITS ELEMENTS */}
+        <Drawer
 
-        // (APPEARS TO BE) MATERIAL UI SIDEBAR SETTINGS
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          // (APPEARS TO BE) MATERIAL UI SIDEBAR SETTINGS
+          sx={{
             width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
 
 
-        {/* MONEY WIZARD LOGO */}
-        <img id="logo" src="MWlogo.png" alt="Money Wizard logo"></img>
-        <Divider />
+          {/* MONEY WIZARD LOGO */}
+          <img id="logo" src="MWlogo.png" alt="Money Wizard logo"></img>
+          <Divider />
 
 
-        {/* THE ELEMENTS OF THE SIDEBAR */}
-        <List>
-          {SideBarData.map((item) => (
+          {/* THE ELEMENTS OF THE SIDEBAR */}
+          <List>
+            {SideBarData.map((item) => (
 
-            // Each `ListItem` requires a `component={Link}` and `to={}`
-            // properties defined so that you can turn it into a functioning
-            // link. `Link` is imported from `react-router-dom`, so don't
-            // forget to do that.
-            <ListItem
-              key={item.title}
-              component={Link}
-              to={item.path}
-              disablePadding
+              // Each `ListItem` requires a `component={Link}` and `to={}`
+              // properties defined so that you can turn it into a functioning
+              // link. `Link` is imported from `react-router-dom`, so don't
+              // forget to do that.
+              <ListItem
+                key={item.title}
+                component={Link}
+                to={item.path}
+                disablePadding
 
-            >
+              >
 
-              {/* Wrap in `ListItemButton` tags so that when you mouse over
+                {/* Wrap in `ListItemButton` tags so that when you mouse over
                 * the links in the sidebar, their backgrounds get highlighted.
                 *
                 * `selected`: The `location.pathname` from `react-router-dom`
                 * is compared to the `item.path` value from `SideBarData.js`.
                 * If the two are the same, the current `ListItemButton` will be
                 * highlighted. (See the declaration of `useLocation()` above.)
-                */}
-              <ListItemButton
-                selected={location.pathname === item.path ? true : false}
-                sx={{ paddingY: "2rem" }}
-              >
+              */}
+                <ListItemButton
+                  selected={location.pathname === item.path ? true : false}
+                  sx={{ paddingY: "2rem" }}
+                >
 
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.title} />
 
-              </ListItemButton>
+                </ListItemButton>
 
-            </ListItem>
+              </ListItem>
 
-          ))}
-        </List>
-        <Divider />
+            ))}
+          </List>
+          <Divider />
 
-      </Drawer>
+        </Drawer>
 
-    </Box>
+      </Box>
+    </ThemeProvider>
   );
 
 }
