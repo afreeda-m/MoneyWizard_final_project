@@ -278,6 +278,7 @@ const useApplicationData = () => {
     });
   };
 
+  // ORIGINAL UseEffect
   // Fetch transactions data from backend server upon loading the app
   useEffect(() => {
     getTransactions();
@@ -293,7 +294,6 @@ const useApplicationData = () => {
     getIcons();
     // No dependency for categories and accounts data, only retrieve on reload
   }, []);
-
 
   useEffect(() => {
     axios({
