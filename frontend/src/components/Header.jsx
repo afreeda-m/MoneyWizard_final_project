@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 
 function Header() {
   return (
-    <Container fluid className="my-5 p-5 position-relative">
+    <Container fluid className=" p-5 position-relative">
       <img className="img-fluid" src="./laptop_showing_report.jpg" alt="Header Background" />
 
 
