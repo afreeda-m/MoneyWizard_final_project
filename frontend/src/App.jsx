@@ -165,6 +165,7 @@ function App() {
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
+              transactionsByCategoryData={transactionsByCategoryData}
             />} />
 
             <Route path='/transactions' element={<Transactions
