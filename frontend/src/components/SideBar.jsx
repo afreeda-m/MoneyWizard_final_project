@@ -73,7 +73,7 @@ export default function PermanentDrawerLeft() {
 
 
           {/* THE ELEMENTS OF THE SIDEBAR */}
-          <List>
+          <List sx={{ paddingY: "0" }}>
             {SideBarData.map((item) => (
 
               // Each `ListItem` requires a `component={Link}` and `to={}`
