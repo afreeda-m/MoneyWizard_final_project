@@ -3,7 +3,7 @@
 
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(2, 1fr); // 2columns same width
+  grid-template-columns: repeat(3, 1fr); // 2columns same width
   // grid-auto-rows: minmax(180px, auto);
   background: #f5f5f5;
 
@@ -20,30 +20,31 @@
 
   .box1 {
     grid-column: span 1;
-    grid-row: span 3
+    grid-row: span 2
+  }
+
+  .box2 {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .box3 {
+    grid-column: span 2;
+    grid-row: span 1;
+
   }
 
   .box5 {
-    grid-column: span 1;
-    grid-row: span 3
+    grid-column: span 3;
+    grid-row: span 1;
   }
-
-  .box7 {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-  .box8 {
+  .box4 {
     grid-column: span 2;
     grid-row: span 1;
-    
-  }
-  .box9.card_hover {
-    cursor: pointer;
-    user-select: none;
   }
 
   .big_text_1 {
-    font-size: 1.1rem;
+    font-size: 2rem;
   }
 
   .text-end {
@@ -55,39 +56,35 @@
     font-weight: 500;
 
   }
-
-  .card-name {
-    color: #888;
+  .number-total-account {
+    font-size: 25px;
     font-weight: 600;
-  }
 
-  .no-bullets {
-    list-style: none;
   }
 
   // .box:hover{
   //   background: #e0e0e0;
   // }
-  .card:hover .big_text_1 {
-    color: #fff;
-  }
+  // .card:hover .big_text_1 {
+  //   color: #fff;
+  // }
 
-  .box {
+  // .box {
 
-    transition: background-color 0.3s ease;
-    /* Add transition for a smooth effect */
+  //   transition: background-color 0.3s ease;
+  //   /* Add transition for a smooth effect */
 
-    /* Initial styles */
-    &:hover {
-      background-color: #b6d5be;
-      /* Change background color on hover */
-    }
+  //   /* Initial styles */
+  //   &:hover {
+  //     background-color: #b6d5be;
+  //     /* Change background color on hover */
+  //   }
 
-    // &:focus {
-    //   outline: 2px solid #007bff;
-    //   /* Add focus outline */
-    // }
-  }
+  //   // &:focus {
+  //   //   outline: 2px solid #007bff;
+  //   //   /* Add focus outline */
+  //   // }
+  // }
   .icon-box{
     font-size: 45px;
     color:#e0e0e0 ;
@@ -107,9 +104,8 @@
 }
 
 .texts {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+  font-size: 20px;
+  text-align: right;
 }
 
 .percentage {
@@ -117,8 +113,8 @@
   font-size: 20px;
 }
 
-.duration {
-  font-size: 14px;
+.accounts-total {
+  font-size: 30px;
 }
 
 
