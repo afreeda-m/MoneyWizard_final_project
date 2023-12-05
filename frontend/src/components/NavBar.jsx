@@ -128,6 +128,9 @@ function NavBar(props) {
               {/* Submit Button */}
               <Button variant="secondary" type="submit" form="login-form" className="h1 mb-0">Login</Button>
 
+              {/* DEAD LINK: Added to complete the home page. */}
+              <Button variant="secondary" type="#" form="login-form" className="h1 ms-2 mb-0">Register</Button>
+
             </InputGroup>
           </Form>}
 
