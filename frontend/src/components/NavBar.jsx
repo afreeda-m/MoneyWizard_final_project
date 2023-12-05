@@ -88,7 +88,7 @@ function NavBar(props) {
 
   return (
 
-    <Navbar className="bg-primary px-4" style={{ height: "5rem"}}>
+    <Navbar className="bg-primary px-4" style={{ height: "5rem" }}>
 
       {/* BRAND NAME */}
       <Navbar.Brand href="#home" className='text-light'>
@@ -131,19 +131,13 @@ function NavBar(props) {
             </InputGroup>
           </Form>}
 
-        {isLoggedIn &&
-          <div className="d-flex align-items-center mt-2">
-
-            <span className="text-secondary h5">Hello {username}</span>
-
-            <Button variant="secondary" onClick={performLogout} className="h1 ms-4">Logout</Button>
-
-          </div>}
 
         {/* CODE TO DISPLAY SIGNED IN USER */}
-        {/* <Navbar.Text>
-            Signed in as: <a href="#login">Mark Otto</a>
-          </Navbar.Text> */}
+        {isLoggedIn &&
+          <Navbar.Text className="d-flex align-items-center mt-2">
+            <span className="text-secondary h5">Hello, {username}!</span>
+            <Button variant="secondary" onClick={performLogout} className="h1 ms-4">Logout</Button>
+          </Navbar.Text>}
 
       </Navbar.Collapse>
 
