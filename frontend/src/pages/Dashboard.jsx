@@ -55,8 +55,8 @@ const Dashboard = (props) => {
         <div className="box box1">
           <div className="chartBox"><h3 className="card-name">Income and Expense overview chart</h3>
             <PieChartComponent data={[
-              { category_name: 'income', sum: totalIncome, type: "Income" },
-              { category_name: 'expense', sum: totalExpense, type: "Expense" },
+              { category_name: 'Income', sum: totalIncome, type: "Income" },
+              { category_name: 'Expense', sum: totalExpense, type: "Expense" },
             ]} />
           </div>
         </div>
@@ -79,12 +79,12 @@ const Dashboard = (props) => {
         {/* BOX -This month */}
         <div className="box box3">
           <Row className="d-flex justify-content-between">
-            <Col><FaChartPie size={60} className="text-secondary mb-3" /></Col>
+            <Col> <h3 className="card-name text-center"><FaChartPie size={60} className="text-secondary mb-3" />  <div className=""></div>This month</h3></Col>
             <Col>
               <div className="d-flex justify-content-between mt-1">
                 <div className=""></div>
                 <div className="text-center d-flex justify-content-between">
-                  <h5 className="card-name">This month</h5>
+
                 </div>
                 <div className="big_text_1 text-end text-success" >
                   <NumericFormat
