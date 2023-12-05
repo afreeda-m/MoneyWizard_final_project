@@ -153,28 +153,38 @@ const Dashboard = (props) => {
                 {accountsData.map((account, index) => (
                   <div>
                     <ListGroup.Item key={index}>
-                      <Row>
-                        <Col className="d-flex justfiy-content-left">{account.account_name}:</Col>
-                        <Col className="text-center"><b>${account.balance.toFixed(2)}</b></Col>
+                      <Row className="texts">
+                        <Col className="d-flex justfiy-content-left">
+                          {account.account_name}:</Col>
+                        <Col>
+                          <b><NumericFormat
+                            value={account.balance.toFixed(2)}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          /></b>
+                        </Col>
                       </Row>
+
                     </ListGroup.Item>
                   </div>
                 ))}
               </ListGroup>
+              <ListGroup>
+                 <ListGroup.Item> <Row className="number-total-account">
 
-              {/* TOTAL OF ALL ACCOUNTS */}
-              <span className="number">
-                <h1>{" "}</h1>
-              <NumericFormat
-                value={totalAccountsBalance.toFixed(2)}
-                displayType={"text"}
-                thousandSeparator={true}
-                prefix={"$"}
-              />
-              </span>
-
+                <Col className="d-flex justify-content-between">Total: <h3>{" "}</h3>
+                  <NumericFormat
+                    value={totalAccountsBalance.toFixed(2)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  /></Col>
+              </Row></ListGroup.Item></ListGroup>
             </div>
           </div>
+           {/* TOTAL OF ALL ACCOUNTS */}
+
         </div>
 
 
