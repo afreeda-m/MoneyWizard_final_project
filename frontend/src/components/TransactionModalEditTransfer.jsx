@@ -189,7 +189,7 @@ const TransactionModalEditTransfer = (props) => {
         <Button variant="secondary" onClick={toggleEditTransferModal}>
           Cancel
         </Button>
-        <Button variant="success" onClick={handleSubmit}>
+        <Button variant="primary" onClick={handleSubmit}>
           Update
         </Button>
       </Modal.Footer>

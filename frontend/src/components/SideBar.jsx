@@ -68,11 +68,11 @@ export default function PermanentDrawerLeft() {
             // forget to do that.
             <ListItem
               key={item.title}
-
               component={Link}
               to={item.path}
+              disablePadding
 
-              disablePadding>
+            >
 
               {/* Wrap in `ListItemButton` tags so that when you mouse over
                 * the links in the sidebar, their backgrounds get highlighted.
@@ -82,7 +82,10 @@ export default function PermanentDrawerLeft() {
                 * If the two are the same, the current `ListItemButton` will be
                 * highlighted. (See the declaration of `useLocation()` above.)
                 */}
-              <ListItemButton selected={location.pathname === item.path ? true : false}>
+              <ListItemButton
+                selected={location.pathname === item.path ? true : false}
+                sx={{ paddingY: "2rem" }}
+              >
 
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.title} />

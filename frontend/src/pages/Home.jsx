@@ -43,32 +43,32 @@ const Home = (props) => {
       <Container className="my-5">
         <h2 className="text-center mb-4">Key Features</h2>
         <Row className="justify-content-center">
-          <Col md={6} lg={4} className="mb-4">
+          <Col md={6} lg={4} className="d-flex flex-column align-items-center">
             <FaMoneyBillAlt size={60} className="text-primary mb-3" />
             <h4>Income/Expense Tracking</h4>
             <p>Effortlessly track your income and expenses to gain insights into your financial activities.</p>
           </Col>
-          <Col md={6} lg={4} className="mb-4">
+          <Col md={6} lg={4} className="d-flex flex-column align-items-center">
             <FaWallet size={60} className="text-success mb-3" />
             <h4>Add Accounts</h4>
             <p>Add and manage financial accounts such as wallet, piggy bank, and cash to keep a comprehensive overview of your financial portfolio.</p>
           </Col>
-          <Col md={6} lg={4} className="mb-4">
+          <Col md={6} lg={4} className="d-flex flex-column align-items-center">
             <FaChartPie size={60} className="text-warning mb-3" />
             <h4>Reports</h4>
             <p>Generate detailed reports to analyze your financial trends, helping you make informed decisions.</p>
           </Col>
-          <Col md={6} lg={4} className="mb-4">
+          <Col md={6} lg={4} className="d-flex flex-column align-items-center">
             <FaTags size={60} className="text-info mb-3" />
             <h4>Customize Categories</h4>
             <p>Customize and organize expense categories to match your unique spending habits and preferences.</p>
           </Col>
-          <Col md={6} lg={4} className="mb-4">
+          <Col md={6} lg={4} className="d-flex flex-column align-items-center">
             <FaExchangeAlt size={60} className="text-danger mb-3" />
             <h4>Transfer Between Accounts</h4>
             <p>Efficiently transfer funds between your financial accounts to manage your finances seamlessly.</p>
           </Col>
-          <Col md={6} lg={4} className="mb-4">
+          <Col md={6} lg={4} className="d-flex flex-column align-items-center">
             <FaCashRegister size={60} className="text-secondary mb-3" />
             <h4>Daily Transactions</h4>
             <p>Record your daily transactions with ease and keep a detailed log of your financial activities.</p>
@@ -78,10 +78,10 @@ const Home = (props) => {
 
       {/* Carousel Images Section */}
       <Container className="my-5" >
-        <h2 className="text-center mb-4">Placeholders - App Screenshots</h2>
-        <Row className="justify-content-center">
-          <Col md={8} className="mb-4">
-            <Carousel>
+        <h2 className="text-center mb-4">App Screenshots</h2>
+        <Row className="d-flex justify-content-center">
+          <Col className="mb-4 d-flex justify-content-center">
+            <Carousel slide={false}>
               <Carousel.Item>
                 <Image src="./dashboard.jpg" alt="Screenshot 1" fluid />
               </Carousel.Item>
@@ -96,43 +96,19 @@ const Home = (props) => {
         </Row>
       </Container>
 
-      {/* Get Started Section - redirect to Login/Register Pages? */}
-      <Container className="text-center my-5">
-        <hr className="my-4" />
-        <Button variant="primary">
-
-          Get Started
-        </Button>
-      </Container>
-
-
-      {/* Screenshots Section */}
-      <Container className="my-5">
-        <h2 className="text-center mb-4">Placeholders - App Screenshots</h2>
-        <Row className="justify-content-center">
-          <Col md={4} className="mb-4">
-            <Image src="./dashboard.jpg" thumbnail />
-          </Col>
-          <Col md={4} className="mb-4">
-            <Image src="./dashboard.jpg" thumbnail />
-          </Col>
-          <Col md={4} className="mb-4">
-            <Image src="./dashboard.jpg" thumbnail />
-          </Col>
-        </Row>
-      </Container>
-
       {/* Mission & Technology Sections */}
-      <Container>
-        <Row className="justify-content-center">
-          <Col md={6} lg={4} className="shadow p-4 mb-4 bg-white rounded">
+      <Container className='mb-5'>
+        <Row className="d-flex justify-content-around">
+
+          <Col md={6} lg={4} className="shadow p-4 mb-4 bg-white rounded d-flex flex-column align-items-center">
             <FaRocket size={40} className="mb-2" />
             <h4>Our Mission</h4>
             <p>
               At MoneyWizard, our mission is to empower you with the tools needed to take control of your finances and achieve your financial goals.
             </p>
           </Col>
-          <Col md={6} lg={4} className="shadow p-4 mb-4 bg-white rounded">
+
+          <Col md={6} lg={4} className="shadow p-4 mb-4 bg-white rounded d-flex flex-column align-items-center">
             <FaRocket size={40} className="mb-2" />
             <h4>Our Technology</h4>
             <p>
@@ -144,6 +120,7 @@ const Home = (props) => {
 
       {/* Footer */}
       <Footer />
+
     </Container>
   );
 };

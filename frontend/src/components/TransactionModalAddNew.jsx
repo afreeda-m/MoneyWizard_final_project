@@ -230,7 +230,7 @@ const TransactionModalAddNew = (props) => {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="success" onClick={handleTransactionSubmit}>
+              <Button variant="primary" onClick={handleTransactionSubmit}>
                 Save
               </Button>
             </div>
@@ -306,7 +306,7 @@ const TransactionModalAddNew = (props) => {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="success" onClick={handleTransferSubmit}>
+              <Button variant="primary" onClick={handleTransferSubmit}>
                 Save
               </Button>
             </div>

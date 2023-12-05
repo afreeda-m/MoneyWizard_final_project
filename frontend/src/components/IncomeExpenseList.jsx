@@ -45,19 +45,17 @@ function IncomeExpenseList(props) {
       </Row>
 
 
-      <Row style={{ width: "100%" }}>
+      <Row className="mt-4" style={{ width: "100%" }}>
 
         <ListGroup >
           <ListGroupItem className="d-flex justify-content-center" style={{ fontSize: '20px' }}>
             <b>
-              <u>
                 <span>{isIncome === true ? "Total Income: $" : "Total Expense: $"}</span>
                 <NumericFormat
-                  value={total}
+                  value={total.toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
                 />
-              </u>
             </b>
           </ListGroupItem>
 
