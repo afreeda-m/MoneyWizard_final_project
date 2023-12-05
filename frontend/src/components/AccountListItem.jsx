@@ -60,7 +60,7 @@ const AccountListItem = (props) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={deleteAccount} id={id} className="text-danger">Delete account</Dropdown.Item>
+                <Dropdown.Item onClick={deleteAccount} id={id} className="text-danger text-center">Delete account</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>

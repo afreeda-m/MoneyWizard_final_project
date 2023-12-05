@@ -61,9 +61,9 @@ const CategoriesListItem = (props) => {
                 {/* disable the delete feature for preset categories */}
                 {categoryUserId === null
                   ?
-                  <Dropdown.Item disabled>Delete category</Dropdown.Item>
+                  <Dropdown.Item className='text-center' disabled>Delete category</Dropdown.Item>
                   :
-                  <Dropdown.Item onClick={handleDelete}>Delete category</Dropdown.Item>
+                  <Dropdown.Item onClick={handleDelete} className='text-center text-danger'>Delete category</Dropdown.Item>
                 }
               </Dropdown.Menu>
 

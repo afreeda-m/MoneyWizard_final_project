@@ -88,7 +88,7 @@ const TransactionListItem = (props) => {
             <b>
               {/* Amount shows in red for expense, green for income and blue for transfer*/}
               <NumericFormat
-                className={categoryType === "Expense" ? "text-danger font-weight-bold" : categoryType === "Income" ? "text-success" : "text-primary"}
+                className={categoryType === "Expense" ? "text-danger" : categoryType === "Income" ? "text-success" : "text-info"}
                 value={amount.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
@@ -114,9 +114,9 @@ const TransactionListItem = (props) => {
                 <Dropdown.Menu>
 
                 {/* The onClick event on Edit button will open different modal based on the type of the category */}
-                <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit}>Edit transaction</Dropdown.Item>
+                <Dropdown.Item onClick={categoryType === "Transfer" ? handleTransferEdit : handleTransactionEdit} >Edit transaction</Dropdown.Item>
 
-                  <Dropdown.Item onClick={handleDelete}>Delete transaction</Dropdown.Item>
+                  <Dropdown.Item onClick={handleDelete} className='text-danger'>Delete transaction</Dropdown.Item>
 
                 </Dropdown.Menu>
 
