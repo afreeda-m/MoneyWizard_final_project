@@ -31,7 +31,7 @@ const Report = (props) => {
 
       <h1>Reports</h1>
 
-      <Container className="mt-5 d-flex flex-column justify-content-center">
+      <Container className="d-flex flex-column justify-content-center">
 
         {/* FilterBar component for selecting the date */}
         <Row className="justify-content-center">

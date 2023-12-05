@@ -68,7 +68,7 @@ const TransactionListItem = (props) => {
             <Image src={categoryIcon} />
           </Col>
 
-          <Col xs={3} >
+          <Col xs={4} >
             <div>
               <b> {categoryName} </b>
             </div>
@@ -78,7 +78,7 @@ const TransactionListItem = (props) => {
             </div>
           </Col>
 
-          <Col xs={5} >
+          <Col xs={4} >
 
             {notes}
 

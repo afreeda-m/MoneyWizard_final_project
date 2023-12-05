@@ -79,7 +79,7 @@ const PieChartComponent = ({ data, isExpense }) => {
                 data={dataWithPercentage}
                 cx="50%"
                 cy="50%"
-                outerRadius={"50%"}
+                outerRadius={"70%"}
                 fill="#8884d8"
                 label={renderCustomizedLabel}
 

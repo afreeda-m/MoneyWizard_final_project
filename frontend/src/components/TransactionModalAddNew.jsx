@@ -51,6 +51,7 @@ const TransactionModalAddNew = (props) => {
 
     // Convert data to number expect for notes
     const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
+    // const targetValue = event.target.name === "amount" ? parseFloat(event.target.value).toFixed(2) : event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
 
     // Update postTransactionData state on each input change
     setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
@@ -158,8 +159,6 @@ const TransactionModalAddNew = (props) => {
           {/* TRANSACTION TAB using grid layout */}
           <Tab eventKey="transaction" title="TRANSACTION">
 
-            <Form >
-
               {/* 2 input fields in the same row for Category selection, Account selection */}
               <Row className='mb-3' >
 
@@ -167,7 +166,7 @@ const TransactionModalAddNew = (props) => {
                 <Form.Group xs={6} as={Col}>
                   <Form.Label >Category</Form.Label>
                   <Form.Select type="text" name="categoryId" onChange={handleInput} required>
-                    <option> </option>
+                    <option>Category Select</option>
                     {categoryDropdown}
 
                   </Form.Select>
@@ -177,7 +176,7 @@ const TransactionModalAddNew = (props) => {
                 <Form.Group xs={6} as={Col}>
                   <Form.Label >Account</Form.Label>
                   <Form.Select type="text" name="accountId" onChange={handleInput} >
-                    <option> </option>
+                    <option>Account Select</option>
                     {accountDropdown}
 
                   </Form.Select>
@@ -222,8 +221,6 @@ const TransactionModalAddNew = (props) => {
                   <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
                 </Form.Group>
               </Row>
-
-            </Form>
 
             {/* 'Close' and 'Save' buttons for the TRANSACTION tab */}
             <div className='d-flex justify-content-around mb-2'>

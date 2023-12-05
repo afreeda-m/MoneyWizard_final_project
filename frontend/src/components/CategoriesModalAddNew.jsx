@@ -139,7 +139,7 @@ function CategoriesModalAddNew(props) {
           Close
         </Button>
 
-        <Button type="submit" variant="success" onClick={handleSubmit}>
+        <Button type="submit" variant="primary" onClick={handleSubmit}>
           Save
         </Button>
       </Modal.Footer>

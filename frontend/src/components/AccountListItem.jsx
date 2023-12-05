@@ -22,23 +22,19 @@ const AccountListItem = (props) => {
   };
 
   return (
-    <ListGroupItem className="p-2" style={{ width: "40vw" }} onClick={handleClick}>
+    <ListGroupItem className="p-2" style={{ width: "40vw" }} >
       <Container>
 
         <Row className="d-flex align-items-center">
 
-          <Col xs={1}>
+          <Col xs={1} onClick={handleClick}>
             <Image className="accounts-icon" src={"./images/income.png"} />
           </Col>
 
-          <Col xs={3}>
+          <Col xs={7} onClick={handleClick}>
             <div>
               <b> {account_name} </b>
             </div>
-          </Col>
-
-          <Col xs={4}>
-            {/* {note} */}
           </Col>
 
           <Col className="d-flex flex-column align-items-end" xs={3}>
