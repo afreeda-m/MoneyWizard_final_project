@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Container from 'react-bootstrap/Container';
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/esm/Col";
-import { NumericFormat } from "react-number-format";
-import RecentTransactionsList from "../components/RecentTransactionsList";
-import "../styles/Dashboard.scss";
-import MonthlyBalanceChart from "../components/MonthlyBalanceChart";
-import PieChartComponent from "./../components/PieChartMoneyWizard";
-import "../styles/Dashboard.scss";
 import { AiOutlineBank } from 'react-icons/ai';
 import { FaChartPie } from 'react-icons/fa';
-import ListGroup from 'react-bootstrap/ListGroup';
+import { NumericFormat } from "react-number-format";
+import MonthlyBalanceChart from "../components/MonthlyBalanceChart";
+import RecentTransactionsList from "../components/RecentTransactionsList";
+import "../styles/Dashboard.scss";
+import PieChartComponent from "./../components/PieChartMoneyWizard";
 
 
 const Dashboard = (props) => {
@@ -46,7 +45,7 @@ const Dashboard = (props) => {
 
 
   return (
-    <Container className="mt-5 d-flex flex-column align-items-center bg-body-tertiary">
+    <Container className="mt-5 mb-5 d-flex flex-column align-items-center bg-body-tertiary">
       {/* <h1 className="text-center">Dashboard</h1> */}
 
       <div className="dashboard">
