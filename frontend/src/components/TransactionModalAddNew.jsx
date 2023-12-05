@@ -165,7 +165,7 @@ const TransactionModalAddNew = (props) => {
                 <Form.Group xs={6} as={Col}>
                   <Form.Label >Category</Form.Label>
                   <Form.Select type="text" name="categoryId" onChange={handleInput} required>
-                    <option> </option>
+                    <option>Category Select</option>
                     {categoryDropdown}
 
                   </Form.Select>
@@ -175,7 +175,7 @@ const TransactionModalAddNew = (props) => {
                 <Form.Group xs={6} as={Col}>
                   <Form.Label >Account</Form.Label>
                   <Form.Select type="text" name="accountId" onChange={handleInput} >
-                    <option> </option>
+                    <option>Account Select</option>
                     {accountDropdown}
 
                   </Form.Select>
