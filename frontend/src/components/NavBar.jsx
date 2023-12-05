@@ -1,13 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Navbar from 'react-bootstrap/Navbar';
-import { FaBullseye } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 
 function NavBar(props) {
+
   const navigate = useNavigate();
 
   const { isLoggedIn, setIsLoggedIn, setUsername, username } = props;
@@ -29,7 +28,7 @@ function NavBar(props) {
       data: value,
     })
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setIsLoggedIn(true);
           setUsername(response.data.name);
           navigate("/dashboard");
@@ -50,7 +49,7 @@ function NavBar(props) {
       }
     })
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setIsLoggedIn(false);
           setUsername('');
           navigate("/");
@@ -65,12 +64,13 @@ function NavBar(props) {
 
   return (
 
-    <Navbar className="bg-primary d-flex justify-content-center align-items-between px-4">
+    <Navbar className="bg-primary d-flex justify-content-center align-items-between px-4" style={{ height: "5rem" }}>
 
       {/* BRAND NAME */}
       <Navbar.Brand href="#home" className='text-light'>
+        Money Wizard
+      </Navbar.Brand>
 
-        Money Wizard</Navbar.Brand>
       <Navbar.Toggle />
 
 
