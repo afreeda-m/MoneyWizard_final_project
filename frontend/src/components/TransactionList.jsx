@@ -59,7 +59,7 @@ const TransactionList = (props) => {
 
   return (
 
-    <ListGroup >
+    <ListGroup style={{width: "50%"}}>
       {listOfTransactions}
     </ListGroup>
 
