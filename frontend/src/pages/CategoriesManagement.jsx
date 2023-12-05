@@ -1,8 +1,8 @@
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import CategoriesList from "../components/CategoriesList";
 import CategoriesModalAddNew from "../components/CategoriesModalAddNew";
 import FloatingActionButton from "../components/FloatingActionButton";
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 
 
 const CategoriesManagement = (props) => {
@@ -22,7 +22,7 @@ const CategoriesManagement = (props) => {
 
   return (
 
-    <div className="d-flex flex-column align-items-center bg-body-tertiary" style={{ paddingTop: "50px" }}>
+    <div className="d-flex flex-column align-items-center bg-body-tertiary mb-5" style={{ paddingTop: "50px" }}>
 
       {/* Render category list with React Bootstrap Tabs component */}
       <Tabs defaultActiveKey="income" transition={false} justify style={{ width: "30vw" }}>
