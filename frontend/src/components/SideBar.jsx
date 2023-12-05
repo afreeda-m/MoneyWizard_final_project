@@ -66,9 +66,12 @@ export default function PermanentDrawerLeft() {
           anchor="left"
         >
 
-
           {/* MONEY WIZARD LOGO */}
           <img id="logo" src="MWlogo.png" alt="Money Wizard logo"></img>
+
+          {/* MONEY WIZARD PRODUCT NAME */}
+          <h1 className='text-center'>MONEY WIZARD</h1>
+
           <Divider />
 
 
