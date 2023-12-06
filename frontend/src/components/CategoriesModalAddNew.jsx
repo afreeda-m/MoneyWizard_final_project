@@ -80,7 +80,7 @@ function CategoriesModalAddNew(props) {
 
   return (
     <Modal
-      style={{ marginLeft: "130px" }}
+      style={{ marginLeft: "130px", marginTop: "200px" }}
       show={isAddCategoryModalOpen}
       onHide={handleClose}
       size="md"
