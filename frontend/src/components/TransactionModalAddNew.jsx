@@ -25,7 +25,8 @@ const TransactionModalAddNew = (props) => {
     chosenTransaction,
     getTransactions,
     setPostTransactionData,
-    postTransactionData
+    postTransactionData,
+    getAccounts
   } = props;
 
   // list of categories for the dropdown selection
@@ -94,6 +95,7 @@ const TransactionModalAddNew = (props) => {
       .then((response) => {
         // Invoke getTransactions function to update transactionsData state
         getTransactions();
+        getAccounts();
       })
       .catch((error) => {
         console.error("Error posting new transaction to backend:", error);
@@ -122,6 +124,7 @@ const TransactionModalAddNew = (props) => {
       .then((response) => {
         // Invoke getTransactions function to update transactionsData state
         getTransactions();
+        getAccounts();
       })
       .catch((error) => {
         console.error("Error posting new transaction to backend:", error);

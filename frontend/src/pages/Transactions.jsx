@@ -29,7 +29,8 @@ const Transactions = (props) => {
     getCategoryTypeById,
     getTransactions,
     setPostTransactionData,
-    postTransactionData
+    postTransactionData,
+    getAccounts
   } = props;
 
   return (
@@ -56,6 +57,7 @@ const Transactions = (props) => {
         toggleEditTransferModal={toggleEditTransferModal}
         chooseTransaction={chooseTransaction}
         getTransactions={getTransactions}
+        getAccounts={getAccounts}
       />
 
       <div onClick={toggleAddNewModal}>
@@ -72,6 +74,7 @@ const Transactions = (props) => {
         getTransactions={getTransactions}
         setPostTransactionData={setPostTransactionData}
         postTransactionData={postTransactionData}
+        getAccounts={getAccounts}
       />
 
       <TransactionModalEditTransaction
@@ -87,6 +90,7 @@ const Transactions = (props) => {
         setPostTransactionData={setPostTransactionData}
         postTransactionData={postTransactionData}
         getTransactions={getTransactions}
+        getAccounts={getAccounts}
       />
 
       <TransactionModalEditTransfer
@@ -101,6 +105,7 @@ const Transactions = (props) => {
         setPostTransactionData={setPostTransactionData}
         postTransactionData={postTransactionData}
         getTransactions={getTransactions}
+        getAccounts={getAccounts}
       />
 
     </div>

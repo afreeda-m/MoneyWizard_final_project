@@ -192,6 +192,7 @@ function App() {
               getTransactions={getTransactions}
               setPostTransactionData={setPostTransactionData}
               postTransactionData={postTransactionData}
+              getAccounts={getAccounts}
             />} />
 
             <Route path='/accounts' element={<Accounts
