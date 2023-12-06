@@ -38,7 +38,8 @@ function App() {
     setIsLoggedIn,
     setUsername,
     toggleAddCategoryModal,
-    setPostCategoryData
+    setPostCategoryData,
+    resetDate
   } = useApplicationData();
 
   const {
@@ -166,6 +167,7 @@ function App() {
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
               transactionsByCategoryData={transactionsByCategoryData}
+              resetDate={resetDate}
             />} />
 
             <Route path='/transactions' element={<Transactions

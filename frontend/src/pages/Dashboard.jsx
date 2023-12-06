@@ -23,9 +23,20 @@ const Dashboard = (props) => {
     getCategoryIconById,
     getCategoryNameById,
     getCategoryTypeById,
-    transactionsByCategoryData
+    transactionsByCategoryData,
+    resetDate
 
   } = props;
+
+
+
+
+  // Reset 'date' state to current to render data of the current month on dashboard
+  useEffect(() => {
+    resetDate();
+  }, []);
+
+
 
   // Separate data into income and expense categories
   const incomeCategories = transactionsByCategoryData.filter((transaction) => transaction.type === "Income");
@@ -170,19 +181,19 @@ const Dashboard = (props) => {
                 ))}
               </ListGroup>
               <ListGroup>
-                 <ListGroup.Item> <Row className="number-total-account">
+                <ListGroup.Item> <Row className="number-total-account">
 
-                <Col className="d-flex justify-content-between">Total: <h3>{" "}</h3>
-                  <NumericFormat
-                    value={totalAccountsBalance.toFixed(2)}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                  /></Col>
-              </Row></ListGroup.Item></ListGroup>
+                  <Col className="d-flex justify-content-between">Total: <h3>{" "}</h3>
+                    <NumericFormat
+                      value={totalAccountsBalance.toFixed(2)}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                    /></Col>
+                </Row></ListGroup.Item></ListGroup>
             </div>
           </div>
-           {/* TOTAL OF ALL ACCOUNTS */}
+          {/* TOTAL OF ALL ACCOUNTS */}
 
         </div>
 
