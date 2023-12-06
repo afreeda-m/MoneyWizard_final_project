@@ -30,7 +30,7 @@ const TransactionList = (props) => {
     const accountId = transaction.account_id;
     const accountToId = transaction.account_id_to;
 
-    if ((!categoriesData || categoriesData.length === 0) && (!accountsData || accountsData.length === 0) && (!transactionsData || transactionsData.length === 0)) {
+    if (!categoriesData || categoriesData.length === 0) {
       return <div>No data available.</div>;
     }
 
