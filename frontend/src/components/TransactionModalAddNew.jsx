@@ -1,16 +1,16 @@
-import moment from 'moment';
+import { DatePicker } from "@mui/x-date-pickers";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
+import moment from 'moment';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Col from 'react-bootstrap/Col';
+import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { DatePicker } from "@mui/x-date-pickers";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 
 const TransactionModalAddNew = (props) => {
@@ -154,7 +154,7 @@ const TransactionModalAddNew = (props) => {
     <Modal style={{ marginLeft: "130px" }} show={isAddTransactionModalOpen} onHide={handleClose} size="md" centered >
 
       <Modal.Header className='d-flex justify-content-center'>
-        <Modal.Title>ADD NEW</Modal.Title>
+        <Modal.Title>ADD NEW CATEGORY</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
