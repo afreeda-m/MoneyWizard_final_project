@@ -11,10 +11,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { SideBarData } from "../data/SideBarData";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 
 // The sidebar's width in pixels.
@@ -66,14 +66,17 @@ export default function PermanentDrawerLeft() {
           anchor="left"
         >
 
-
           {/* MONEY WIZARD LOGO */}
           <img id="logo" src="MWlogo.png" alt="Money Wizard logo"></img>
+
+          {/* MONEY WIZARD PRODUCT NAME */}
+          <h1 className='text-center'>MONEY WIZARD</h1>
+
           <Divider />
 
 
           {/* THE ELEMENTS OF THE SIDEBAR */}
-          <List>
+          <List sx={{ paddingY: "0" }}>
             {SideBarData.map((item) => (
 
               // Each `ListItem` requires a `component={Link}` and `to={}`
@@ -98,7 +101,7 @@ export default function PermanentDrawerLeft() {
               */}
                 <ListItemButton
                   selected={location.pathname === item.path ? true : false}
-                  sx={{ paddingY: "2rem" }}
+                  sx={{ paddingY: "1.5rem" }}
                 >
 
                   <ListItemIcon>{item.icon}</ListItemIcon>

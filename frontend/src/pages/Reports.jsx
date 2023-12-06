@@ -29,7 +29,7 @@ const Report = (props) => {
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary" style={{ paddingTop: "50px"}}>
 
-      <Container className="d-flex flex-column justify-content-center">
+      <Container className="d-flex flex-column justify-content-center mb-5">
 
         {/* FilterBar component for selecting the date */}
         <Row className="justify-content-center">
