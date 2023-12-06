@@ -73,9 +73,9 @@ const Dashboard = (props) => {
 
 
         {/* BOX -TOTAL BALANCE */}
-        <div className="box box2">
+        <div className="box box2 d-flex flex-column justify-content-center align-items-center">
           <h3 className="card-name">TOTAL BALANCE</h3>
-          <span className="number">
+          <span className="number text-success">
             <h1>{" "}</h1>
             <NumericFormat
               value={(totalIncome - totalExpense).toFixed(2)}
