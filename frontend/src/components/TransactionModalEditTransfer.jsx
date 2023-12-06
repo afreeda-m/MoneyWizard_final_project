@@ -23,7 +23,8 @@ const TransactionModalEditTransfer = (props) => {
     pickTransactionDate,
     setPostTransactionData,
     postTransactionData,
-    getTransactions
+    getTransactions,
+    getAccounts
   } = props;
 
   // list of accounts for the dropdown selection
@@ -70,6 +71,7 @@ const TransactionModalEditTransfer = (props) => {
     axios.post(`/transfer/${chosenTransaction.id}/edit`, postTransactionData)
       .then((response) => {
         getTransactions();
+        getAccounts();
       })
       .catch((error) => {
         console.error("Error editing transaction:", error);

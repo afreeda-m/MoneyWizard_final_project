@@ -29,7 +29,8 @@ const TransactionListItem = (props) => {
     chooseTransaction,
     transaction,
     getTransactions,
-    disableEditingAndDeleting
+    disableEditingAndDeleting,
+    getAccounts
   } = props;
 
 
@@ -50,6 +51,7 @@ const TransactionListItem = (props) => {
     axios.post(`/transactions/${transaction.id}/delete`)
       .then((response) => {
         getTransactions();
+        getAccounts();
       })
       .catch((error) => {
         console.error('Error deleting data:', error);
@@ -101,9 +103,9 @@ const TransactionListItem = (props) => {
           </Col >
 
           {/* 3 dots icon with dropdown list show the Edit and Delete feature for a transaction */}
-            {!disableEditingAndDeleting && (
-          <Col xs={1}  >
-            {/* Render the dropdown only if editing and deleting are not disabled */}
+          {!disableEditingAndDeleting && (
+            <Col xs={1}  >
+              {/* Render the dropdown only if editing and deleting are not disabled */}
 
               <Dropdown >
 
@@ -121,8 +123,8 @@ const TransactionListItem = (props) => {
                 </Dropdown.Menu>
 
               </Dropdown>
-          </Col>
-            )}
+            </Col>
+          )}
 
         </Row>
 
