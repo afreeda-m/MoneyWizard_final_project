@@ -4,12 +4,15 @@ import { Cell, Label, Legend, Pie, PieChart, Tooltip } from "recharts";
 import AccountList from "../components/AccountList";
 import AccountsModal from "../components/AccountsModal";
 import FloatingActionButton from "../components/FloatingActionButton";
-// import "../styles/Accounts.scss";
 
 
-const Accounts = () => {
+const Accounts = (props) => {
 
-  const [accounts, setAccounts] = useState([]);
+  const {
+    accountsData,
+    getAccounts
+  } = props;
+
 
   const [show, setShow] = useState(false);
 
@@ -22,24 +25,14 @@ const Accounts = () => {
   const deleteAccount = (account_id) => {
     axios.post('/accounts/' + account_id + '/delete')
       .then((response) => {
-        axios.get("/accounts").then((response) => {
-          setAccounts(response.data.accounts);
-        });
+        getAccounts();
       })
       .catch(function(error) {
-        console.log(error);
+        console.error("Error deleting account:", error);
       });
   };
 
-  useEffect(() => {
-    axios.get('/accounts')
-      .then((response) => {
-        setAccounts(response.data.accounts);
-      });
-  }, []);
-
-
-  const totalAccountsBalance = accounts
+  const totalAccountsBalance = accountsData
     .map((account) => account.balance)
     .reduce((a, b) => a + b, 0);
 
@@ -74,13 +67,13 @@ const Accounts = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center bg-body-tertiary mb-5" style={{ paddingTop: "50px"}} >
+    <div className="d-flex flex-column align-items-center bg-body-tertiary mb-5" style={{ paddingTop: "50px" }} >
 
       <h3>Accounts breakdown</h3>
 
       <PieChart className="mb-3" width={500} height={500}>
         <Pie
-          data={accounts}
+          data={accountsData}
           dataKey="balance"
           nameKey="account_name"
           cx="50%"
@@ -90,7 +83,7 @@ const Accounts = () => {
           outerRadius={180}
           fill="#8884d8"
         >
-          {accounts.map((entry, index) => (
+          {accountsData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
           <Label layout="vertical" align="right" verticalAlign="middle" />
@@ -100,12 +93,16 @@ const Accounts = () => {
       </PieChart>
 
       <AccountList
-        accounts={accounts}
+        accounts={accountsData}
         deleteAccount={deleteAccount}
         totalAccountsBalance={totalAccountsBalance}
       />
 
-      {show && <AccountsModal show={show} modalClose={modalClose} modalShow={modalShow} updateAccounts={setAccounts} />}
+      {show && <AccountsModal
+      show={show}
+      modalClose={modalClose}
+      modalShow={modalShow}
+      getAccounts={getAccounts} />}
 
       <FloatingActionButton click={modalShow} />
       {/* </div> */}

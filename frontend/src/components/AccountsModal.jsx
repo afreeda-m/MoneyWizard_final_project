@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 
 
 function AccountsModal(props) {
-  const { show, modalClose, updateAccounts } = props;
+  const { show, modalClose, getAccounts } = props;
 
   const submitForm = (event) => {
     event.preventDefault();
@@ -25,9 +25,7 @@ function AccountsModal(props) {
       data: value,
     })
       .then((response) => {
-        axios.get("/accounts").then((response) => {
-          updateAccounts(response.data.accounts);
-        });
+        getAccounts();
       })
       .catch(function(error) {
         console.log(error);
@@ -76,12 +74,12 @@ function AccountsModal(props) {
         </Modal.Body>
 
         <Modal.Footer className="d-flex justify-content-around">
-            <Button className="accounts-modal" variant="secondary" type="button" onClick={modalClose}>
-              Close
-            </Button>
-            <Button type="submit" form="account-form" variant="primary">
-              Save
-            </Button>
+          <Button className="accounts-modal" variant="secondary" type="button" onClick={modalClose}>
+            Close
+          </Button>
+          <Button type="submit" form="account-form" variant="primary">
+            Save
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

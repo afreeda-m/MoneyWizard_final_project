@@ -194,7 +194,10 @@ function App() {
               postTransactionData={postTransactionData}
             />} />
 
-            <Route path='/accounts' element={<Accounts />} />
+            <Route path='/accounts' element={<Accounts
+              accountsData={accountsData}
+              getAccounts={getAccounts}
+            />} />
 
             <Route path='/reports' element={<Reports
               date={date}
