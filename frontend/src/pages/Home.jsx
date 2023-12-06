@@ -9,6 +9,7 @@ import { FaCashRegister, FaChartPie, FaExchangeAlt, FaMoneyBillAlt, FaRocket, Fa
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
+import "../styles/Home.scss";
 
 
 const Home = (props) => {

@@ -1,0 +1,32 @@
+
+/* Carousel arrows */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color:black; // Change desired color
+
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 2%; // Adjust the width as needed
+}
+
+/* Carousel indicators (dots) */
+.carousel-indicators li{
+  background-color: black; // Change desired color
+
+}
+
+// .image {
+//   width: 100%;
+//   height: 100vh;
+//   background-position: center;
+//   background-size: cover;
+//   background-image: linear-gradient(to right, rgba(0,0, 0, 0.433),rgba(35, 26, 26, 0.504), rgba(14, 1, 1, 0.893) ) , url(../../public/laptop_showing_report.jpg);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   color: white;
+//   letter-spacing: 5px;
+//   font-size: 3rem;
+// }
