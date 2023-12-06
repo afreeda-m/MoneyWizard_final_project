@@ -29,8 +29,8 @@ const TransactionList = (props) => {
     const accountId = transaction.account_id;
     const accountToId = transaction.account_id_to;
 
-    if (!categoriesData || categoriesData.length === 0) {
-      return <div>No category data available.</div>;
+    if (!categoriesData || categoriesData.length === 0 && !accountsData || accountsData.length === 0) {
+      return <div>No account/category data available.</div>;
     }
 
     return (
@@ -40,7 +40,7 @@ const TransactionList = (props) => {
         categoryIcon={`/images/${getCategoryIconById(categoryId, categoriesData)}`}
         categoryName={getCategoryNameById(categoryId, categoriesData)}
         categoryType={getCategoryTypeById(categoryId, categoriesData)}
-        accountName={getAccountNameById(accountId, accountsData)}
+        accountName={!accountsData || accountsData.length === 0 ? getAccountNameById(accountId, accountsData) : null}
         accountToName={accountToId ? getAccountNameById(accountToId, accountsData) : null}
         notes={transaction.notes}
         amount={transaction.amount}
