@@ -73,11 +73,12 @@ const Dashboard = (props) => {
 
 
         {/* BOX -TOTAL BALANCE */}
-        <div className="box box2 d-flex flex-column justify-content-center align-items-center">
+        <div className="box box2">
           <h3 className="card-name">TOTAL BALANCE</h3>
           <span className="number text-success">
             <h1>{" "}</h1>
             <NumericFormat
+              className="mt-5"
               value={(totalIncome - totalExpense).toFixed(2)}
               displayType={"text"}
               thousandSeparator={true}
