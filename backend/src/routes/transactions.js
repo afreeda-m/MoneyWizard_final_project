@@ -38,7 +38,7 @@ router.post('/add', (req, res) => {
   const transactionData = {
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
-    amount: req.body.amount,
+    amount: parseFloat(req.body.amount),
     transaction_date: req.body.transaction_date,
     notes: req.body.notes
   };
@@ -86,7 +86,7 @@ router.post('/:transaction_id/edit', (req, res) => {
   const transactionData = {
     categoryId: req.body.categoryId,
     accountId: req.body.accountId,
-    amount: req.body.amount,
+    amount: parseFloat(req.body.amount),
     transaction_date: req.body.transaction_date,
     notes: req.body.notes,
     transaction_id: req.params.transaction_id

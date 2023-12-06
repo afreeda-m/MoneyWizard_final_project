@@ -30,9 +30,15 @@ function reducer(state, action) {
     // ACTION FOR RETRIEVING DATA FROM BACKEND SERVER
     // Update transactionsData state
     case ACTIONS.SET_TRANSACTIONS_DATA:
+      for (const i in action.transactionsData){
+        action.transactionsData[i].amount = parseFloat(action.transactionsData[i].amount);
+      }
       return { ...state, transactionsData: action.transactionsData };
     // Update accountsData state
     case ACTIONS.SET_ACCOUNTS_DATA:
+      for (const i in action.accountsData){
+        action.accountsData[i].balance = parseFloat(action.accountsData[i].balance);
+      }
       return { ...state, accountsData: action.accountsData };
     // Update categoriesData state
     case ACTIONS.SET_CATEGORIES_DATA:

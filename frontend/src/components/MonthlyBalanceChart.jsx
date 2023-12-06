@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Line,LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import moment from 'moment';
 import axios from 'axios';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const MonthlyBalanceChart = () => {
   const [transactionsData, setTransactionsData] = useState([]);
   const [monthlyData, setMonthlyData] = useState([]);
+
+  //New State to prevent infinite loop
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
 
@@ -22,7 +25,14 @@ const MonthlyBalanceChart = () => {
         params: { year, month, userId },
       })
       .then((response) => {
+        //Force amount to be float
+        for(const i in response.data) {
+          response.data[i].amount = parseFloat(response.data[i].amount);
+        }
         setTransactionsData(response.data);
+        if (!refresh) {
+          setRefresh(true);
+        }
       })
       .catch((error) => {
         console.error('Error fetching monthly transactions data:', error);
@@ -46,7 +56,7 @@ const MonthlyBalanceChart = () => {
     const resultData = Object.values(aggregatedData);
 
     setMonthlyData(resultData);
-  }, [transactionsData]);
+  }, [refresh]);
 
 
 
@@ -64,7 +74,7 @@ const MonthlyBalanceChart = () => {
   };
   return (
     <Container>
-      
+
       <Row>
         <Col>
           <ResponsiveContainer width="100%" height={400}>
