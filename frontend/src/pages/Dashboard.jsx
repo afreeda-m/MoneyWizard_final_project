@@ -89,8 +89,12 @@ const Dashboard = (props) => {
 
         {/* BOX -This month */}
         <div className="box box3">
-          <Row className="d-flex justify-content-between align-items-center">
-            <Col> <h3 className="card-name text-center"><FaChartPie size={90} className="text-secondary mb-3" />  <div className=""></div>This month</h3></Col>
+          <Row className="d-flex justify-content-between align-items-center mt-5 me-4">
+            <Col>
+              <h3 className="card-name text-center">
+                <FaChartPie size={90} className="text-secondary mb-3" />
+                <div className=""></div>This month</h3>
+            </Col>
             <Col>
               <div className="d-flex justify-content-between mt-1">
                 <div className=""></div>
