@@ -20,7 +20,8 @@ const TransactionList = (props) => {
     chooseTransaction,
     getTransactions,
     disableEditingAndDeleting,
-    width
+    width,
+    getAccounts
   } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
@@ -29,8 +30,8 @@ const TransactionList = (props) => {
     const accountId = transaction.account_id;
     const accountToId = transaction.account_id_to;
 
-    if (!categoriesData || categoriesData.length === 0 && !accountsData || accountsData.length === 0) {
-      return <div>No account/category data available.</div>;
+    if ((!categoriesData || categoriesData.length === 0) && (!accountsData || accountsData.length === 0) && (!transactionsData || transactionsData.length === 0)) {
+      return <div>No data available.</div>;
     }
 
     return (
@@ -40,7 +41,7 @@ const TransactionList = (props) => {
         categoryIcon={`/images/${getCategoryIconById(categoryId, categoriesData)}`}
         categoryName={getCategoryNameById(categoryId, categoriesData)}
         categoryType={getCategoryTypeById(categoryId, categoriesData)}
-        accountName={!accountsData || accountsData.length === 0 ? getAccountNameById(accountId, accountsData) : null}
+        accountName={getAccountNameById(accountId, accountsData)}
         accountToName={accountToId ? getAccountNameById(accountToId, accountsData) : null}
         notes={transaction.notes}
         amount={transaction.amount}
@@ -52,6 +53,7 @@ const TransactionList = (props) => {
         chooseTransaction={chooseTransaction}
         transaction={transaction}
         getTransactions={getTransactions}
+        getAccounts={getAccounts}
         disableEditingAndDeleting={disableEditingAndDeleting} // New prop for disabling editing and deleting transactions on Dashboard
       />
 
