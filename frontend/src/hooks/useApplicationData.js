@@ -9,6 +9,7 @@ export const ACTIONS = {
   SET_TRANSACTION_DATE: 'SET_TRANSACTION_DATE',
   INCREMENT_DATE: 'INCREMENT_DATE',
   DECREMENT_DATE: 'DECREMENT_DATE',
+  RESET_DATE: 'RESET_DATE',
   TOGGLE_ADD_NEW_TRANSACTION_MODAL: 'TOGGLE_ADD_NEW_TRANSACTION_MODAL',
   TOGGLE_EDIT_TRANSACTION_MODAL: 'TOGGLE_EDIT_TRANSACTION_MODAL',
   TOGGLE_EDIT_TRANSFER_MODAL: 'TOGGLE_EDIT_TRANSFER_MODAL',
@@ -50,6 +51,11 @@ function reducer(state, action) {
       return { ...state, date: action.newDate };
     case ACTIONS.DECREMENT_DATE:
       return { ...state, date: action.newDate };
+
+    // ACTION TO RESET THE DATE TO CURRENT
+    case ACTIONS.RESET_DATE:
+      return { ...state, date: moment() };
+
 
     // ACTION FOR USER AUTHENTICATION
     case ACTIONS.SET_LOGGED_IN:
@@ -162,6 +168,13 @@ const useApplicationData = () => {
       newDate: moment(state.date).add(-1, 'months').format("YYYY-MM")
     });
   };
+
+  const resetDate = () => {
+    dispatch({
+      type: ACTIONS.RESET_DATE
+    });
+  };
+
 
   // FUNCTION FOR USER AUTHENTICATION
   const setIsLoggedIn = (loggedIn) => {
@@ -334,7 +347,8 @@ const useApplicationData = () => {
     setUsername,
     toggleAddCategoryModal,
     setPostCategoryData,
-    getTransactionsByCategory
+    getTransactionsByCategory,
+    resetDate
   };
 
 };

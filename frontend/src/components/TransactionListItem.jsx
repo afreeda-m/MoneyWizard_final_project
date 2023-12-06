@@ -30,7 +30,8 @@ const TransactionListItem = (props) => {
     transaction,
     getTransactions,
     disableEditingAndDeleting,
-    getAccounts
+    getAccounts,
+    getTransactionsByCategory
   } = props;
 
 
@@ -52,6 +53,7 @@ const TransactionListItem = (props) => {
       .then((response) => {
         getTransactions();
         getAccounts();
+        getTransactionsByCategory();
       })
       .catch((error) => {
         console.error('Error deleting data:', error);

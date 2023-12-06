@@ -24,7 +24,8 @@ const TransactionModalEditTransfer = (props) => {
     setPostTransactionData,
     postTransactionData,
     getTransactions,
-    getAccounts
+    getAccounts,
+    getTransactionsByCategory
   } = props;
 
   // list of accounts for the dropdown selection
@@ -64,6 +65,7 @@ const TransactionModalEditTransfer = (props) => {
     setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
   };
 
+
   const handleSubmit = (event) => {
 
     event.preventDefault();
@@ -72,6 +74,7 @@ const TransactionModalEditTransfer = (props) => {
       .then((response) => {
         getTransactions();
         getAccounts();
+        getTransactionsByCategory();
       })
       .catch((error) => {
         console.error("Error editing transaction:", error);

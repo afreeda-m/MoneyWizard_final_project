@@ -21,7 +21,8 @@ const TransactionList = (props) => {
     getTransactions,
     disableEditingAndDeleting,
     width,
-    getAccounts
+    getAccounts,
+    getTransactionsByCategory
   } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
@@ -30,7 +31,7 @@ const TransactionList = (props) => {
     const accountId = transaction.account_id;
     const accountToId = transaction.account_id_to;
 
-    if ((!categoriesData || categoriesData.length === 0) && (!accountsData || accountsData.length === 0) && (!transactionsData || transactionsData.length === 0)) {
+    if (!categoriesData || categoriesData.length === 0) {
       return <div>No data available.</div>;
     }
 
@@ -54,6 +55,7 @@ const TransactionList = (props) => {
         transaction={transaction}
         getTransactions={getTransactions}
         getAccounts={getAccounts}
+        getTransactionsByCategory={getTransactionsByCategory}
         disableEditingAndDeleting={disableEditingAndDeleting} // New prop for disabling editing and deleting transactions on Dashboard
       />
 
