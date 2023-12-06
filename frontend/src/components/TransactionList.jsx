@@ -21,7 +21,8 @@ const TransactionList = (props) => {
     getTransactions,
     disableEditingAndDeleting,
     width,
-    getAccounts
+    getAccounts,
+    getTransactionsByCategory
   } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
@@ -54,6 +55,7 @@ const TransactionList = (props) => {
         transaction={transaction}
         getTransactions={getTransactions}
         getAccounts={getAccounts}
+        getTransactionsByCategory={getTransactionsByCategory}
         disableEditingAndDeleting={disableEditingAndDeleting} // New prop for disabling editing and deleting transactions on Dashboard
       />
 

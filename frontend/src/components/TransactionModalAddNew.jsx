@@ -26,7 +26,8 @@ const TransactionModalAddNew = (props) => {
     getTransactions,
     setPostTransactionData,
     postTransactionData,
-    getAccounts
+    getAccounts,
+    getTransactionsByCategory
   } = props;
 
   // list of categories for the dropdown selection
@@ -96,6 +97,7 @@ const TransactionModalAddNew = (props) => {
         // Invoke getTransactions function to update transactionsData state
         getTransactions();
         getAccounts();
+        getTransactionsByCategory();
       })
       .catch((error) => {
         console.error("Error posting new transaction to backend:", error);
@@ -125,6 +127,7 @@ const TransactionModalAddNew = (props) => {
         // Invoke getTransactions function to update transactionsData state
         getTransactions();
         getAccounts();
+        getTransactionsByCategory();
       })
       .catch((error) => {
         console.error("Error posting new transaction to backend:", error);
@@ -162,68 +165,68 @@ const TransactionModalAddNew = (props) => {
           {/* TRANSACTION TAB using grid layout */}
           <Tab eventKey="transaction" title="TRANSACTION">
 
-              {/* 2 input fields in the same row for Category selection, Account selection */}
-              <Row className='mb-3' >
+            {/* 2 input fields in the same row for Category selection, Account selection */}
+            <Row className='mb-3' >
 
-                {/* Dropdown selection for Category */}
-                <Form.Group xs={6} as={Col}>
-                  <Form.Label >Category</Form.Label>
-                  <Form.Select type="text" name="categoryId" onChange={handleInput} required>
-                    <option>Category Select</option>
-                    {categoryDropdown}
+              {/* Dropdown selection for Category */}
+              <Form.Group xs={6} as={Col}>
+                <Form.Label >Category</Form.Label>
+                <Form.Select type="text" name="categoryId" onChange={handleInput} required>
+                  <option>Category Select</option>
+                  {categoryDropdown}
 
-                  </Form.Select>
-                </Form.Group>
+                </Form.Select>
+              </Form.Group>
 
-                {/* Dropdown selection for Account */}
-                <Form.Group xs={6} as={Col}>
-                  <Form.Label >Account</Form.Label>
-                  <Form.Select type="text" name="accountId" onChange={handleInput} >
-                    <option>Account Select</option>
-                    {accountDropdown}
+              {/* Dropdown selection for Account */}
+              <Form.Group xs={6} as={Col}>
+                <Form.Label >Account</Form.Label>
+                <Form.Select type="text" name="accountId" onChange={handleInput} >
+                  <option>Account Select</option>
+                  {accountDropdown}
 
-                  </Form.Select>
-                </Form.Group>
+                </Form.Select>
+              </Form.Group>
 
-              </Row>
+            </Row>
 
-              {/* Input field for Amount */}
-              <Row className="mb-3" >
-                <Form.Group as={Col}>
-                  <Form.Label >Amount</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Text >$</InputGroup.Text>
-                    <Form.Control type="number" name="amount" onChange={handleInput} />
-                  </InputGroup>
-                </Form.Group>
-              </Row>
+            {/* Input field for Amount */}
+            <Row className="mb-3" >
+              <Form.Group as={Col}>
+                <Form.Label >Amount</Form.Label>
+                <InputGroup>
+                  <InputGroup.Text >$</InputGroup.Text>
+                  <Form.Control type="number" name="amount" onChange={handleInput} />
+                </InputGroup>
+              </Form.Group>
+            </Row>
 
-              {/* Input field for Date using MUI DatePicker */}
-              <Row className="mb-3">
-                <Form.Group as={Col}>
-                  <Form.Label  >Date</Form.Label>
-                  {/* Date picker box */}
-                  <div >
-                    <LocalizationProvider dateAdapter={AdapterMoment}>
+            {/* Input field for Date using MUI DatePicker */}
+            <Row className="mb-3">
+              <Form.Group as={Col}>
+                <Form.Label  >Date</Form.Label>
+                {/* Date picker box */}
+                <div >
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
 
-                      <DatePicker
-                        sx={{ width: "50%" }}
-                        value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
-                        onChange={handleDateChange}
-                      />
+                    <DatePicker
+                      sx={{ width: "50%" }}
+                      value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
+                      onChange={handleDateChange}
+                    />
 
-                    </LocalizationProvider>
-                  </div>
-                </Form.Group>
-              </Row>
+                  </LocalizationProvider>
+                </div>
+              </Form.Group>
+            </Row>
 
-              {/* Input field for Notes */}
-              <Row className="mb-4">
-                <Form.Group as={Col}>
-                  <Form.Label >Notes</Form.Label>
-                  <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
-                </Form.Group>
-              </Row>
+            {/* Input field for Notes */}
+            <Row className="mb-4">
+              <Form.Group as={Col}>
+                <Form.Label >Notes</Form.Label>
+                <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
+              </Form.Group>
+            </Row>
 
             {/* 'Close' and 'Save' buttons for the TRANSACTION tab */}
             <div className='d-flex justify-content-around mb-2'>

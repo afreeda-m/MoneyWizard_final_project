@@ -26,7 +26,8 @@ const TransactionModalEditTransaction = (props) => {
     setPostTransactionData,
     postTransactionData,
     getTransactions,
-    getAccounts
+    getAccounts,
+    getTransactionsByCategory
   } = props;
 
   // list of categories for the dropdown selection
@@ -83,6 +84,7 @@ const TransactionModalEditTransaction = (props) => {
       .then((response) => {
         getTransactions();
         getAccounts();
+        getTransactionsByCategory();
       })
       .catch((error) => {
         console.error("Error editing transaction:", error);

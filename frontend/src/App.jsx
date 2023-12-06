@@ -39,7 +39,8 @@ function App() {
     setUsername,
     toggleAddCategoryModal,
     setPostCategoryData,
-    resetDate
+    resetDate,
+    getTransactionsByCategory
   } = useApplicationData();
 
   const {
@@ -195,6 +196,8 @@ function App() {
               setPostTransactionData={setPostTransactionData}
               postTransactionData={postTransactionData}
               getAccounts={getAccounts}
+              getTransactionsByCategory={getTransactionsByCategory}
+
             />} />
 
             <Route path='/accounts' element={<Accounts
