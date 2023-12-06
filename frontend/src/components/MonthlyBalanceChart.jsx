@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Line,LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, Dot} from 'recharts';
 import moment from 'moment';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
@@ -62,16 +62,33 @@ const MonthlyBalanceChart = () => {
 
     return null;
   };
+
+  // Custom Dot component to increase the size
+  const CustomDot = (props) => {
+    const { cx, cy, stroke, strokeWidth, r } = props;
+
+    return (
+      <Dot cx={cx} cy={cy} r={r + 3} stroke={stroke} strokeWidth={strokeWidth} fill="#fff" />
+    );
+  };
   return (
     <Container>
-      
+
       <Row>
         <Col>
           <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={monthlyData}>
+            <AreaChart data={monthlyData}>
+              {/* Define linear gradient */}
+              <defs>
+                <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+
+              {/* Chart components */}
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
-
               <YAxis tickFormatter={(value) => `$${value}`} />
               <Tooltip
                 content={<CustomTooltip />}
@@ -79,8 +96,17 @@ const MonthlyBalanceChart = () => {
                 labelStyle={{ display: "none" }}
                 cursor={{ fill: "none" }}
               />
-              <Line type="monotone" dataKey="balance" stroke="#82ca9d" name="Monthly Balance" />
-            </LineChart>
+
+              {/* Area with linear gradient */}
+              <Area
+                type="monotone"
+                dataKey="balance"
+                stroke="#82ca9d"
+                fill="url(#balanceGradient)" // Apply the linear gradient
+                name="Monthly Balance"
+                dot={<CustomDot/>}
+              />
+            </AreaChart>
           </ResponsiveContainer>
 
         </Col>
