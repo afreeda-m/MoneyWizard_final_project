@@ -79,21 +79,30 @@ const Home = (props) => {
       {/* Carousel Images Section */}
       <Container className="my-5" >
         <h2 className="text-center mb-4">App Screenshots</h2>
+
         <Row className="d-flex justify-content-center">
+
           <Col className="mb-4 d-flex justify-content-center">
-            <Carousel slide={false}>
+            <Carousel slide={true}>
+
               <Carousel.Item>
-                <Image src="./dashboard.jpg" alt="Screenshot 1" fluid />
+                <Image src="./Screenshot-1-Transactions-Page.png" alt="Transactions Page" fluid />
               </Carousel.Item>
+
               <Carousel.Item>
-                <Image src="./dashboard.jpg" alt="Screenshot 2" fluid />
+                <Image src="./Screenshot-2-Reports-Page.png" alt="Reports Page" fluid />
               </Carousel.Item>
+
               <Carousel.Item>
-                <Image src="./dashboard.jpg" alt="Screenshot 3" fluid />
+                <Image src="./Screenshot-3-Accounts-Page.png" alt="Accounts Page" fluid />
               </Carousel.Item>
+
             </Carousel>
+
           </Col>
+
         </Row>
+
       </Container>
 
       {/* Mission & Technology Sections */}
