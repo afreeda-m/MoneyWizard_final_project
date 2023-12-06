@@ -11,10 +11,10 @@ const addTransfer = (transfer) => {
   return db
   .query("begin")
   .then((res) => {
-    return db.query(fundsFrom, [transfer.amount, transfer.accountFrom]);
+    return db.query(fundsFrom, [transfer.amount, transfer.accountId]);
   })
   .then((res) => {
-    return db.query(fundsTo, [transfer.amount, transfer.accountTo]);
+    return db.query(fundsTo, [transfer.amount, transfer.accountToId]);
   })
   .then((res) => {
     return db.query(createTransaction, [
