@@ -154,7 +154,7 @@ const TransactionModalAddNew = (props) => {
     <Modal style={{ marginLeft: "130px" }} show={isAddTransactionModalOpen} onHide={handleClose} size="md" centered >
 
       <Modal.Header className='d-flex justify-content-center'>
-        <Modal.Title>ADD NEW CATEGORY</Modal.Title>
+        <Modal.Title>ADD NEW TRANSACTION</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -248,7 +248,7 @@ const TransactionModalAddNew = (props) => {
               <Form.Group xs={6} as={Col} >
                 <Form.Label >From Account</Form.Label>
                 <Form.Select type="text" name="accountId" onChange={handleInput}>
-                  <option> </option>
+                  <option>Account Select</option>
                   {accountDropdown}
 
                 </Form.Select>
@@ -257,7 +257,7 @@ const TransactionModalAddNew = (props) => {
               <Form.Group xs={6} as={Col} >
                 <Form.Label >To Account</Form.Label>
                 <Form.Select type="text" name="accountToId" onChange={handleInput} >
-                  <option> </option>
+                  <option>Account Select</option>
                   {accountDropdown}
 
                 </Form.Select>

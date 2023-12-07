@@ -91,7 +91,8 @@ function NavBar(props) {
     <Navbar className="bg-primary px-4" style={{ height: "5rem" }}>
 
       {/* BRAND NAME */}
-      <Navbar.Brand href="#home" className='text-light'>
+      <Navbar.Brand className='text-light d-flex align-items-center'>
+        {pathname === "/" && <div className="me-1"><img src="/MWlogo.png" alt="logo" style={{height: "50px"}}/></div>}
         {getPageHeading()}
       </Navbar.Brand>
 
