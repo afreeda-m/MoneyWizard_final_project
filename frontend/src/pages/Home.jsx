@@ -78,7 +78,8 @@ const Home = (props) => {
       </Container>
 
       <Container className="my-5 d-flex flex-column align-items-center justify-content-center">
-        <h2 className="text-center mb-4">Interested?</h2>
+        {/* Add `&nbsp;` to centre the `Interested` text w.r.t `Register` button. */}
+        <h2 className="text-center ms-10 mb-4">&nbsp; Interested?</h2>
         {/* DEAD LINK: Added to complete the home page. */}
         <Button variant="primary" type="#" form="login-form" className="h1 ms-2 mb-0">Register</Button>
       </Container>

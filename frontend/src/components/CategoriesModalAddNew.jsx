@@ -1,9 +1,9 @@
-import React from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import React from 'react';
+import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
 
 function CategoriesModalAddNew(props) {
@@ -80,15 +80,14 @@ function CategoriesModalAddNew(props) {
 
   return (
     <Modal
-      style={{ marginLeft: "130px" }}
+      style={{ marginLeft: "130px", marginTop: "200px" }}
       show={isAddCategoryModalOpen}
       onHide={handleClose}
       size="md"
-      centered
     >
 
-      <Modal.Header>
-        <Modal.Title>ADD CATEGORY</Modal.Title>
+      <Modal.Header className="d-flex justify-content-center">
+        <Modal.Title>ADD NEW CATEGORY</Modal.Title>
       </Modal.Header>
 
 
