@@ -165,7 +165,7 @@ const Dashboard = (props) => {
               <ListGroup>
                 {accountsData.map((account, index) => (
                   <div>
-                    <ListGroup.Item key={index}>
+                    <ListGroup.Item key={account.id}>
                       <Row className="texts">
                         <Col className="d-flex justfiy-content-left">
                           {account.account_name}:</Col>
