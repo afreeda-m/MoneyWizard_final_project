@@ -63,7 +63,7 @@ const Dashboard = (props) => {
 
         {/*  GRID BOX - PIE CHART*/}
         <div className="box box1">
-          <div className="chartBox"><h3 className="card-name">Income and Expense overview chart</h3>
+          <div className="chartBox"><h3 className="card-name">Current Month Income and Expense overview</h3>
             <PieChartComponent data={[
               { category_name: 'Income', sum: totalIncome, type: "Income" },
               { category_name: 'Expense', sum: totalExpense, type: "Expense" },
@@ -74,7 +74,7 @@ const Dashboard = (props) => {
 
         {/* BOX -TOTAL BALANCE */}
         <div className="box box2">
-          <h3 className="card-name">TOTAL BALANCE</h3>
+          <h3 className="card-name">CURRENT MONTH NET BALANCE</h3>
           <span className="number text-success">
             <h1>{" "}</h1>
             <NumericFormat
@@ -208,7 +208,7 @@ const Dashboard = (props) => {
         <div className="box box5">
           <Row>
             <Col>
-              <h3 className="card-name">Past 6 Months Balance Chart</h3>
+              <h3 className="card-name">Monthly Balance Chart</h3>
             </Col>
           </Row>
           <MonthlyBalanceChart />
