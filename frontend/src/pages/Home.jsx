@@ -90,18 +90,21 @@ const Home = (props) => {
         <Row className="d-flex justify-content-center">
 
           <Col className="mb-4 d-flex justify-content-center">
-            <Carousel slide={true}>
+            <Carousel fade >
 
-              <Carousel.Item>
-                <Image src="./Screenshot-1-Transactions-Page.png" alt="Transactions Page" fluid />
+              <Carousel.Item interval={1700}>
+                {/* <Image src="./Screenshot-1-Transactions-Page.png" alt="Transactions Page" fluid /> */}
+                <Image src="/screenshots/AccountPage.png" alt="Transactions Page" fluid style={{width: "100%"}}/>
               </Carousel.Item>
 
-              <Carousel.Item>
-                <Image src="./Screenshot-2-Reports-Page.png" alt="Reports Page" fluid />
+              <Carousel.Item interval={1700}>
+                {/* <Image src="./Screenshot-2-Reports-Page.png" alt="Reports Page" fluid /> */}
+                <Image src="/screenshots/TransactionPage.png" alt="Reports Page" fluid />
               </Carousel.Item>
 
-              <Carousel.Item>
-                <Image src="./Screenshot-3-Accounts-Page.png" alt="Accounts Page" fluid />
+              <Carousel.Item interval={1700}>
+                {/* <Image src="./Screenshot-3-Accounts-Page.png" alt="Accounts Page" fluid /> */}
+                <Image src="/screenshots/ReportPage.png" alt="Accounts Page" fluid />
               </Carousel.Item>
 
             </Carousel>
