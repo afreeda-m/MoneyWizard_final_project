@@ -72,7 +72,7 @@ const TransactionListItem = (props) => {
             <Image src={categoryIcon} />
           </Col>
 
-          <Col xs={!disableEditingAndDeleting ? 4 : 3} className='d-flex flex-column align-items-start'>
+          <Col xs={!disableEditingAndDeleting ? 3 : 3} className='d-flex flex-column align-items-start'>
             <div>
               <b> {categoryName} </b>
             </div>
@@ -82,7 +82,7 @@ const TransactionListItem = (props) => {
             </div>
           </Col>
 
-          <Col xs={4} >
+          <Col xs={!disableEditingAndDeleting ? 5 : 4} >
 
             {notes}
 
