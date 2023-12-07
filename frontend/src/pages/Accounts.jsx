@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Cell, Label, Legend, Pie, PieChart, Tooltip } from "recharts";
 import AccountList from "../components/AccountList";
 import AccountsModal from "../components/AccountsModal";
