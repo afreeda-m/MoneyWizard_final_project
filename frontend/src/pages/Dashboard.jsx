@@ -164,25 +164,24 @@ const Dashboard = (props) => {
             <div >
               <ListGroup>
                 {accountsData.map((account, index) => (
-                  <div>
-                    <ListGroup.Item key={account.id}>
-                      <Row className="texts">
-                        <Col className="d-flex justfiy-content-left">
-                          {account.account_name}:</Col>
-                        <Col>
-                          <b><NumericFormat
-                            value={account.balance.toFixed(2)}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          /></b>
-                        </Col>
-                      </Row>
 
-                    </ListGroup.Item>
-                  </div>
+                  <ListGroup.Item key={account.id}>
+                    <Row className="texts">
+                      <Col className="d-flex justfiy-content-left">
+                        {account.account_name}:</Col>
+                      <Col>
+                        <b><NumericFormat
+                          value={account.balance.toFixed(2)}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        /></b>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
                 ))}
               </ListGroup>
+
               <ListGroup>
                 <ListGroup.Item> <Row className="number-total-account">
 
