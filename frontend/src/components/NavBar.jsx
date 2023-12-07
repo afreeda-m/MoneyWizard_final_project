@@ -92,7 +92,7 @@ function NavBar(props) {
 
       {/* BRAND NAME */}
       <Navbar.Brand className='text-light d-flex align-items-center'>
-        {pathname === "/" && <div className="me-4"><img src="/MWlogo.png" alt="logo" style={{height: "50px"}}/></div>}
+        {pathname === "/" && <div className="me-4"><img src="/MWlogo.png" alt="logo" style={{height: "50px", borderRadius: "100px"}}/></div>}
         {getPageHeading()}
       </Navbar.Brand>
 

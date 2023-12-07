@@ -24,7 +24,6 @@ const CategoriesListItem = (props) => {
   const handleDelete = () => {
     axios.post(`/categories/${categoryId}/delete`)
       .then((response) => {
-        console.log('logging from handleDelete:', response);
         getCategories();
       })
       .catch((error) => {

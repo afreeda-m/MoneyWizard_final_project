@@ -297,14 +297,6 @@ const useApplicationData = () => {
     });
   };
 
-  // ORIGINAL UseEffect
-  // Fetch transactions data from backend server upon loading the app
-  useEffect(() => {
-    getTransactions();
-    getTransactionsByCategory();
-    // Dependent on the 'date' state
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.date]);
 
   // Fetch categories and accounts data from backend server upon loading the app
   useEffect(() => {
@@ -313,6 +305,14 @@ const useApplicationData = () => {
     getIcons();
     // No dependency for categories and accounts data, only retrieve on reload
   }, []);
+  // Fetch transactions data from backend server upon loading the app
+  useEffect(() => {
+    getTransactions();
+    getTransactionsByCategory();
+    // Dependent on the 'date' state
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.date]);
+
 
   useEffect(() => {
     axios({
