@@ -86,7 +86,7 @@ const Home = (props) => {
 
       {/* Carousel Images Section */}
       <Container className="my-5" >
-        <h2 className="text-center mb-4">App Screenshots</h2>
+        <h2 className="text-center mb-4">Sneak peak into our app</h2>
 
         <Row className="d-flex justify-content-center">
 
