@@ -70,7 +70,7 @@ const TransactionModalEditTransaction = (props) => {
   const handleInput = (event) => {
 
     // Convert data to number expect for notes
-    const targetValue = event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
+    const targetValue = event.target.name === "amount" ? parseFloat(event.target.value).toFixed(2) : event.target.name !== "notes" ? parseInt(event.target.value) : event.target.value;
 
     // Update postTransactionData state on each input change
     setPostTransactionData({ ...postTransactionData, [event.target.name]: targetValue });
