@@ -1,6 +1,3 @@
-import { DatePicker } from "@mui/x-date-pickers";
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
 import moment from 'moment';
 import Button from 'react-bootstrap/Button';
@@ -9,6 +6,9 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from 'react-bootstrap/Modal';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { DatePicker } from "@mui/x-date-pickers";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { NumericFormat } from "react-number-format";
 
 
@@ -19,8 +19,6 @@ const TransactionModalAddNew = (props) => {
     categoriesData,
     isAddTransactionModalOpen,
     toggleAddNewModal,
-    categories,
-    accounts,
     transactionDate,
     pickTransactionDate,
     chosenTransaction,
@@ -34,7 +32,7 @@ const TransactionModalAddNew = (props) => {
   } = props;
 
   // list of categories for the dropdown selection
-  const categoryDropdown = categories.map((category) => {
+  const categoryDropdown = categoriesData.map((category) => {
     return (
       <option key={category.id} value={category.id}>
         {category.category_name}
@@ -43,7 +41,7 @@ const TransactionModalAddNew = (props) => {
   });
 
   // list of accounts for the dropdown selection
-  const accountDropdown = accounts.map((account) => {
+  const accountDropdown = accountsData.map((account) => {
     return (
       <option key={account.id} value={account.id}>
         {account.account_name}
@@ -97,7 +95,7 @@ const TransactionModalAddNew = (props) => {
 
     axios.post('/transactions/add', postTransactionData)
       .then((response) => {
-        // Invoke getTransactions function to update transactionsData state
+        // Update data states that are affected by the addition
         getTransactions();
         getAccounts();
         getTransactionsByCategory();
@@ -154,7 +152,13 @@ const TransactionModalAddNew = (props) => {
   return (
 
     // Adjust styling for the modal. Move 130px to the right and center vertically
-    <Modal style={{ marginLeft: "130px" }} show={isAddTransactionModalOpen} onHide={handleClose} size="md" centered >
+    <Modal
+      style={{ marginLeft: "130px" }}
+      show={isAddTransactionModalOpen}
+      onHide={handleClose}
+      size="md"
+      centered
+    >
 
       <Modal.Header className='d-flex justify-content-center'>
         <Modal.Title>ADD NEW TRANSACTION</Modal.Title>
@@ -165,7 +169,7 @@ const TransactionModalAddNew = (props) => {
         {/* This modal has TWO tabs: TRANSACTION and TRANSFER */}
         <Tabs defaultActiveKey="transaction" transition={false} className="mb-3" justify >
 
-          {/* TRANSACTION TAB using grid layout */}
+          {/* TRANSACTION TAB */}
           <Tab eventKey="transaction" title="TRANSACTION">
 
             {/* Dropdown selection for Category */}
@@ -182,7 +186,7 @@ const TransactionModalAddNew = (props) => {
               </Form.Group>
 
               <div className="d-flex justify-content-center align-items-center" style={{ width: "30%" }} >
-                <img src={postTransactionData.categoryId ? `/images/${getCategoryById(postTransactionData.categoryId, categoriesData).logo_url}` : "/images/blue.png"} alt="category icon" style={{height: "64px"}} />
+                <img src={postTransactionData.categoryId ? `/images/${getCategoryById(postTransactionData.categoryId, categoriesData).logo_url}` : "/images/blue.png"} alt="category icon" style={{ height: "64px" }} />
               </div>
             </div>
 
@@ -256,7 +260,7 @@ const TransactionModalAddNew = (props) => {
 
           </Tab>
 
-          {/* TRANSFER TAB using grid layout */}
+          {/* TRANSFER TAB */}
           <Tab eventKey="transfer" title="TRANSFER">
 
             <Form.Group className="mb-3" >

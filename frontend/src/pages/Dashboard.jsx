@@ -140,7 +140,7 @@ const Dashboard = (props) => {
         </div>
         {/* BOX -RECENT TRANSACTIONS */}
         <div className="box box6" >
-          <h1 className="card-name">RECENT TRANSACTIONS </h1>
+          <h3 className="card-name mb-2">RECENT TRANSACTIONS </h3>
 
           < RecentTransactionsList
             transactionsData={top5RecentTransactions}

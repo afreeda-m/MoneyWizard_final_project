@@ -9,10 +9,6 @@ const TransactionList = (props) => {
     transactionsData,
     categoriesData,
     accountsData,
-    getCategoryIconById,
-    getCategoryTypeById,
-    getCategoryNameById,
-    getAccountNameById,
     toggleEditTransactionModal,
     toggleEditTransferModal,
     isEditTransactionModalOpen,
@@ -22,7 +18,9 @@ const TransactionList = (props) => {
     disableEditingAndDeleting,
     width,
     getAccounts,
-    getTransactionsByCategory
+    getTransactionsByCategory,
+    getAccountById,
+    getCategoryById
   } = props;
 
   const listOfTransactions = transactionsData.map((transaction) => {
@@ -39,11 +37,11 @@ const TransactionList = (props) => {
 
       <TransactionListItem
         key={transaction.id}
-        categoryIcon={`/images/${getCategoryIconById(categoryId, categoriesData)}`}
-        categoryName={getCategoryNameById(categoryId, categoriesData)}
-        categoryType={getCategoryTypeById(categoryId, categoriesData)}
-        accountName={getAccountNameById(accountId, accountsData)}
-        accountToName={accountToId ? getAccountNameById(accountToId, accountsData) : null}
+        categoryIcon={`/images/${getCategoryById(categoryId, categoriesData).logo_url}`}
+        categoryName={getCategoryById(categoryId, categoriesData).category_name}
+        categoryType={getCategoryById(categoryId, categoriesData).type}
+        accountName={getAccountById(accountId, accountsData).account_name}
+        accountToName={accountToId ? getAccountById(accountToId, accountsData).account_name : null}
         notes={transaction.notes}
         amount={transaction.amount}
         date={transaction.transaction_date}
