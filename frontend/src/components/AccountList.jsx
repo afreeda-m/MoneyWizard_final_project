@@ -28,7 +28,7 @@ const AccountList = (props) => {
   });
 
   return (
-    <ListGroup style={{ width: "40%" }}>
+    <ListGroup style={{ width: "100%" }}>
 
       <ListGroupItem className="d-flex justify-content-center" style={{ fontSize: '20px' }}>
         <b>
