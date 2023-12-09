@@ -169,18 +169,22 @@ const TransactionModalAddNew = (props) => {
           <Tab eventKey="transaction" title="TRANSACTION">
 
             {/* Dropdown selection for Category */}
-            <Form.Group className='mb-3'>
-              <Form.Label >Category</Form.Label>
-              <div className="d-flex justify-content-between align-items-center">
-                <Form.Select type="text" name="categoryId" onChange={handleInput} style={{ width: "70%" }}>
-                  <option>Category Select</option>
-                  {categoryDropdown}
-                </Form.Select>
-                <div className="d-flex justify-content-center" style={{ width: "20%"}} >
-                  <img src={postTransactionData.categoryId ? `/images/${getCategoryById(postTransactionData.categoryId, categoriesData).logo_url}` : "/images/blue.png"} alt="category icon" />
+            <div className="d-flex justify-content-between " style={{ width: "100%" }}>
+
+              <Form.Group className='mb-3' style={{ width: "70%" }}>
+                <Form.Label >Category</Form.Label>
+                <div className="d-flexalign-items-center">
+                  <Form.Select type="text" name="categoryId" onChange={handleInput}>
+                    <option>Category Select</option>
+                    {categoryDropdown}
+                  </Form.Select>
                 </div>
+              </Form.Group>
+
+              <div className="d-flex justify-content-center align-items-center" style={{ width: "30%" }} >
+                <img src={postTransactionData.categoryId ? `/images/${getCategoryById(postTransactionData.categoryId, categoriesData).logo_url}` : "/images/blue.png"} alt="category icon" style={{height: "64px"}} />
               </div>
-            </Form.Group>
+            </div>
 
             {/* Dropdown selection for Account */}
             <Form.Group className='mb-3'>
@@ -191,7 +195,7 @@ const TransactionModalAddNew = (props) => {
                   {accountDropdown}
                 </Form.Select>
 
-                <div style={{ width: "20%" }} className="d-flex justify-content-end">
+                <div style={{ width: "30%" }} className="d-flex justify-content-center">
                   {postTransactionData.accountId
                     ?
                     <NumericFormat
@@ -265,7 +269,7 @@ const TransactionModalAddNew = (props) => {
                   {accountDropdown}
                 </Form.Select>
 
-                <div style={{ width: "20%" }} className="d-flex justify-content-end">
+                <div style={{ width: "30%" }} className="d-flex justify-content-center">
                   {postTransactionData.accountId
                     ?
                     <NumericFormat
@@ -289,7 +293,7 @@ const TransactionModalAddNew = (props) => {
                   {accountDropdown}
                 </Form.Select>
 
-                <div style={{ width: "20%" }} className="d-flex justify-content-end">
+                <div style={{ width: "30%" }} className="d-flex justify-content-center">
                   {postTransactionData.accountToId
                     ?
                     <NumericFormat
