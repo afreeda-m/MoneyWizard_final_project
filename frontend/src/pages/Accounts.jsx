@@ -1,5 +1,3 @@
-import axios from 'axios';
-import React, { useState } from "react";
 import { Cell, Label, Legend, Pie, PieChart, Tooltip } from "recharts";
 import AccountList from "../components/AccountList";
 import AccountsModal from "../components/AccountsModal";
@@ -10,31 +8,14 @@ const Accounts = (props) => {
 
   const {
     accountsData,
-    getAccounts
+    getAccounts,
+    getTransactions,
+    postAccountData,
+    setPostAccountData,
+    isAddAccountModalOpen,
+    toggleAddAccountModal
   } = props;
 
-
-  const [show, setShow] = useState(false);
-
-  const modalClose = () => setShow(false);
-
-  const modalShow = () => {
-    setShow(true);
-  };
-
-  const deleteAccount = (account_id) => {
-    axios.post('/accounts/' + account_id + '/delete')
-      .then((response) => {
-        getAccounts();
-      })
-      .catch(function(error) {
-        console.error("Error deleting account:", error);
-      });
-  };
-
-  const totalAccountsBalance = accountsData
-    .map((account) => account.balance)
-    .reduce((a, b) => a + b, 0);
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#FFD300", "#8f2d56", "#BE0AFF", "#f15bb5"];
 
@@ -66,6 +47,7 @@ const Accounts = (props) => {
     );
   };
 
+  
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary mb-5" style={{ paddingTop: "50px" }} >
 
@@ -93,19 +75,20 @@ const Accounts = (props) => {
       </PieChart>
 
       <AccountList
-        accounts={accountsData}
-        deleteAccount={deleteAccount}
-        totalAccountsBalance={totalAccountsBalance}
+        accountsData={accountsData}
+        getAccounts={getAccounts}
+        getTransactions={getTransactions}
       />
 
-      {show && <AccountsModal
-      show={show}
-      modalClose={modalClose}
-      modalShow={modalShow}
-      getAccounts={getAccounts} />}
+      <AccountsModal
+        isAddAccountModalOpen={isAddAccountModalOpen}
+        toggleAddAccountModal={toggleAddAccountModal}
+        postAccountData={postAccountData}
+        setPostAccountData={setPostAccountData}
+        getAccounts={getAccounts} />
 
-      <FloatingActionButton click={modalShow} />
-      {/* </div> */}
+      <FloatingActionButton click={toggleAddAccountModal} />
+
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import axios from "axios";
 import { useState } from "react";
 import { Image } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
@@ -10,15 +11,22 @@ import { NumericFormat } from "react-number-format";
 // import '../styles/Accounts.scss';
 
 const AccountListItem = (props) => {
-  const { id, account_name, amount, note } = props;
+  const {
+    account,
+    getAccounts,
+    getTransactions,
+  } = props;
 
   const [show, setShow] = useState(false);
 
   const handleClick = () => setShow(!show);
 
-
-  const deleteAccount = (event) => {
-    props.deleteAccount(event.target.id);
+  const handleDelete = () => {
+    axios.post(`/accounts/${account.id}/delete`)
+      .then(() => {
+        getAccounts();
+        getTransactions();
+      });
   };
 
   return (
@@ -27,21 +35,19 @@ const AccountListItem = (props) => {
 
         <Row className="d-flex align-items-center">
 
-          <Col xs={1} onClick={handleClick}>
+          <Col className="d-flex justify-content-center" xs={2} onClick={handleClick}>
             <Image className="accounts-icon" src={"./images/income.png"} />
           </Col>
 
-          <Col xs={7} onClick={handleClick}>
-            <div>
-              <b> {account_name} </b>
-            </div>
+          <Col className="d-flex justify-content-start" xs={6} onClick={handleClick}>
+            <b> {account.account_name} </b>
           </Col>
 
-          <Col className="d-flex flex-column align-items-end" xs={3}>
+          <Col className="d-flex justify-content-end" xs={3}>
             <>
               <NumericFormat
-                className={amount > 0 ? "text-success" : "text-danger"}
-                value={amount.toFixed(2)}
+                className={account.balance > 0 ? "text-success" : "text-danger"}
+                value={account.balance.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"$"}
@@ -49,14 +55,14 @@ const AccountListItem = (props) => {
             </>
           </Col>
 
-          <Col xs={1}>
+          <Col className="d-flex justify-content-center" xs={1}>
             <Dropdown>
-              <Dropdown.Toggle variant="none" id="dropdown-basic" style={{ width: "1rem" }}>
+              <Dropdown.Toggle variant="none" id="dropdown-basic" >
                 <MoreVertIcon />
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={deleteAccount} id={id} className="text-danger text-center">Delete account</Dropdown.Item>
+                <Dropdown.Item onClick={handleDelete} id={account.id} className="text-danger text-center">Delete account</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>
@@ -64,7 +70,8 @@ const AccountListItem = (props) => {
         </Row>
       </Container>
 
-      {show && <div className="d-flex justify-content-center"> {note} </div>}
+      {show && <div className="d-flex justify-content-center"> {account.note} </div>}
+
     </ListGroupItem>
   );
 };

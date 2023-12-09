@@ -1,5 +1,5 @@
 INSERT INTO users (name, email, password)
-VALUES ('Rora Alem', 'rora@email.com', '123');
+VALUES ('Admin', 'admin', '123');
 
 
 

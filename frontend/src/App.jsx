@@ -40,7 +40,9 @@ function App() {
     toggleAddCategoryModal,
     setPostCategoryData,
     resetDate,
-    getTransactionsByCategory
+    getTransactionsByCategory,
+    setPostAccountData,
+    toggleAddAccountModal
   } = useApplicationData();
 
   const {
@@ -59,7 +61,9 @@ function App() {
     username,
     isAddCategoryModalOpen,
     postCategoryData,
-    transactionsByCategoryData
+    transactionsByCategoryData,
+    isAddAccountModalOpen,
+    postAccountData
   } = state;
 
   return (
@@ -203,6 +207,11 @@ function App() {
             <Route path='/accounts' element={<Accounts
               accountsData={accountsData}
               getAccounts={getAccounts}
+              getTransactions={getTransactions}
+              isAddAccountModalOpen={isAddAccountModalOpen}
+              toggleAddAccountModal={toggleAddAccountModal}
+              postAccountData={postAccountData}
+              setPostAccountData={setPostAccountData}
             />} />
 
             <Route path='/reports' element={<Reports

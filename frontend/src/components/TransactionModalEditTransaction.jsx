@@ -204,8 +204,8 @@ const TransactionModalEditTransaction = (props) => {
 
       </Modal.Body>
 
-      <Modal.Footer className='d-flex justify-content-center'>
-        <Button variant="secondary" onClick={toggleEditTransactionModal}>
+      <Modal.Footer className='d-flex justify-content-around'>
+        <Button variant="secondary" onClick={toggleEditTransactionModal} style={{border: "1px solid"}}>
           Cancel
         </Button>
         <Button variant="primary" onClick={handleSubmit}>
