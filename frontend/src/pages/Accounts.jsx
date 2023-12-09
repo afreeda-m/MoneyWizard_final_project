@@ -47,7 +47,7 @@ const Accounts = (props) => {
     );
   };
 
-  
+
   return (
     <div className="d-flex flex-column align-items-center bg-body-tertiary mb-5" style={{ paddingTop: "50px" }} >
 
@@ -74,11 +74,13 @@ const Accounts = (props) => {
         <Legend />
       </PieChart>
 
-      <AccountList
-        accountsData={accountsData}
-        getAccounts={getAccounts}
-        getTransactions={getTransactions}
-      />
+      <div style={{width: "40%"}}>
+        <AccountList
+          accountsData={accountsData}
+          getAccounts={getAccounts}
+          getTransactions={getTransactions}
+        />
+      </div>
 
       <AccountsModal
         isAddAccountModalOpen={isAddAccountModalOpen}
