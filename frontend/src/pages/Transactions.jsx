@@ -96,9 +96,7 @@ const Transactions = (props) => {
 
       }
 
-      <div onClick={toggleAddNewModal}>
-        <FloatingActionButton />
-      </div>
+      <FloatingActionButton click={toggleAddNewModal} />
 
       <TransactionModalAddNew
         isAddTransactionModalOpen={isAddTransactionModalOpen}

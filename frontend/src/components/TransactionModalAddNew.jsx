@@ -230,7 +230,7 @@ const TransactionModalAddNew = (props) => {
 
             {/* 'Close' and 'Save' buttons for the TRANSACTION tab */}
             <div className='d-flex justify-content-around mb-2'>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant="secondary" onClick={handleClose} style={{border: "1px solid"}}>
                 Close
               </Button>
               <Button variant="primary" onClick={handleTransactionSubmit}>
@@ -306,7 +306,7 @@ const TransactionModalAddNew = (props) => {
 
             {/* 'Close' and 'Save' buttons for the TRANSFER tab */}
             <div className='d-flex justify-content-around mb-2'>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant="secondary" onClick={handleClose} style={{border: "1px solid"}}>
                 Close
               </Button>
               <Button variant="primary" onClick={handleTransferSubmit}>
