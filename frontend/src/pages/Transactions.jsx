@@ -25,10 +25,6 @@ const Transactions = (props) => {
     toggleEditTransactionModal,
     toggleEditTransferModal,
     chooseTransaction,
-    getAccountNameById,
-    getCategoryIconById,
-    getCategoryNameById,
-    getCategoryTypeById,
     getCategoryById,
     getAccountById,
     getTransactions,
@@ -39,7 +35,7 @@ const Transactions = (props) => {
   } = props;
 
   return (
-    <div className="d-flex flex-column align-items-center bg-body-tertiary mb-5" style={{ width: "100%", paddingTop: "50px" }} >
+    <div className="d-flex flex-column align-items-center mb-5" style={{ width: "100%"}} >
 
       <div style={{ width: "50%" }}>
         <FilterBar
@@ -55,10 +51,6 @@ const Transactions = (props) => {
           transactionsData={transactionsData}
           categoriesData={categoriesData}
           accountsData={accountsData}
-          getAccountNameById={getAccountNameById}
-          getCategoryIconById={getCategoryIconById}
-          getCategoryNameById={getCategoryNameById}
-          getCategoryTypeById={getCategoryTypeById}
           chosenTransaction={chosenTransaction}
           isEditTransactionModalOpen={isEditTransactionModalOpen}
           toggleEditTransactionModal={toggleEditTransactionModal}
@@ -68,6 +60,8 @@ const Transactions = (props) => {
           getTransactions={getTransactions}
           getAccounts={getAccounts}
           getTransactionsByCategory={getTransactionsByCategory}
+          getAccountById={getAccountById}
+          getCategoryById={getCategoryById}
         />
         :
         <div style={{ width: "50%" }}>
@@ -82,8 +76,6 @@ const Transactions = (props) => {
         categoriesData={categoriesData}
         isAddTransactionModalOpen={isAddTransactionModalOpen}
         toggleAddNewModal={toggleAddNewModal}
-        categories={categoriesData}
-        accounts={accountsData}
         transactionDate={transactionDate}
         pickTransactionDate={pickTransactionDate}
         getTransactions={getTransactions}
@@ -96,13 +88,11 @@ const Transactions = (props) => {
       />
 
       <TransactionModalEditTransaction
+        accountsData={accountsData}
+        categoriesData={categoriesData}
         isEditTransactionModalOpen={isEditTransactionModalOpen}
         toggleEditTransactionModal={toggleEditTransactionModal}
-        categories={categoriesData}
-        accounts={accountsData}
         chosenTransaction={chosenTransaction}
-        getAccountNameById={getAccountNameById}
-        getCategoryNameById={getCategoryNameById}
         transactionDate={transactionDate}
         pickTransactionDate={pickTransactionDate}
         setPostTransactionData={setPostTransactionData}
@@ -110,15 +100,15 @@ const Transactions = (props) => {
         getTransactions={getTransactions}
         getAccounts={getAccounts}
         getTransactionsByCategory={getTransactionsByCategory}
+        getAccountById={getAccountById}
+        getCategoryById={getCategoryById}
       />
 
       <TransactionModalEditTransfer
+        accountsData={accountsData}
         isEditTransferModalOpen={isEditTransferModalOpen}
         toggleEditTransferModal={toggleEditTransferModal}
-        categories={categoriesData}
-        accounts={accountsData}
         chosenTransaction={chosenTransaction}
-        getAccountNameById={getAccountNameById}
         transactionDate={transactionDate}
         pickTransactionDate={pickTransactionDate}
         setPostTransactionData={setPostTransactionData}
@@ -126,6 +116,7 @@ const Transactions = (props) => {
         getTransactions={getTransactions}
         getAccounts={getAccounts}
         getTransactionsByCategory={getTransactionsByCategory}
+        getAccountById={getAccountById}
       />
 
     </div>
