@@ -11,6 +11,8 @@ const  RecentTransactionsList = (props) => {
     getCategoryIconById,
     getCategoryNameById,
     getCategoryTypeById,
+    getAccountById,
+    getCategoryById,
     disableEditingAndDeleting,
    } = props;
 
@@ -23,6 +25,8 @@ const  RecentTransactionsList = (props) => {
   getCategoryIconById={getCategoryIconById}
   getCategoryNameById={getCategoryNameById}
   getCategoryTypeById={getCategoryTypeById}
+  getAccountById={getAccountById}
+  getCategoryById={getCategoryById}
   disableEditingAndDeleting={disableEditingAndDeleting}
   width={"100%"}
   />;

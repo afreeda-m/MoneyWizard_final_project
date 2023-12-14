@@ -15,6 +15,7 @@ import Reports from './pages/Reports';
 import Transactions from './pages/Transactions';
 
 
+
 function App() {
 
   const {
@@ -166,6 +167,8 @@ function App() {
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
+              getAccountById={getAccountById}
+              getCategoryById={getCategoryById}
               transactionsByCategoryData={transactionsByCategoryData}
               resetDate={resetDate}
             />} />
