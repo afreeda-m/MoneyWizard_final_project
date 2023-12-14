@@ -27,7 +27,7 @@ function FloatingActionButton(props) {
         {/* THE FLOATING ACTION BUTTON COMPONENT */}
         <Fab color="success"
           aria-label="add"
-          style={{ position: "fixed", bottom: "8rem", right: "3rem" }}
+          style={{ position: "fixed", bottom: "7rem", right: "1rem" }}
           onClick={props.click}
         >
 
