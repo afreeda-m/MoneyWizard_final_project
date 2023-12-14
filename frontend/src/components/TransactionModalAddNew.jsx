@@ -1,25 +1,24 @@
-import { DatePicker } from "@mui/x-date-pickers";
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
 import moment from 'moment';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from 'react-bootstrap/Modal';
-import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { DatePicker } from "@mui/x-date-pickers";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { NumericFormat } from "react-number-format";
 
 
 const TransactionModalAddNew = (props) => {
 
   const {
+    accountsData,
+    categoriesData,
     isAddTransactionModalOpen,
     toggleAddNewModal,
-    categories,
-    accounts,
     transactionDate,
     pickTransactionDate,
     chosenTransaction,
@@ -27,11 +26,13 @@ const TransactionModalAddNew = (props) => {
     setPostTransactionData,
     postTransactionData,
     getAccounts,
-    getTransactionsByCategory
+    getTransactionsByCategory,
+    getAccountById,
+    getCategoryById
   } = props;
 
   // list of categories for the dropdown selection
-  const categoryDropdown = categories.map((category) => {
+  const categoryDropdown = categoriesData.map((category) => {
     return (
       <option key={category.id} value={category.id}>
         {category.category_name}
@@ -40,7 +41,7 @@ const TransactionModalAddNew = (props) => {
   });
 
   // list of accounts for the dropdown selection
-  const accountDropdown = accounts.map((account) => {
+  const accountDropdown = accountsData.map((account) => {
     return (
       <option key={account.id} value={account.id}>
         {account.account_name}
@@ -94,7 +95,7 @@ const TransactionModalAddNew = (props) => {
 
     axios.post('/transactions/add', postTransactionData)
       .then((response) => {
-        // Invoke getTransactions function to update transactionsData state
+        // Update data states that are affected by the addition
         getTransactions();
         getAccounts();
         getTransactionsByCategory();
@@ -151,7 +152,13 @@ const TransactionModalAddNew = (props) => {
   return (
 
     // Adjust styling for the modal. Move 130px to the right and center vertically
-    <Modal style={{ marginLeft: "130px" }} show={isAddTransactionModalOpen} onHide={handleClose} size="md" centered >
+    <Modal
+      style={{ marginLeft: "130px" }}
+      show={isAddTransactionModalOpen}
+      onHide={handleClose}
+      size="md"
+      centered
+    >
 
       <Modal.Header className='d-flex justify-content-center'>
         <Modal.Title>ADD NEW TRANSACTION</Modal.Title>
@@ -162,75 +169,88 @@ const TransactionModalAddNew = (props) => {
         {/* This modal has TWO tabs: TRANSACTION and TRANSFER */}
         <Tabs defaultActiveKey="transaction" transition={false} className="mb-3" justify >
 
-          {/* TRANSACTION TAB using grid layout */}
+          {/* TRANSACTION TAB */}
           <Tab eventKey="transaction" title="TRANSACTION">
 
-            {/* 2 input fields in the same row for Category selection, Account selection */}
-            <Row className='mb-3' >
+            {/* Dropdown selection for Category */}
+            <div className="d-flex justify-content-between " style={{ width: "100%" }}>
 
-              {/* Dropdown selection for Category */}
-              <Form.Group xs={6} as={Col}>
+              <Form.Group className='mb-3' style={{ width: "70%" }}>
                 <Form.Label >Category</Form.Label>
-                <Form.Select type="text" name="categoryId" onChange={handleInput} required>
-                  <option>Category Select</option>
-                  {categoryDropdown}
-
-                </Form.Select>
-              </Form.Group>
-
-              {/* Dropdown selection for Account */}
-              <Form.Group xs={6} as={Col}>
-                <Form.Label >Account</Form.Label>
-                <Form.Select type="text" name="accountId" onChange={handleInput} >
-                  <option>Account Select</option>
-                  {accountDropdown}
-
-                </Form.Select>
-              </Form.Group>
-
-            </Row>
-
-            {/* Input field for Amount */}
-            <Row className="mb-3" >
-              <Form.Group as={Col}>
-                <Form.Label >Amount</Form.Label>
-                <InputGroup>
-                  <InputGroup.Text >$</InputGroup.Text>
-                  <Form.Control type="number" name="amount" onChange={handleInput} />
-                </InputGroup>
-              </Form.Group>
-            </Row>
-
-            {/* Input field for Date using MUI DatePicker */}
-            <Row className="mb-3">
-              <Form.Group as={Col}>
-                <Form.Label  >Date</Form.Label>
-                {/* Date picker box */}
-                <div >
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
-
-                    <DatePicker
-                      sx={{ width: "50%" }}
-                      value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
-                      onChange={handleDateChange}
-                    />
-
-                  </LocalizationProvider>
+                <div className="d-flexalign-items-center">
+                  <Form.Select type="text" name="categoryId" onChange={handleInput}>
+                    <option>Category Select</option>
+                    {categoryDropdown}
+                  </Form.Select>
                 </div>
               </Form.Group>
-            </Row>
+
+              <div className="d-flex justify-content-center align-items-center" style={{ width: "30%" }} >
+                <img src={postTransactionData.categoryId ? `/images/${getCategoryById(postTransactionData.categoryId, categoriesData).logo_url}` : "/images/blue.png"} alt="category icon" style={{ height: "64px" }} />
+              </div>
+            </div>
+
+            {/* Dropdown selection for Account */}
+            <Form.Group className='mb-3'>
+              <Form.Label >Account</Form.Label>
+              <div className="d-flex justify-content-between align-items-center">
+                <Form.Select type="text" name="accountId" onChange={handleInput} style={{ width: "70%" }}>
+                  <option>Account Select</option>
+                  {accountDropdown}
+                </Form.Select>
+
+                <div style={{ width: "30%" }} className="d-flex justify-content-center">
+                  {postTransactionData.accountId
+                    ?
+                    <NumericFormat
+                      value={getAccountById(postTransactionData.accountId, accountsData).balance.toFixed(2)}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      displayType={"text"}
+                    />
+                    :
+                    null}
+                </div>
+              </div>
+            </Form.Group>
+
+            {/* Input field for Amount */}
+            <Form.Group className='mb-3'>
+              <Form.Label >Amount</Form.Label>
+              <InputGroup>
+                <InputGroup.Text >$</InputGroup.Text>
+                <Form.Control type="number" name="amount" onChange={handleInput} />
+              </InputGroup>
+            </Form.Group>
+
+            {/* Input field for Date using MUI DatePicker */}
+            <Form.Group className='mb-3'>
+              <Form.Label  >Date</Form.Label>
+              {/* Date picker box */}
+              <div >
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+
+                  <DatePicker
+                    sx={{ width: "50%" }}
+                    value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
+                    onChange={handleDateChange}
+                  />
+
+                </LocalizationProvider>
+              </div>
+            </Form.Group>
+
 
             {/* Input field for Notes */}
-            <Row className="mb-4">
-              <Form.Group as={Col}>
-                <Form.Label >Notes</Form.Label>
-                <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
-              </Form.Group>
-            </Row>
+            <Form.Group className="mb-4">
+              <Form.Label >Notes</Form.Label>
+              <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
+            </Form.Group>
+
 
             {/* 'Close' and 'Save' buttons for the TRANSACTION tab */}
             <div className='d-flex justify-content-around mb-2'>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant="secondary" onClick={handleClose} style={{ border: "1px solid" }}>
                 Close
               </Button>
               <Button variant="primary" onClick={handleTransactionSubmit}>
@@ -240,73 +260,97 @@ const TransactionModalAddNew = (props) => {
 
           </Tab>
 
-          {/* TRANSFER TAB using grid layout */}
+          {/* TRANSFER TAB */}
           <Tab eventKey="transfer" title="TRANSFER">
 
-            <Row className="mb-3">
+            <Form.Group className="mb-3" >
 
-              <Form.Group xs={6} as={Col} >
-                <Form.Label >From Account</Form.Label>
-                <Form.Select type="text" name="accountId" onChange={handleInput}>
+              <Form.Label >From Account</Form.Label>
+
+              <div className="d-flex justify-content-between align-items-center">
+                <Form.Select type="text" name="accountId" onChange={handleInput} style={{ width: "70%" }}>
                   <option>Account Select</option>
                   {accountDropdown}
-
                 </Form.Select>
-              </Form.Group>
 
-              <Form.Group xs={6} as={Col} >
-                <Form.Label >To Account</Form.Label>
-                <Form.Select type="text" name="accountToId" onChange={handleInput} >
+                <div style={{ width: "30%" }} className="d-flex justify-content-center">
+                  {postTransactionData.accountId
+                    ?
+                    <NumericFormat
+                      value={getAccountById(postTransactionData.accountId, accountsData).balance.toFixed(2)}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      displayType={"text"}
+                    />
+                    :
+                    null}
+                </div>
+              </div>
+            </Form.Group>
+            <Form.Group className="mb-3">
+
+              <Form.Label >To Account</Form.Label>
+
+              <div className="d-flex justify-content-between align-items-center">
+                <Form.Select type="text" name="accountToId" onChange={handleInput} style={{ width: "70%" }}>
                   <option>Account Select</option>
                   {accountDropdown}
-
                 </Form.Select>
-              </Form.Group>
 
-            </Row>
+                <div style={{ width: "30%" }} className="d-flex justify-content-center">
+                  {postTransactionData.accountToId
+                    ?
+                    <NumericFormat
+                      value={getAccountById(postTransactionData.accountToId, accountsData).balance.toFixed(2)}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      displayType={"text"}
+                    />
+                    :
+                    null}
+                </div>
+              </div>
+
+            </Form.Group>
 
             {/* Input field for Amount */}
-            <Row className="mb-3">
-              <Form.Group as={Col}>
+            <Form.Group className="mb-3">
 
-                <Form.Label >Amount</Form.Label>
-                <InputGroup>
-                  <InputGroup.Text >$</InputGroup.Text>
-                  <Form.Control type="number" name="amount" onChange={handleInput} />
-                </InputGroup>
-              </Form.Group>
-            </Row>
+              <Form.Label >Amount</Form.Label>
+              <InputGroup>
+                <InputGroup.Text >$</InputGroup.Text>
+                <Form.Control type="number" name="amount" onChange={handleInput} />
+              </InputGroup>
+            </Form.Group>
+
 
             {/* Input field for Date using MUI DatePicker */}
-            <Row className="mb-3">
-              <Form.Group as={Col}>
-                <Form.Label >Date</Form.Label>
-                {/* Date picker box */}
-                <div>
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
+            <Form.Group className="mb-3">
+              <Form.Label >Date</Form.Label>
+              {/* Date picker box */}
+              <div>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
 
-                    <DatePicker
-                      sx={{ width: "50%" }}
-                      value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
-                      onChange={handleDateChange}
-                    />
+                  <DatePicker
+                    sx={{ width: "50%" }}
+                    value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
+                    onChange={handleDateChange}
+                  />
 
-                  </LocalizationProvider>
-                </div>
-              </Form.Group>
-            </Row>
+                </LocalizationProvider>
+              </div>
+            </Form.Group>
+
 
             {/* Input field for Notes */}
-            <Row className="mb-4">
-              <Form.Group as={Col}>
-                <Form.Label >Notes</Form.Label>
-                <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
-              </Form.Group>
-            </Row>
+            <Form.Group className="mb-4">
+              <Form.Label >Notes</Form.Label>
+              <Form.Control as="textarea" type="text" name="notes" onChange={handleInput} />
+            </Form.Group>
 
             {/* 'Close' and 'Save' buttons for the TRANSFER tab */}
             <div className='d-flex justify-content-around mb-2'>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant="secondary" onClick={handleClose} style={{ border: "1px solid" }}>
                 Close
               </Button>
               <Button variant="primary" onClick={handleTransferSubmit}>

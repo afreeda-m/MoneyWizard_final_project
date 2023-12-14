@@ -52,6 +52,7 @@ const addAccount = (accountData, userId) => {
   return db
     .query(queryString, [accountData.account_name, accountData.balance, accountData.note, userId])
     .then((data) => {
+      console.log("Account added to DB");
       return data.rows[0]; // only one row to be inserted
     })
     .catch((error) => {
@@ -85,6 +86,7 @@ const updateAccount = (accountId, accountData, userId) => {
       ]);
     })
     .then(data => {
+      console.log("Account data updated");
       return data.rows[0]; //only one updated row
     })
     .catch(error => {
@@ -93,14 +95,13 @@ const updateAccount = (accountId, accountData, userId) => {
     });
 };
 
-
-
 const removeAccount =(account_id, userId) =>{
 
   const queryString = `DELETE FROM accounts WHERE id = $1 AND user_id = $2;`;
   return db
     .query(queryString, [account_id, userId])
     .then((data) => {
+      console.log("Account removed from DB");
       return data.rows;
     })
     .catch((error) => {

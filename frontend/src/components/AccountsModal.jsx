@@ -1,83 +1,94 @@
 import axios from "axios";
 import React from "react";
+import Form from "react-bootstrap/Form";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 
 function AccountsModal(props) {
-  const { show, modalClose, getAccounts } = props;
 
-  const submitForm = (event) => {
+  const {
+    isAddAccountModalOpen,
+    toggleAddAccountModal,
+    postAccountData,
+    setPostAccountData,
+    getAccounts
+  } = props;
+
+  // Function handle closing action
+  const handleClose = () => {
+    // Reset postAccountData
+    setPostAccountData({
+      account_name: null,
+      balance: 0,
+      user_id: null,
+      note: null
+    });
+    // Close the Modal
+    toggleAddAccountModal();
+  };
+
+  // Function to update postAccountData upon input on the Modal
+  const handleInput = (event) => {
+    const targetValue = event.target.value;
+    setPostAccountData({ ...postAccountData, [event.target.name]: targetValue });
+
+  };
+
+  // Function handle submit action
+  const handleSubmit = (event) => {
+
     event.preventDefault();
-
-    const value = {
-      account_name: event.target.accountName.value,
-      balance: event.target.balance.value,
-      note: event.target.notes.value,
-    };
-
-    axios({
-      method: "post",
-      url: "/accounts/add",
-      header: {
-        "Content-Type": "application/json",
-      },
-      data: value,
-    })
-      .then((response) => {
+    // Make a post request to BE
+    axios.post('/accounts/add', postAccountData)
+      .then(() => {
         getAccounts();
       })
-      .catch(function(error) {
-        console.log(error);
+      .catch((error) => {
+        console.error("Error adding new Account:", error);
       });
-
-    modalClose();
+    // Reset postAccountData state
+    setPostAccountData({
+      account_name: null,
+      balance: 0,
+      user_id: null,
+      note: null
+    });
+    // Close the Modal
+    toggleAddAccountModal();
   };
 
   return (
     <div className="App p-4">
-      <Modal style={{ marginLeft: "130px" }} show={show} onHide={modalClose} size="md" centered >
+      <Modal style={{ marginLeft: "130px" }} show={isAddAccountModalOpen} onHide={handleClose} size="md" centered >
         <Modal.Header className='d-flex justify-content-center'>
           <Modal.Title>Add New Account</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <form id="account-form" onSubmit={submitForm}>
+          <Form>
+            <Form.Group>
+              <Form.Label>Account Name</Form.Label>
+              <Form.Control name="account_name" onChange={handleInput} />
+            </Form.Group>
 
-            <div className="form-group">
-              <label htmlFor="recipient-name" className="col-form-label">
-                Account Name
-              </label>
-              <input type="text" name="accountName" className="form-control" id="account-name" />
-            </div>
+            <Form.Group>
+              <Form.Label>Initial Balance</Form.Label>
+              <Form.Control name="balance" onChange={handleInput} />
+            </Form.Group>
 
-            <div className="form-group">
-              <label htmlFor="message-text" className="col-form-label">
-                Balance
-              </label>
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">$</span>
-                </div>
-                <input className="form-control" name="balance" id="account-balance" />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message-text" className="col-form-label">
-                Notes
-              </label>
-              <input className="form-control" name="notes" id="account-notes" />
-            </div>
-
-          </form>
+            <Form.Group>
+              <Form.Label>Notes</Form.Label>
+              <Form.Control as="textarea" name="note" onChange={handleInput} />
+            </Form.Group>
+          </Form>
         </Modal.Body>
 
         <Modal.Footer className="d-flex justify-content-around">
-          <Button className="accounts-modal" variant="secondary" type="button" onClick={modalClose}>
+          <Button variant="secondary" onClick={handleClose} style={{ border: "1px solid" }}>
             Close
           </Button>
-          <Button type="submit" form="account-form" variant="primary">
+          <Button form="account-form" variant="primary" onClick={handleSubmit}>
             Save
           </Button>
         </Modal.Footer>

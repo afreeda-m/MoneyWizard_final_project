@@ -6,22 +6,29 @@ import AccountListItem from "./AccountListItem";
 
 const AccountList = (props) => {
 
-  const { accounts, totalAccountsBalance } = props;
+  const {
+    accountsData,
+    getAccounts,
+    getTransactions,
+  } = props;
 
-  const listOfAccounts = accounts.map((account) => {
+
+  const totalAccountsBalance = accountsData
+    .map((account) => account.balance)
+    .reduce((a, b) => a + b, 0);
+
+  const listOfAccounts = accountsData.map((account) => {
     return (
       <AccountListItem
         key={account.id}
-        id={account.id}
-        account_name={account.account_name}
-        amount={account.balance}
-        note={account.note}
-        deleteAccount={props.deleteAccount}
+        account={account}
+        getAccounts={getAccounts}
+        getTransactions={getTransactions}
       />);
   });
 
   return (
-    <ListGroup style={{width: "40%"}}>
+    <ListGroup style={{ width: "100%" }}>
 
       <ListGroupItem className="d-flex justify-content-center" style={{ fontSize: '20px' }}>
         <b>
@@ -32,7 +39,6 @@ const AccountList = (props) => {
             thousandSeparator={true}
           />
         </b>
-
       </ListGroupItem>
 
       {listOfAccounts}

@@ -17,7 +17,7 @@ const FilterBar = (props) => {
 
   return (
 
-    <Container className="p-2 mb-4 mt-4 rounded bg-white" style={{ width: "40vw", border: "2px solid grey" }}>
+    <Container className="p-2 mb-4 mt-4 rounded bg-white" style={{ width: "100%", border: "2px solid grey" }}>
       <Row className='d-flex align-items-center'>
         <Col className="d-flex justify-content-center" xs={2} onClick={decrementDate} >
               <ArrowBackIosIcon />

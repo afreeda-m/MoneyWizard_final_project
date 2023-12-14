@@ -3,40 +3,48 @@ import moment from "moment";
 import { useEffect, useReducer } from "react";
 
 export const ACTIONS = {
+
   SET_TRANSACTIONS_DATA: 'SET_TRANSACTION_DATA',
   SET_ACCOUNTS_DATA: 'SET_ACCOUNTS_DATA',
   SET_CATEGORIES_DATA: 'SET_CATEGORIES_DATA',
-  SET_TRANSACTION_DATE: 'SET_TRANSACTION_DATE',
+
   INCREMENT_DATE: 'INCREMENT_DATE',
   DECREMENT_DATE: 'DECREMENT_DATE',
   RESET_DATE: 'RESET_DATE',
+
   TOGGLE_ADD_NEW_TRANSACTION_MODAL: 'TOGGLE_ADD_NEW_TRANSACTION_MODAL',
   TOGGLE_EDIT_TRANSACTION_MODAL: 'TOGGLE_EDIT_TRANSACTION_MODAL',
   TOGGLE_EDIT_TRANSFER_MODAL: 'TOGGLE_EDIT_TRANSFER_MODAL',
   SELECT_TRANSACTION: 'SELECT_TRANSACTION',
   SET_POST_TRANSACTION_DATA: 'SET_POST_TRANSACTION_DATA',
+  SET_TRANSACTION_DATE: 'SET_TRANSACTION_DATE',
+
   SET_LOGGED_IN: 'SET_LOGGED_IN',
   SET_USERNAME: 'SET_USERNAME',
+
+  SET_ICONS_DATA: 'SET_ICONS_DATA',
   TOGGLE_ADD_NEW_CATEGORY_MODAL: 'TOGGLE_ADD_NEW_CATEGORY_MODAL',
   SET_POST_CATEGORY_DATA: 'SET_POST_CATEGORY_DATA',
+
+  TOGGLE_ADD_NEW_ACCOUNT_MODAL: 'TOGGLE_ADD_NEW_ACCOUNT_MODAL',
+  SET_PORT_ACCOUNT_DATA: 'SET_PORT_ACCOUNT_DATA',
+
   SET_TRANSACTIONS_BY_CATEGORY_DATA: 'SET_TRANSACTIONS_BY_CATEGORY_DATA',
-  SET_ICONS_DATA: 'SET_ICONS_DATA'
+
 };
 
 function reducer(state, action) {
   switch (action.type) {
-
-
-    // ACTION FOR RETRIEVING DATA FROM BACKEND SERVER
+    // ACTIONS FOR RETRIEVING DATA FROM BACKEND SERVER
     // Update transactionsData state
     case ACTIONS.SET_TRANSACTIONS_DATA:
-      for (const i in action.transactionsData){
+      for (const i in action.transactionsData) {
         action.transactionsData[i].amount = parseFloat(action.transactionsData[i].amount);
       }
       return { ...state, transactionsData: action.transactionsData };
     // Update accountsData state
     case ACTIONS.SET_ACCOUNTS_DATA:
-      for (const i in action.accountsData){
+      for (const i in action.accountsData) {
         action.accountsData[i].balance = parseFloat(action.accountsData[i].balance);
       }
       return { ...state, accountsData: action.accountsData };
@@ -44,32 +52,24 @@ function reducer(state, action) {
     case ACTIONS.SET_CATEGORIES_DATA:
       return { ...state, categoriesData: action.categoriesData };
 
-    case ACTIONS.SET_ICONS_DATA:
-      return { ...state, iconsData: action.iconsData };
 
-
-    // Update transactionDate when picking transaction date
-    case ACTIONS.SET_TRANSACTION_DATE:
-      return { ...state, transactionDate: action.transactionDate };
-
-    // ACTION FOR FILTER BAR COMPONENT
+    // ACTIONS FOR DATE RELATED
     case ACTIONS.INCREMENT_DATE:
       return { ...state, date: action.newDate };
     case ACTIONS.DECREMENT_DATE:
       return { ...state, date: action.newDate };
-
-    // ACTION TO RESET THE DATE TO CURRENT
     case ACTIONS.RESET_DATE:
       return { ...state, date: moment() };
 
 
-    // ACTION FOR USER AUTHENTICATION
+    // ACTIONS FOR USER AUTHENTICATION
     case ACTIONS.SET_LOGGED_IN:
       return { ...state, isLoggedIn: action.isLoggedIn };
     case ACTIONS.SET_USERNAME:
       return { ...state, username: action.username };
 
-    // ACTION FOR TRANSACTION RELATED COMPONENTS
+
+    // ACTIONS FOR TRANSACTION PAGE RELATED COMPONENTS
     // Update state to Open/Close the Add New Transaction modal
     case ACTIONS.TOGGLE_ADD_NEW_TRANSACTION_MODAL:
       return { ...state, isAddTransactionModalOpen: !state.isAddTransactionModalOpen };
@@ -85,8 +85,15 @@ function reducer(state, action) {
     // Update postTransactionData state upon editing in the Modal
     case ACTIONS.SET_POST_TRANSACTION_DATA:
       return { ...state, postTransactionData: action.postTransactionData };
+    // Update transactionDate when picking transaction date
+    case ACTIONS.SET_TRANSACTION_DATE:
+      return { ...state, transactionDate: action.transactionDate };
 
-    // ACTION FOR CATEGORY RELATED COMPONENTS
+
+    // ACTIONS FOR CATEGORY PAGE RELATED COMPONENTS
+    // Update iconsData state
+    case ACTIONS.SET_ICONS_DATA:
+      return { ...state, iconsData: action.iconsData };
     // Update state to Open/Close the Add New Category Modal
     case ACTIONS.TOGGLE_ADD_NEW_CATEGORY_MODAL:
       return { ...state, isAddCategoryModalOpen: !state.isAddCategoryModalOpen };
@@ -94,7 +101,16 @@ function reducer(state, action) {
     case ACTIONS.SET_POST_CATEGORY_DATA:
       return { ...state, postCategoryData: action.postCategoryData };
 
-    // ACTION FOR REPORT COMPONENT
+
+    // ACTIONS FOR ACCOUNT PAGE RELATED COMPONENTS
+    // Update state to Open/Close the Add New Account Modal
+    case ACTIONS.TOGGLE_ADD_NEW_ACCOUNT_MODAL:
+      return { ...state, isAddAccountModalOpen: !state.isAddAccountModalOpen };
+    // Update postAccountData state upon editing in the Modal
+    case ACTIONS.SET_PORT_ACCOUNT_DATA:
+      return { ...state, postAccountData: action.postAccountData };
+
+    // ACTIONS FOR REPORT PAGE RELATED COMPONENT
     case ACTIONS.SET_TRANSACTIONS_BY_CATEGORY_DATA:
       return { ...state, transactionsByCategoryData: action.transactionsByCategoryData };
 
@@ -134,6 +150,7 @@ const useApplicationData = () => {
       },
 
       // CATEGORY PAGE RELATED STATES
+      iconsData: [],
       isAddCategoryModalOpen: false,
       postCategoryData: { // state for form control in the Add New Category Modal
         category_name: null,
@@ -141,14 +158,22 @@ const useApplicationData = () => {
         logo_url: null,
         user_id: null
       },
-      iconsData: [],
 
       // STATES FOR USER AUTHENTICATION
       isLoggedIn: false,
       username: '',
 
+      // STATES FOR ACCOUNTS PAGE
+      isAddAccountModalOpen: false,
+      postAccountData: {
+        account_name: null,
+        balance: 0,
+        user_id: null,
+        note: null
+      },
+
       // STATES FOR REPORT PAGE
-      transactionsByCategoryData: []
+      transactionsByCategoryData: [],
 
     }
   );
@@ -225,6 +250,15 @@ const useApplicationData = () => {
       type: ACTIONS.TOGGLE_ADD_NEW_CATEGORY_MODAL
     });
 
+  // FUNCTION FOR ACCOUNT RELATED PAGE
+  const toggleAddAccountModal = () => {
+    dispatch({
+      type: ACTIONS.TOGGLE_ADD_NEW_ACCOUNT_MODAL
+    });
+  };
+
+
+
   // FUNCTION FOR FORM SUBMISSION
   // Transaction/Transfer related Modals
   const setPostTransactionData = (data) => {
@@ -240,7 +274,12 @@ const useApplicationData = () => {
       postCategoryData: data
     });
   };
-
+  const setPostAccountData = (data) => {
+    dispatch({
+      type: ACTIONS.SET_PORT_ACCOUNT_DATA,
+      postAccountData: data
+    });
+  };
 
 
 
@@ -287,8 +326,6 @@ const useApplicationData = () => {
       transactionsByCategoryData: response.data
     });
   };
-  // console.log('Logging transactionsByCat from hook:', state.transactionsByCategoryData);
-
   const getIcons = async () => {
     const response = await axios.get('/icons');
     dispatch({
@@ -354,7 +391,9 @@ const useApplicationData = () => {
     toggleAddCategoryModal,
     setPostCategoryData,
     getTransactionsByCategory,
-    resetDate
+    resetDate,
+    setPostAccountData,
+    toggleAddAccountModal
   };
 
 };

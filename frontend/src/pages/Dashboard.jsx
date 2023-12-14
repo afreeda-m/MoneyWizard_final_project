@@ -21,6 +21,8 @@ const Dashboard = (props) => {
     getCategoryIconById,
     getCategoryNameById,
     getCategoryTypeById,
+    getAccountById,
+    getCategoryById,
     transactionsByCategoryData,
     resetDate
 
@@ -54,7 +56,7 @@ const Dashboard = (props) => {
 
 
   return (
-    <Container className="mt-5 mb-5 d-flex flex-column align-items-center bg-body-tertiary">
+    <Container className="mt-4 mb-5 d-flex flex-column align-items-center bg-body-tertiary">
       {/* <h1 className="text-center">Dashboard</h1> */}
 
       <div className="dashboard">
@@ -140,7 +142,7 @@ const Dashboard = (props) => {
         </div>
         {/* BOX -RECENT TRANSACTIONS */}
         <div className="box box6" >
-          <h1 className="card-name">RECENT TRANSACTIONS </h1>
+          <h3 className="card-name mb-2">RECENT TRANSACTIONS </h3>
 
           < RecentTransactionsList
             transactionsData={top5RecentTransactions}
@@ -150,6 +152,8 @@ const Dashboard = (props) => {
             getCategoryIconById={getCategoryIconById}
             getCategoryNameById={getCategoryNameById}
             getCategoryTypeById={getCategoryTypeById}
+            getAccountById={getAccountById}
+            getCategoryById={getCategoryById}
             chosenTransaction={chosenTransaction}
             disableEditingAndDeleting={true}
           />

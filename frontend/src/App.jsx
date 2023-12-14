@@ -1,13 +1,8 @@
-// Import `bootstrap/dist/css/bootstrap.min.css` to import default Bootstrap
-// styling into React-Bootstrap. Otherwise, your React-Bootstrap elements will
-// not have any styling.
 import 'bootstrap/dist/css/bootstrap.min.css';
-// Import the `App.scss` file to enable SASS in your project.
 import './App.scss';
-
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById } from "./helpers/helperFunctions";
+import { getAccountNameById, getCategoryIconById, getCategoryNameById, getCategoryTypeById, getAccountById, getCategoryById } from "./helpers/helperFunctions";
 import useApplicationData from './hooks/useApplicationData';
 import Accounts from './pages/Accounts';
 // import Budgets from './pages/Budgets';
@@ -18,6 +13,7 @@ import Home from './pages/Home';
 import Layout from './pages/Layout';
 import Reports from './pages/Reports';
 import Transactions from './pages/Transactions';
+
 
 
 function App() {
@@ -40,7 +36,9 @@ function App() {
     toggleAddCategoryModal,
     setPostCategoryData,
     resetDate,
-    getTransactionsByCategory
+    getTransactionsByCategory,
+    setPostAccountData,
+    toggleAddAccountModal
   } = useApplicationData();
 
   const {
@@ -59,7 +57,9 @@ function App() {
     username,
     isAddCategoryModalOpen,
     postCategoryData,
-    transactionsByCategoryData
+    transactionsByCategoryData,
+    isAddAccountModalOpen,
+    postAccountData
   } = state;
 
   return (
@@ -167,6 +167,8 @@ function App() {
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
+              getAccountById={getAccountById}
+              getCategoryById={getCategoryById}
               transactionsByCategoryData={transactionsByCategoryData}
               resetDate={resetDate}
             />} />
@@ -192,6 +194,8 @@ function App() {
               getCategoryIconById={getCategoryIconById}
               getCategoryNameById={getCategoryNameById}
               getCategoryTypeById={getCategoryTypeById}
+              getAccountById={getAccountById}
+              getCategoryById={getCategoryById}
               getTransactions={getTransactions}
               setPostTransactionData={setPostTransactionData}
               postTransactionData={postTransactionData}
@@ -203,6 +207,11 @@ function App() {
             <Route path='/accounts' element={<Accounts
               accountsData={accountsData}
               getAccounts={getAccounts}
+              getTransactions={getTransactions}
+              isAddAccountModalOpen={isAddAccountModalOpen}
+              toggleAddAccountModal={toggleAddAccountModal}
+              postAccountData={postAccountData}
+              setPostAccountData={setPostAccountData}
             />} />
 
             <Route path='/reports' element={<Reports

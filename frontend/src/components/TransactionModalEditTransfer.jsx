@@ -4,32 +4,31 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DatePicker } from "@mui/x-date-pickers";
+import { NumericFormat } from "react-number-format";
 
 
 const TransactionModalEditTransfer = (props) => {
 
   const {
+    accountsData,
     isEditTransferModalOpen,
     toggleEditTransferModal,
-    accounts,
     chosenTransaction,
-    getAccountNameById,
     transactionDate,
     pickTransactionDate,
     setPostTransactionData,
     postTransactionData,
     getTransactions,
     getAccounts,
-    getTransactionsByCategory
+    getTransactionsByCategory,
+    getAccountById,
   } = props;
 
   // list of accounts for the dropdown selection
-  const accountDropdown = accounts.map((account) => {
+  const accountDropdown = accountsData.map((account) => {
     return (
       <option key={account.id} value={account.id}>
         {account.account_name}
@@ -109,89 +108,114 @@ const TransactionModalEditTransfer = (props) => {
       </Modal.Header>
 
       <Modal.Body>
-
         <Form>
 
-          {/* 2 input fields in the same row for Category selection, Account selection */}
-          <Row className='d-flex align-items-center mb-3' >
+          {/* Dropdown selection for Category */}
+          <Form.Group className="mb-3">
+            <Form.Label >From Account</Form.Label>
 
-            {/* Dropdown selection for Category */}
-            <Form.Group xs={6} as={Col}>
-              <Form.Label >From Account</Form.Label>
-              <Form.Select type="text" name="accountId" onChange={handleInput} >
+            <div className="d-flex justify-content-between align-items-center">
+              <Form.Select type="text" name="accountId" onChange={handleInput} style={{ width: "70%" }}>
+                <option>{chosenTransaction && getAccountById(chosenTransaction.account_id, accountsData).account_name}</option>
+                {accountDropdown}
+              </Form.Select>
+
+              <div style={{ width: "30%" }} className="d-flex justify-content-center">
+                {postTransactionData.accountId
+                  ?
+                  <NumericFormat
+                    value={getAccountById(postTransactionData.accountId, accountsData).balance.toFixed(2)}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    displayType={"text"}
+                  />
+                  :
+                  null}
+              </div>
+            </div>
+          </Form.Group>
+
+          {/* Dropdown selection for Account */}
+          <Form.Group className="mb-3">
+            <Form.Label >To Account</Form.Label>
+
+            <div className="d-flex justify-content-between align-items-center">
+              <Form.Select type="text" name="accountToId" onChange={handleInput} style={{ width: "70%" }}>
                 <option>
-                  {chosenTransaction && getAccountNameById(chosenTransaction.account_id, accounts)}
+                  {chosenTransaction && chosenTransaction.account_id_to && getAccountById(chosenTransaction.account_id_to, accountsData).account_name}
                 </option>
                 {accountDropdown}
               </Form.Select>
-            </Form.Group>
 
-            {/* Dropdown selection for Account */}
-            <Form.Group xs={6} as={Col}>
-              <Form.Label >To Account</Form.Label>
-              <Form.Select type="text" name="accountToId" onChange={handleInput}>
-                <option>
-                  {chosenTransaction && chosenTransaction.account_id_to && getAccountNameById(chosenTransaction.account_id_to, accounts)}
-                </option>
-                {accountDropdown}
+              <div style={{ width: "30%" }} className="d-flex justify-content-center">
+                {postTransactionData.accountToId
+                  ?
+                  <NumericFormat
+                    value={getAccountById(postTransactionData.accountToId, accountsData).balance.toFixed(2)}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    displayType={"text"}
+                  />
+                  :
+                  null}
+              </div>
+            </div>
+          </Form.Group>
 
-              </Form.Select>
-            </Form.Group>
 
-          </Row>
 
           {/* Input field for Amount */}
-          <Row className="mb-3">
-            <Form.Group as={Col}>
 
-              <Form.Label >Amount</Form.Label>
-              <InputGroup>
-                <InputGroup.Text >$</InputGroup.Text>
-                <Form.Control
-                  name="amount"
-                  onChange={handleInput}
-                  defaultValue={chosenTransaction && chosenTransaction.amount}
-                />
-              </InputGroup>
-            </Form.Group>
-          </Row>
+          <Form.Group className="mb-3">
+
+            <Form.Label >Amount</Form.Label>
+            <InputGroup>
+              <InputGroup.Text >$</InputGroup.Text>
+              <Form.Control
+                name="amount"
+                onChange={handleInput}
+                defaultValue={chosenTransaction && chosenTransaction.amount}
+              />
+            </InputGroup>
+          </Form.Group>
+
 
           {/* Input field for Date */}
-          <Row className="mb-3">
-            <Form.Group as={Col}>
-              <Form.Label >Date</Form.Label>
-              {/* Date picker box */}
-              <div>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker
-                    sx={{ width: "50%" }}
-                    value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
-                    onChange={handleDateChange}
-                  />
-                </LocalizationProvider>
-              </div>
-            </Form.Group>
-          </Row>
+
+          <Form.Group className="mb-3">
+            <Form.Label >Date</Form.Label>
+            {/* Date picker box */}
+            <div>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
+                <DatePicker
+                  sx={{ width: "50%" }}
+                  value={chosenTransaction ? moment(chosenTransaction.transaction_date) : transactionDate}
+                  onChange={handleDateChange}
+                />
+              </LocalizationProvider>
+            </div>
+          </Form.Group>
+
 
           {/* Input field for Notes */}
-          <Row className="mb-3">
-            <Form.Group as={Col}>
-              <Form.Label >Notes</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="notes"
-                onChange={handleInput}
-                defaultValue={chosenTransaction && chosenTransaction.notes}
-              />
-            </Form.Group>
-          </Row>
+
+          <Form.Group className="mb-3">
+            <Form.Label >Notes</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="notes"
+              onChange={handleInput}
+              defaultValue={chosenTransaction && chosenTransaction.notes}
+            />
+          </Form.Group>
+
 
         </Form>
 
       </Modal.Body>
 
-      <Modal.Footer className='d-flex justify-content-center'>
-        <Button variant="secondary" onClick={toggleEditTransferModal}>
+      <Modal.Footer className='d-flex justify-content-around'>
+        <Button variant="secondary" onClick={toggleEditTransferModal} style={{ border: "1px solid" }}>
           Cancel
         </Button>
         <Button variant="primary" onClick={handleSubmit}>
