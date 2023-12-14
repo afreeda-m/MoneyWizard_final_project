@@ -326,8 +326,6 @@ const useApplicationData = () => {
       transactionsByCategoryData: response.data
     });
   };
-  // console.log('Logging transactionsByCat from hook:', state.transactionsByCategoryData);
-
   const getIcons = async () => {
     const response = await axios.get('/icons');
     dispatch({
